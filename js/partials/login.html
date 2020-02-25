@@ -1,0 +1,19 @@
+<form>
+    <p>Admin</p>
+    <p>John</p>
+    <p>johnpassword</p>
+
+    <p>NON-Admin</p>
+    <p>Jerry</p>
+    <p>jerrypassword</p>
+        
+    <label><b>Username</b></label>
+    <input type="text" ng-model="userLogin.username" placeholder="Enter Username" required>
+
+    <label><b>Password</b></label>
+    <input type="password" ng-model="userLogin.password" placeholder="Enter Password" required>
+        
+    <button ng-click="login()">Login</button>
+    <p class="loginErrorMessage">{{message}}</p>
+
+</form>
