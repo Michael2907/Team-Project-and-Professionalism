@@ -1,19 +1,36 @@
-<form>
-    <p>Admin</p>
-    <p>John</p>
-    <p>johnpassword</p>
+<section>
+    <button ng-click="showAdminForm()">Admin</button>
+    <button ng-click="showGuestForm()">Guest</button>
+    <div ng-if="showAdmin == true && showGuest == false">
+        <form>
 
-    <p>NON-Admin</p>
-    <p>Jerry</p>
-    <p>jerrypassword</p>
-        
-    <label><b>Username</b></label>
-    <input type="text" ng-model="userLogin.username" placeholder="Enter Username" required>
+            <label><b>Username</b></label>
+            <input type="text" ng-model="admin.username" placeholder="Enter Username" required>
 
-    <label><b>Password</b></label>
-    <input type="password" ng-model="userLogin.password" placeholder="Enter Password" required>
-        
-    <button ng-click="login()">Login</button>
-    <p class="loginErrorMessage">{{message}}</p>
+            <label><b>Password</b></label>
+            <input type="password" ng-model="admin.password" placeholder="Enter Password" required>
 
-</form>
+            <button ng-click="adminLogin()">Login</button>
+            <p class="loginErrorMessage">{{message}}</p>
+
+        </form>
+    </div>
+    <div ng-if="showGuest == true && showAdmin == false">
+
+        <form>
+
+            <label><b>Full Name</b></label>
+            <input type="text" ng-model="guest.fullName" placeholder="Enter Full Name" required>
+
+            <label><b>Number Plate</b></label>
+            <input type="text" ng-model="guest.numberPlate" placeholder="Enter Number Plate" min="7" max="7" required>
+
+            <label><b>Email</b></label>
+            <input type="email" ng-model="guest.email" placeholder="Enter Email" required>
+
+            <button ng-click="guestLogin()">Login</button>
+            <p class="loginErrorMessage">{{message}}</p>
+
+        </form>
+    </div>
+</section>
