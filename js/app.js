@@ -17,10 +17,11 @@
           '$routeProvider',     // built in variable which injects functionality, passed as a string
           function($routeProvider) { 
               $routeProvider.
-                // when('/login', {
-                //   templateUrl: 'js/partials/login.html',
-                //   controller: 'LoginController'
-                // }).
+              // not working :( 
+                when('/admin', {
+                  templateUrl: 'js/partials/admin.html',
+                  controller: 'AdminController'
+                }).
                 otherwise({
                   redirectTo: '/'
                 });

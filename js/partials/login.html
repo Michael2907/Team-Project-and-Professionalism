@@ -1,16 +1,16 @@
-<section>
-    <button ng-click="showAdminForm()">Admin</button>
-    <button ng-click="showGuestForm()">Guest</button>
+<section class="loginSection">
+    <button class="showButton button1" ng-click="showAdminForm()">Admin</button>
+    <button class="showButton button2" ng-click="showGuestForm()">Guest</button>
     <div ng-if="showAdmin == true && showGuest == false">
         <form>
 
-            <label><b>Username</b></label>
+            <label><b>Username: </b></label>
             <input type="text" ng-model="admin.username" placeholder="Enter Username" required>
-
-            <label><b>Password</b></label>
+            <br>
+            <label><b>Password: </b></label>
             <input type="password" ng-model="admin.password" placeholder="Enter Password" required>
-
-            <button ng-click="adminLogin()">Login</button>
+            <br>
+            <button type="button" class="btn btn-primary" ng-click="adminLogin()">Login</button>
             <p class="loginErrorMessage">{{message}}</p>
 
         </form>
@@ -19,16 +19,16 @@
 
         <form>
 
-            <label><b>Full Name</b></label>
+            <label><b>Full Name: </b></label>
             <input type="text" ng-model="guest.fullName" placeholder="Enter Full Name" required>
-
-            <label><b>Number Plate</b></label>
+            <br>
+            <label><b>Number Plate: </b></label>
             <input type="text" ng-model="guest.numberPlate" placeholder="Enter Number Plate" min="7" max="7" required>
-
-            <label><b>Email</b></label>
+            <br>
+            <label><b>Email: </b></label>
             <input type="email" ng-model="guest.email" placeholder="Enter Email" required>
-
-            <button ng-click="guestLogin()">Login</button>
+            <br>
+            <button type="button" class="btn btn-primary" ng-click="guestLogin()">Login</button>
             <p class="loginErrorMessage">{{message}}</p>
 
         </form>
