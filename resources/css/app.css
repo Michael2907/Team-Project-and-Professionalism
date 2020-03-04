@@ -1,8 +1,5 @@
 /* Login */
 
-.loginSection{
-    margin: 15vh 15vh;
-}
 
 .showButton {
     background-color: #4CAF50; /* Green */
@@ -43,7 +40,7 @@ input {
 /* Admin */
 
 .table{
-    height: 347px;
+    height: 300px;
 }
 
 /* /////////////////////////////////////////////////////// */

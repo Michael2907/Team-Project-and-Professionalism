@@ -1,36 +1,43 @@
 <section class="loginSection">
-    <button class="showButton button1" ng-click="showAdminForm()">Admin</button>
-    <button class="showButton button2" ng-click="showGuestForm()">Guest</button>
-    <div ng-if="showAdmin == true && showGuest == false">
-        <form>
+	<h1 class="text-center">Login</h1>
+	<div class="container d-flex align-items-center">
+		<div class="col ">
+			<div class="row d-flex justify-content-center">
+				<button class="showButton button1" ng-click="showAdminForm()">Admin</button>
+				<button class="showButton button2" ng-click="showGuestForm()">Guest</button>
+			</div>
+			<div class="row d-flex justify-content-center">
+				<div ng-if="showAdmin == true && showGuest == false">
+					<form>
 
-            <label><b>Username: </b></label>
-            <input type="text" ng-model="admin.username" placeholder="Enter Username" required>
-            <br>
-            <label><b>Password: </b></label>
-            <input type="password" ng-model="admin.password" placeholder="Enter Password" required>
-            <br>
-            <button type="button" class="btn btn-primary" ng-click="adminLogin()">Login</button>
-            <p class="loginErrorMessage">{{message}}</p>
+						<label><b>Username: </b></label>
+						<input type="text" ng-model="admin.username" placeholder="Enter Username" required>
+						<br>
+						<label><b>Password: </b></label>
+						<input type="password" ng-model="admin.password" placeholder="Enter Password" required>
+						<br>
+						<button type="button" class="btn btn-primary" ng-click="adminLogin()">Login</button>
+						<p class="loginErrorMessage">{{message}}</p>
 
-        </form>
-    </div>
-    <div ng-if="showGuest == true && showAdmin == false">
+					</form>
+				</div>
+				<div ng-if="showGuest == true && showAdmin == false">
+					<form>
+						<label><b>Full Name: </b></label>
+						<input type="text" ng-model="guest.fullName" placeholder="Enter Full Name" required>
+						<br>
+						<label><b>Number Plate: </b></label>
+						<input type="text" ng-model="guest.numberPlate" placeholder="Enter Number Plate" min="7" max="7" required>
+						<br>
+						<label><b>Email: </b></label>
+						<input type="email" ng-model="guest.email" placeholder="Enter Email" required>
+						<br>
+						<button type="button" class="btn btn-primary" ng-click="guestLogin()">Login</button>
+						<p class="loginErrorMessage">{{message}}</p>
 
-        <form>
-
-            <label><b>Full Name: </b></label>
-            <input type="text" ng-model="guest.fullName" placeholder="Enter Full Name" required>
-            <br>
-            <label><b>Number Plate: </b></label>
-            <input type="text" ng-model="guest.numberPlate" placeholder="Enter Number Plate" min="7" max="7" required>
-            <br>
-            <label><b>Email: </b></label>
-            <input type="email" ng-model="guest.email" placeholder="Enter Email" required>
-            <br>
-            <button type="button" class="btn btn-primary" ng-click="guestLogin()">Login</button>
-            <p class="loginErrorMessage">{{message}}</p>
-
-        </form>
-    </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
