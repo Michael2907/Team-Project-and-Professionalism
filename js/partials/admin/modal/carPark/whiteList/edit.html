@@ -1,0 +1,23 @@
+<form id="editWForm">
+    <input class="form-control" type="text" ng-model="user.id" placeholder="ID" readonly>
+    <br>
+    <input class="form-control" type="text" ng-model="user.name" placeholder="Name" required>
+    <br>
+    <input class="form-control" type="text" ng-model="user.numberPlate" placeholder="Number Plate" required>
+    <br>
+    <label>
+        <input type="radio" ng-model="user.userGroup" value="standard">
+        Standard
+    </label>
+    <label>
+        <input type="radio" ng-model="user.userGroup" value="admin">
+        Admin
+    </label>
+    <br>
+    <button type="button" class="btn btn-primary" ng-click="editWClose(true)">Submit</button>
+    <button type="button" class="btn btn-secondary" ng-click="editWClose(false)">Cancel</button>
+    <p class="editErrorMessage">{{message}}</p>
+
+</form>
+
+{{user.userGroup}}
