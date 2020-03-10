@@ -21,15 +21,15 @@ assignmentApp.
 			function ($q, $http) {     // the parameters must be in the same order as the dependencies
 
 
-				var urlBase = '/eam-Project-and-Professionalism/Team-Project-and-Professionalism-Front-end/api/';
+				var urlBase = 'http://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api';
 
-				this.adminLogin = function (admin) {
+				this.login = function (admin) {
 					let adminJSON = { "username": admin.username, "password": admin.password };
 
 
 					var defer = $q.defer(),             // The promise
 						data = {                        // the data to be passed to the url
-							action: 'adminLogin',
+							action: '/authenticate',
 						};
 
 					/**
@@ -55,14 +55,13 @@ assignmentApp.
 
 				};
 
-
-				this.guestLogin = function (guest) {
-					let guestJSON = { "fullName": guest.fullName, "numberPlate": guest.numberPlate, "email": guest.email };
+				this.createUser = function (user) {
+					let userJSON = { "username": user.username, "password": user.password };
 
 
 					var defer = $q.defer(),             // The promise
 						data = {                        // the data to be passed to the url
-							action: 'guestLogin',
+							action: '/initialiseUser',
 						};
 
 					/**
@@ -72,7 +71,7 @@ assignmentApp.
 					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
 					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
 					 */
-					$http.post(urlBase + data.action, guestJSON, { cache: true }).                          // notice the dot to start the chain to success()
+					$http.post(urlBase + data.action, userJSON, { cache: true }).                          // notice the dot to start the chain to success()
 						success(function (response) {
 							defer.resolve({
 								data: response,         // create data property with value from response
@@ -87,8 +86,6 @@ assignmentApp.
 					return defer.promise;
 
 				};
-
-
 
 			}
 		]

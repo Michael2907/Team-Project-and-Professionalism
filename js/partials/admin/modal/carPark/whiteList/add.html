@@ -1,0 +1,19 @@
+<form id="addWForm">
+    <input class="form-control" type="text" ng-model="newUser.name" placeholder="Name" required>
+    <br>
+    <input class="form-control" type="text" ng-model="newUser.numberPlate" placeholder="Number Plate" required>
+    <br>
+    <label>
+        <input type="radio" ng-model="user.userGroup" value="standard">
+        standard
+    </label>
+    <label>
+        <input type="radio" ng-model="user.userGroup" value="admin">
+        admin
+    </label>
+    <br>
+    <button type="button" class="btn btn-primary" ng-click="addWClose(true)">Submit</button>
+    <button type="button" class="btn btn-secondary" ng-click="addWClose(false)">Cancel</button>
+    <p class="editErrorMessage">{{message}}</p>
+
+</form>
