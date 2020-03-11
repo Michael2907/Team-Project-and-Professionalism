@@ -1,7 +1,15 @@
 <form id="addWForm">
-    <input class="form-control" type="text" ng-model="newUser.name" placeholder="Name" required>
+    <input class="form-control" type="text" ng-model="newUser.username" placeholder="Name" required>
+    <span ng-show="addWForm.username.$error.required">Username is required.</span>
+
     <br>
     <input class="form-control" type="text" ng-model="newUser.numberPlate" placeholder="Number Plate" required>
+    <span ng-show="addWForm.numberPlate.$error.required">Number Plate is required.</span>
+
+    <br>
+    <input class="form-control" type="text" ng-model="newUser.email" placeholder="Email" required>
+    <span ng-show="addWForm.email.$error.required">Email is required.</span>
+
     <br>
     <label>
         <input type="radio" ng-model="user.userGroup" value="standard">
@@ -12,8 +20,7 @@
         admin
     </label>
     <br>
-    <button type="button" class="btn btn-primary" ng-click="addWClose(true)">Submit</button>
+    <button type="button" class="btn btn-primary" ng-click="addWClose(true)" ng-disabled="addWForm.$invalid">Submit</button>
     <button type="button" class="btn btn-secondary" ng-click="addWClose(false)">Cancel</button>
-    <p class="editErrorMessage">{{message}}</p>
 
 </form>

@@ -1,5 +1,7 @@
-<form id="adBdForm">
+<form id="addBForm">
         <input class="form-control" type="text" ng-model="newBannedVehicle.numberPlate" placeholder="Number Plate" required>
+        <br>
+        <input class="form-control" type="text" ng-model="newBannedVehicle.description" placeholder="Description" required>
         <br>
         <button type="button" class="btn btn-primary" ng-click="addBClose(true)">Submit</button>
         <button type="button" class="btn btn-secondary" ng-click="addBClose(false)">Cancel</button>

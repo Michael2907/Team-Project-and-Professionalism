@@ -1,8 +1,8 @@
 
 <form id="editBForm">
-        <input class="form-control" type="text" ng-model="bannedVehicle.id" placeholder="ID" readonly>
-        <br>
         <input class="form-control" type="text" ng-model="bannedVehicle.numberPlate" placeholder="Number Plate">
+        <br>
+        <input class="form-control" type="text" ng-model="bannedVehicle.description" placeholder="Description">
         <br>
         <button type="button" class="btn btn-primary" ng-click="editBClose(true)">Submit</button>
         <button type="button" class="btn btn-secondary" ng-click="editBClose(false)">Cancel</button>

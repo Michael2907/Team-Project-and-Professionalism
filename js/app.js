@@ -29,6 +29,10 @@ assignmentApp.
             templateUrl: 'js/partials/reporting.html',
             controller: 'ReportingController'
           }).
+          when('/guest-booking', {
+            templateUrl: 'js/partials/guestBooking.html',
+            controller: 'guestBookingController'
+          }).
           when('/', {
             templateUrl: 'js/partials/landing.html',
             controller: 'IndexController'
