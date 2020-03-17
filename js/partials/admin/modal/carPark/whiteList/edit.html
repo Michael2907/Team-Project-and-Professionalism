@@ -1,23 +1,31 @@
-<form id="editWForm">
-    <input class="form-control" type="text" ng-model="user.id" placeholder="ID" readonly>
+<form name="editWForm">
+    <input class="form-control" type="text" name="username" ng-model="user.username" placeholder="Name" required>
+    <span ng-show="editWForm.username.$dirty && editWForm.username.$error.required">Username is required.</span>
+
     <br>
-    <input class="form-control" type="text" ng-model="user.name" placeholder="Name" required>
+    <input class="form-control" type="text" name="numberPlate" ng-model="user.numberPlate" placeholder="Number Plate"
+        required>
+    <span ng-show="editWForm.numberPlate.$dirty && editWForm.numberPlate.$error.required">Number Plate is
+        required.</span>
+
     <br>
-    <input class="form-control" type="text" ng-model="user.numberPlate" placeholder="Number Plate" required>
+    <input class="form-control" type="text" name="email" ng-model="user.email" placeholder="Email" required>
+    <span ng-show="editWForm.email.$dirty && editWForm.email.$error.required">Email is required.</span>
+    <span ng-show="editWForm.email.$dirty && editWForm.email.$error.email">Invalid email address.</span>
+
     <br>
+
     <label>
-        <input type="radio" ng-model="user.userGroup" value="standard">
+        <input type="radio" ng-model="user.userGroup" value="2">
         Standard
     </label>
     <label>
-        <input type="radio" ng-model="user.userGroup" value="admin">
+        <input type="radio" ng-model="user.userGroup" value="1">
         Admin
     </label>
     <br>
-    <button type="button" class="btn btn-primary" ng-click="editWClose(true)">Submit</button>
+    <button type="button" class="btn btn-primary" ng-click="editWClose(true)"
+        ng-disabled="editWForm.$invalid">Submit</button>
     <button type="button" class="btn btn-secondary" ng-click="editWClose(false)">Cancel</button>
-    <p class="editErrorMessage">{{message}}</p>
 
 </form>
-
-{{user.userGroup}}

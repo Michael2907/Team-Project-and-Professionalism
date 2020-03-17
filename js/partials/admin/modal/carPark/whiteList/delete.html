@@ -1,6 +1,10 @@
-<form id="deleteWForm">
+<form name="deleteWForm">
 
-    <p>Are you sure you want to delete : {{user.name}}</p>
-    <button ng-click="deleteWClose(true)">Yes</button>
-    <button ng-click="deleteWClose(false)">No</button>
+    <p>Are you sure you want to delete : {{user.username}}</p>
+
+    <br>
+
+    <button type="button" class="btn btn-primary" ng-click="deleteWClose(true)"
+        ng-disabled="deleteWForm.$invalid">Yes</button>
+    <button type="button" class="btn btn-secondary" ng-click="deleteWClose(false)">No</button>
 </form>

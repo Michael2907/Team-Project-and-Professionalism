@@ -1,12 +1,18 @@
 <div class="container">
 
     <section>
-        <h2>Current Bookings</h2>
+        <h1 class="text-center"><span class="glyphicon">&#xe032;</span> Current Bookings</h1>
+        
+        <p> <span class="glyphicon">&#xe086;</span>
+            To Edit/Delete, select a row and press the corresponding button</p>
 
         <div id="currentBookings" class="ag-theme-balham table"></div>
-        <button id="addBtnG" class="btn btn-success" ng-click="addG()">Add</button>
-        <button id="editBtnG" class="btn btn-secondary" ng-click="editG()" disabled>Edit</button>
-        <button id="deleteBtnG" class="btn btn-danger" ng-click="deleteG()" disabled>Delete</button>
+        <button id="addBtnG" class="btn btn-success" ng-click="addG()"><span
+                class="glyphicon icon">&#x2b;</span></button>
+        <button id="editBtnG" class="btn btn-secondary" ng-click="editG()" disabled><span
+                class="glyphicon icon">&#x270f;</span></button>
+        <button id="deleteBtnG" class="btn btn-danger" ng-click="deleteG()" disabled><span
+                class="glyphicon icon">&#xe020;</span></button>
 
         <div id="addModalG" class="modal">
             <div class="modal-content">

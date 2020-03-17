@@ -1,6 +1,9 @@
-<form id="deleteBForm">
+<form name="deleteBForm">
+    <h3>Edit Blacklisted Vehicle</h3>
 
-<p>Are you sure you want to delete : {{bannedVehicle.numberPlate}}</p>
-<button ng-click="deleteBClose(true)">Yes</button>
-<button ng-click="deleteBClose(false)">No</button>
+    <p>Are you sure you want to delete : {{bannedVehicle.numberPlate}}</p>
+
+    <button type="button" class="btn btn-primary" ng-click="deleteBClose(true)"
+    ng-disabled="deleteBForm.$invalid">Yes</button>
+<button type="button" class="btn btn-secondary" ng-click="deleteBClose(false)">No</button>
 </form>

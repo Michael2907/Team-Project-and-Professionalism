@@ -9,22 +9,20 @@ assignmentApp.
       'applicationData',
       '$location',
       function ($scope, dataService) {
-
-
-
         // White List
 
         var columnDefsW = [
-          { headerName: "ID", field: "userId", sortable: true, filter: true },
-          { headerName: "Name", field: "username", sortable: true, filter: true },
-          { headerName: "Number Plate", field: "numberPlate", sortable: true, filter: true },
-          { headerName: "Email", field: "email", sortable: true, filter: true },
-          { headerName: "User Group", field: "userGroup", sortable: true, filter: true },
+          { headerName: "ID", field: "userId", sortable: true, filter: true, resizable: true },
+          { headerName: "Name", field: "username", sortable: true, filter: true, resizable: true },
+          { headerName: "Number Plate", field: "numberPlate", sortable: true, filter: true, resizable: true },
+          { headerName: "Email", field: "email", sortable: true, filter: true, resizable: true },
+          { headerName: "User Group", field: "userGroup", sortable: true, filter: true, resizable: true },
         ];
+
         var rowDataW = [];
         // var rowDataW = [
-        //   { id: 1, name: "Michael Clayton", numberPlate: "QQ11 WER", userGroup: "admin" },
-        //   { id: 2, name: "Jordan Marshall", numberPlate: "WW22 ASD", userGroup: "standard" },
+        //   { userId: 1, username: "Michael Clayton", numberPlate: "QQ11 WER", email:"asdadas@Asdasdsa" , userGroup: "admin" },
+        //   { userId: 2, username: "Jordan Marshall", numberPlate: "WW22 ASD", email:"asdadas@Asdasdsa", userGroup: "standard" },
         // ];
         var gridOptionsW = {
           columnDefs: columnDefsW,
@@ -38,11 +36,18 @@ assignmentApp.
         var eGridDivW = document.querySelector('#whiteListGrid');
         new agGrid.Grid(eGridDivW, gridOptionsW);
 
+        var allColumnIdsW = [];
+        gridOptionsW.columnApi.getAllColumns().forEach(function(column) {
+          allColumnIdsW.push(column.colId);
+        });
+        gridOptionsW.columnApi.autoSizeColumns(allColumnIdsW, false);
+
+
         $scope.newUser = {
-          userGroup: "standard"
+          userGroup: "1"
         }
         $scope.user = {
-          userGroup: "standard"
+          userGroup: "1"
         }
 
         function onSelectionChangedW() {
@@ -50,6 +55,8 @@ assignmentApp.
           $scope.user = selectedRows[0];
           document.getElementById("editBtnW").disabled = false;
           document.getElementById("deleteBtnW").disabled = false;
+          document.getElementById("suspiciousBtn").disabled = false;
+
 
           document.getElementById("editBtnB").disabled = true;
           document.getElementById("deleteBtnB").disabled = true;
@@ -58,6 +65,7 @@ assignmentApp.
         var addModalW = document.getElementById("addModalW");
         var editModalW = document.getElementById("editModalW");
         var deleteModalW = document.getElementById("deleteModalW");
+        var suspiciousModal = document.getElementById("suspiciousModal");
 
 
         $scope.addW = function () {
@@ -66,6 +74,24 @@ assignmentApp.
         $scope.addWClose = function (response) {
           if (response) {
             console.log($scope.newUser)
+            $scope.newUser.password = null;
+            $scope.newUser.userGroup= parseInt($scope.newUser.userGroup);
+            dataService.addWhiteListVehicle($scope.newUser).then(
+              function (response) {
+                console.log(response)
+                getWhiteList();
+                
+              },
+              function (err) {
+                $scope.status = 'Unable to load data ' + err;
+              },
+              function (notify) {
+                console.log(notify);
+              }
+            );
+          }
+          $scope.newUser = {
+            userGroup: "1"
           }
           addModalW.style.display = "none";
         }
@@ -77,6 +103,20 @@ assignmentApp.
         $scope.editWClose = function (response) {
           if (response) {
             console.log($scope.user)
+            $scope.user.userGroup= parseInt($scope.user.userGroup);
+            dataService.editWhiteListVehicle($scope.user).then(
+              function (response) {
+                console.log(response)
+                getWhiteList();
+                
+              },
+              function (err) {
+                $scope.status = 'Unable to load data ' + err;
+              },
+              function (notify) {
+                console.log(notify);
+              }
+            );
           }
           editModalW.style.display = "none";
         }
@@ -88,7 +128,19 @@ assignmentApp.
         $scope.deleteWClose = function (response) {
           if (response) {
             console.log("do something")
-
+            dataService.deleteWhiteListVehicle($scope.user.userId).then(
+              function (response) {
+                console.log(response)
+                getWhiteList();
+                
+              },
+              function (err) {
+                $scope.status = 'Unable to load data ' + err;
+              },
+              function (notify) {
+                console.log(notify);
+              }
+            );
           }
           deleteModalW.style.display = "none";
         }
@@ -96,6 +148,7 @@ assignmentApp.
         var getWhiteList = function () {
           dataService.getWhiteList().then(
             function (response) {
+              console.log(response.data)
               gridOptionsW.api.setRowData(response.data)
             },
             function (err) {
@@ -108,12 +161,35 @@ assignmentApp.
         };
         getWhiteList();
 
-        // Black List
+
+
+        $scope.suspicious = function () {
+          suspiciousModal.style.display = "block";
+        };
+        $scope.suspiciousClose = function (response) {
+          if (response) {
+            dataService.checkSuspiciousVehicle($scope.user.numberPlate).then(
+              function (response) {
+                console.log(response)
+               
+              },
+              function (err) {
+                $scope.status = 'Unable to load data ' + err;
+              },
+              function (notify) {
+                console.log(notify);
+              }
+            );
+          }
+          suspiciousModal.style.display = "none";
+        }
+
+        /////////////////////////    Black List     ///////////////////////////////
 
         var columnDefsB = [
           // { headerName: "ID", field: "id", sortable: true, filter: true },
-          { headerName: "Number Plate", field: "numberPlate", sortable: true, filter: true },
-          { headerName: "Description", field: "description", sortable: true, filter: true },
+          { headerName: "Number Plate", field: "numberPlate", sortable: true, filter: true, resizable: true },
+          { headerName: "Description", field: "description", sortable: true, filter: true, resizable: true },
         ];
 
         var rowDataB = []
@@ -135,6 +211,12 @@ assignmentApp.
         var eGridDivB = document.querySelector('#blackListGrid');
         new agGrid.Grid(eGridDivB, gridOptionsB);
 
+        var allColumnIdsB = [];
+        gridOptionsB.columnApi.getAllColumns().forEach(function(column) {
+            allColumnIdsB.push(column.colId);
+        });
+        gridOptionsB.columnApi.autoSizeColumns(allColumnIdsB, false);
+
         $scope.newBannedVehicle = {}
         $scope.bannedVehicle = {}
 
@@ -146,6 +228,7 @@ assignmentApp.
 
           document.getElementById("editBtnW").disabled = true;
           document.getElementById("deleteBtnW").disabled = true;
+          document.getElementById("suspiciousBtn").disabled = true;
         }
 
         var addModalB = document.getElementById("addModalB");
@@ -159,7 +242,24 @@ assignmentApp.
         $scope.addBClose = function (response) {
           if (response) {
             console.log($scope.newBannedVehicle)
+
+            dataService.addBlackListVehicle($scope.newBannedVehicle).then(
+              function (response) {
+                console.log(response)
+                getBlackList();
+                
+              },
+              function (err) {
+                $scope.status = 'Unable to load data ' + err;
+              },
+              function (notify) {
+                console.log(notify);
+              }
+            );
+
           }
+          $scope.newBannedVehicle = {}
+
           addModalB.style.display = "none";
         }
 
@@ -171,7 +271,6 @@ assignmentApp.
             console.log($scope.bannedVehicle)
             dataService.editBlackListVehicle($scope.bannedVehicle).then(
               function (response) {
-                // TO DO: NOT UPDATING TABLE, TAKES TO LONG TO UPDATE????
                 getBlackList();
               },
               function (err) {
@@ -191,8 +290,17 @@ assignmentApp.
         };
         $scope.deleteBClose = function (response) {
           if (response) {
-            console.log("do something")
-
+            dataService.deleteBlackListVehicle($scope.bannedVehicle.numberPlate).then(
+              function (response) {
+                getBlackList();
+              },
+              function (err) {
+                $scope.status = 'Unable to load data ' + err;
+              },
+              function (notify) {
+                console.log(notify);
+              }
+            );
           }
           deleteModalB.style.display = "none";
         }

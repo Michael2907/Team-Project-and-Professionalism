@@ -9,7 +9,6 @@ assignmentApp.
 			'$location',
 			function ($scope, dataService, applicationData, $location) {
 
-
 			}
 		]
 	)
