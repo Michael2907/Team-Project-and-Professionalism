@@ -3,7 +3,7 @@
     <span ng-show="addWForm.username.$dirty && addWForm.username.$error.required">Username is required.</span>
 
     <br>
-    <input class="form-control" type="text" name="numberPlate" ng-model="newUser.numberPlate" placeholder="Number Plate"
+    <input class="form-control" type="text" name="numberPlate" ng-model="newUser.numberPlate" placeholder="Number Plate" minlength="7" maxlength="7"
         required>
     <span ng-show="addWForm.numberPlate.$dirty && addWForm.numberPlate.$error.required">Number Plate is required.</span>
 

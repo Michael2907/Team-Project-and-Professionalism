@@ -1,7 +1,7 @@
 <form name="addBForm">
     <h3>Add Blacklisted Vehicle</h3>
     <input class="form-control" type="text" name="numberPlate" ng-model="newBannedVehicle.numberPlate"
-        placeholder="Number Plate" required>
+        placeholder="Number Plate" minlength="7" maxlength="7" required>
     <span ng-show="addBForm.numberPlate.$dirty && addBForm.numberPlate.$error.required">Number Plate is required.</span>
 
     <br>

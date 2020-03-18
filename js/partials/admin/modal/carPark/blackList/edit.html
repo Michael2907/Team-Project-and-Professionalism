@@ -1,7 +1,7 @@
 <form name="editBForm">
     <h3>Edit Blacklisted Vehicle</h3>
     <input class="form-control" type="text" name="numberPlate" ng-model="bannedVehicle.numberPlate"
-        placeholder="Number Plate" readonly>
+        placeholder="Number Plate" minlength="7" maxlength="7" readonly>
     <span ng-show="editBForm.numberPlate.$dirty && editBForm.numberPlate.$error.required">Number Plate is
         required.</span>
 

@@ -8,21 +8,33 @@ assignmentApp.
 			'dataService',
 			'applicationData',
 			'$location',
-			function ($scope, dataService, applicationData, $location) {
+			'authFact',
+			function ($scope, dataService, applicationData, $location, authFact) {
 
 				$scope.login = {};
-
 				$scope.reset = {};
-
+				$scope.message = "";
 
 				$scope.login = function () {
 					// Show
 					dataService.login($scope.login).then(
 						function (response) {
-							console.log(response);
-							$scope.login = {};
-							$scope.jwt = response
-							applicationData.publishInfo('jwt', $scope.jwt);
+
+							if(response.status != 401){
+								$scope.message = "";
+								console.log(response);
+								authFact.setAccessToken(response.data.token)
+								// authFact.setUserGroup(1)
+
+								// change to -  response.data.userGroup
+								applicationData.publishInfo('userGroup', 1);
+								$scope.login = {};
+								$location.path("/");
+							} else {
+								$scope.message = response.message
+							}
+
+
 						},
 						function (err) {
 							$scope.status = 'Unable to load data ' + err;
@@ -34,8 +46,8 @@ assignmentApp.
 				};
 
 
-				// $scope.$on('systemInfo_jwt', function (event, response) {
-				// 	$scope.jwt = response;
+				// $scope.$on('systemInfo_token', function (event, response) {
+				// 	$scope.token = response;
 				// })
 
 
