@@ -1,0 +1,7 @@
+<nav class="nav">
+    <a class="nav-link active" href="#!/">Home <span class="glyphicon">&#xe021;</span></a>
+    <a class="nav-link" href="#!/admin" ng-if="userGroup == 1">Admin <span class="glyphicon">&#xe008;</span></a>
+    <a class="nav-link" href="#!/reports" ng-if="userGroup == 1">Reports <span class="glyphicon">&#xe210;</span></a>
+    <a class="nav-link" href="#!/guest-booking">Book Guest <span class="glyphicon">&#xe032;</span></a>
+    <a class="nav-link" href ng-click="logout()">Logout <span class="glyphicon">&#xe163;</span></a>
+</nav>

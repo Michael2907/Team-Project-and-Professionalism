@@ -3,16 +3,38 @@
 	<div class="container d-flex align-items-center">
 		<div class="col ">
 			<div class="row d-flex justify-content-center">
-					<form id="loginForm">
-						<input class="form-control"  type="text" ng-model="user.username" placeholder="Enter Username" required>
-						<br>
-						<input class="form-control"  type="password" ng-model="user.password" placeholder="Enter Password" required>
-						<br>
-						<button type="button" class="btn btn-primary" ng-click="login()">Login</button>
-						<p class="loginErrorMessage">{{message}}</p>
-					</form>
+				<form name="loginForm">
+					<input class="form-control" name="username" type="text" ng-model="login.username"
+						placeholder="Enter Username" required>
+					<span ng-show="loginForm.username.$dirty && loginForm.username.$error.required">Username is
+						required.</span>
+
+					<br>
+
+					<div class="input-group">
+						<input type="{{inputType}}" name="password" class="form-control" ng-model="login.password"
+							placeholder="Enter Password" required />
+						<span class="input-group-addon" ng-click="showPassword()" style="cursor:pointer">
+							<span class="{{showHideClass}}"></span>
+						</span>
+					</div>
+					<span ng-show="loginForm.password.$dirty && loginForm.password.$error.required">Password is
+						required.</span>
+					<br>
+					<button style="float: right" type="button" class="btn btn-secondary" ng-click="resetPassword()">Reset
+						Password <span class="glyphicon">&#xe031;</span></button>
+					<button type="button" class="btn btn-primary" ng-click="login()"
+						ng-disabled="loginForm.$invalid">Login <span class="glyphicon">&#xe161;</span></button>
+					<p class="loginErrorMessage">{{message}}</p>
+				</form>
+
+				<div id="resetPasswordModal" class="modal">
+					<div class="modal-content">
+						<article data-ng-include="'js/partials/login/modal/resetPassword.html'"></article>
+					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </section>

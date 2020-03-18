@@ -2,13 +2,8 @@
 
     <h2>Book Guest</h2>
 
-    <input class="form-control" type="text" name="firstName" ng-model="guest.firstName" placeholder="First Name"
-        required>
-    <span ng-show="editGuestBooking.firstName.$error.required">First Name is required.</span>
-
-    <br>
-    <input class="form-control" type="text" name="surname" ng-model="guest.surname" placeholder="Surname" required>
-    <span ng-show="editGuestBooking.surname.$error.required">Surname is required.</span>
+    <input class="form-control" type="text" name="username" ng-model="guest.username" placeholder="Name" required>
+    <span ng-show="editGuestBooking.username.$dirty && editGuestBooking.username.$error.required">Username is required.</span>
 
     <br>
     <input class="form-control" type="email" name="email" ng-model="guest.email" placeholder="Email Address" required>
@@ -17,7 +12,7 @@
 
     <br>
     <!-- min="7" max="7" -->
-    <input class="form-control" type="text" name="numberPlate" ng-model="guest.numberPlate" placeholder="Number Plate"
+    <input class="form-control" type="text" name="numberPlate" ng-model="guest.numberPlate" placeholder="Number Plate" minlength="7" maxlength="7"
         required>
     <span ng-show="editGuestBooking.numberPlate.$error.required">Number Plate is required.</span>
 

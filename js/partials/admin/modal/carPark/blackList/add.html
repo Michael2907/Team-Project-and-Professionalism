@@ -1,11 +1,20 @@
-<form id="addBForm">
-        <input class="form-control" type="text" ng-model="newBannedVehicle.numberPlate" placeholder="Number Plate" required>
-        <br>
-        <input class="form-control" type="text" ng-model="newBannedVehicle.description" placeholder="Description" required>
-        <br>
-        <button type="button" class="btn btn-primary" ng-click="addBClose(true)">Submit</button>
-        <button type="button" class="btn btn-secondary" ng-click="addBClose(false)">Cancel</button>
-        <p class="editErrorMessage">{{message}}</p>
-    
-    </form>
-    
+<form name="addBForm">
+    <h3>Add Blacklisted Vehicle</h3>
+    <input class="form-control" type="text" name="numberPlate" ng-model="newBannedVehicle.numberPlate"
+        placeholder="Number Plate" minlength="7" maxlength="7" required>
+    <span ng-show="addBForm.numberPlate.$dirty && addBForm.numberPlate.$error.required">Number Plate is required.</span>
+
+    <br>
+
+    <input class="form-control" type="text" name="description" ng-model="newBannedVehicle.description"
+        placeholder="Description" required>
+    <span ng-show="addBForm.description.$dirty && addBForm.description.$error.required">Description is required.</span>
+
+    <br>
+
+    <button type="button" class="btn btn-primary" ng-click="addBClose(true)"
+        ng-disabled="addBForm.$invalid">Submit</button>
+    <button type="button" class="btn btn-secondary" ng-click="addBClose(false)">Cancel</button>
+    <p class="editErrorMessage">{{message}}</p>
+
+</form>

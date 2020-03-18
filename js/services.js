@@ -1,6 +1,6 @@
 
 "use strict";
-/** Service to return the data */
+// Service to return the data
 
 assignmentApp.
 	service('applicationData', function ($rootScope) {
@@ -29,86 +29,65 @@ assignmentApp.
 					let adminJSON = { "username": admin.username, "password": admin.password };
 
 
-					var defer = $q.defer(),             // The promise
-						data = {                        // the data to be passed to the url
+					var defer = $q.defer(),
+						data = {
 							action: 'authenticate',
 						};
 
-					/**
-					 * make an ajax get call 
-					 * chain calls to .success and .error which will resolve or reject the promise
-					 * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					 */
-					$http.post(urlBase + data.action, adminJSON, { cache: true }).                          // notice the dot to start the chain to success()
-						success(function (response) {
-							defer.resolve({
-								data: response,         // create data property with value from response
-							});
-						}).                                                 // another dot to chain to error()
-						error(function (err) {
-							defer.reject(err);
-						});
+					$http.post(urlBase + data.action, adminJSON, { cache: true }).
 
-					// the call to getCourses returns this promise which is fulfilled 
-					// by the .get method .success or .failure
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response.data,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.resolve(err.data);
+
+
+						});
 					return defer.promise;
 
 				};
 
-				this.createUser = function (user) {
-					let userJSON = { "username": user.username, "password": user.password };
+				// this.createUser = function (user) {
+				// 	let userJSON = { "username": user.username, "password": user.password };
 
 
-					var defer = $q.defer(),             // The promise
-						data = {                        // the data to be passed to the url
-							action: 'rinitialiseUser',
-						};
+				// 	var defer = $q.defer(),             
+				// 		data = {                        
+				// 			action: 'initialiseUser',
+				// 		};
 
-					/**
-					 * make an ajax get call 
-					 * chain calls to .success and .error which will resolve or reject the promise
-					 * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					 */
-					$http.post(urlBase + data.action, userJSON, { cache: true }).                          // notice the dot to start the chain to success()
-						success(function (response) {
-							defer.resolve({
-								data: response,         // create data property with value from response
-							});
-						}).                                                 // another dot to chain to error()
-						error(function (err) {
-							defer.reject(err);
-						});
+				// 	$http.post(urlBase + data.action, userJSON, { cache: true }).                          
 
-					// the call to getCourses returns this promise which is fulfilled 
-					// by the .get method .success or .failure
-					return defer.promise;
+				// 		then(function successCallback(response) {
+				// 			defer.resolve({
+				// 				data: response,         
+				// 			});
 
-				};
+				// 		}, function errorCallback(err) {
+
+				// 			defer.reject(err);
+				// 		});
+				// 	return defer.promise;
+
+				// };
 
 				////////////////////////////////	White List	 ////////////////////////////////
 
 
 				this.getWhiteList = function () {
 					var defer = $q.defer(),
-						data = {                        // the data to be passed to the url
+						data = {
 							action: 'user'
 						};
 
-					/**
-					 * make an ajax get call 
-					 * chain calls to .success and .error which will resolve or reject the promise
-					 * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					 */
-					$http.get(urlBase + data.action, { cache: true }).
+						$http.get(urlBase + data.action, { cache: false }).
 						then(function successCallback(response) {
 							defer.resolve({
-								data: response.data,         // create data property with value from response
+								data: response.data,
 							});
 
 						}, function errorCallback(err) {
@@ -118,37 +97,77 @@ assignmentApp.
 					return defer.promise;
 				}
 
-				this.editWhiteListUser = function (user) {
+				this.addWhiteListVehicle = function (whiteListVehicle) {
 
-					console.log(user)
-					// let userJSON = { "username": user.username, "password": user.password };
+					console.log(whiteListVehicle)
+
+					var defer = $q.defer(),
+						data = {
+							action: 'initialiseUser',
+						};
+
+					$http.post(urlBase + data.action, whiteListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.editWhiteListVehicle = function (whiteListVehicle) {
+
+					console.log(whiteListVehicle)
+
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
+
+						$http.put(urlBase + data.action, whiteListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.deleteWhiteListVehicle = function (whiteListVehicle) {
+
+					console.log(whiteListVehicle)
+					// let whiteListVehicleJSON = { "username": user.username, "password": user.password };
 
 
-					// var defer = $q.defer(),             // The promise
-					// 	data = {                        // the data to be passed to the url
-					// 		action: '/initialiseUser',
-					// 	};
+					var defer = $q.defer(),
+						data = {
+							action: '/user?userId=' + whiteListVehicle,
+						};
 
-					// /**
-					//  * make an ajax get call 
-					//  * chain calls to .success and .error which will resolve or reject the promise
-					//  * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					//  * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					//  * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					//  */
-					// $http.post(urlBase + data.action, userJSON, { cache: true }).                          // notice the dot to start the chain to success()
-					// 	success(function (response) {
-					// 		defer.resolve({
-					// 			data: response,         // create data property with value from response
-					// 		});
-					// 	}).                                                 // another dot to chain to error()
-					// 	error(function (err) {
-					// 		defer.reject(err);
-					// 	});
+						$http.delete(urlBase + data.action, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
 
-					// // the call to getCourses returns this promise which is fulfilled 
-					// // by the .get method .success or .failure
-					// return defer.promise;
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
 
 				};
 
@@ -156,21 +175,14 @@ assignmentApp.
 
 				this.getBlackList = function () {
 					var defer = $q.defer(),
-						data = {                        // the data to be passed to the url
+						data = {
 							action: 'blacklist'
 						};
 
-					/**
-					 * make an ajax get call 
-					 * chain calls to .success and .error which will resolve or reject the promise
-					 * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					 */
-					$http.get(urlBase + data.action, { cache: true }).
+					$http.get(urlBase + data.action, { cache: false }).
 						then(function successCallback(response) {
 							defer.resolve({
-								data: response.data,         // create data property with value from response
+								data: response.data,
 							});
 
 						}, function errorCallback(err) {
@@ -180,26 +192,19 @@ assignmentApp.
 					return defer.promise;
 				}
 
-				this.editBlackListVehicle = function (blackListVehicle) {
+				this.addBlackListVehicle = function (blackListVehicle) {
 
 					console.log(blackListVehicle)
 
-					var defer = $q.defer(),             // The promise
-						data = {                        // the data to be passed to the url
-							action: '/blacklist',
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist',
 						};
 
-					/**
-					 * make an ajax get call 
-					 * chain calls to .success and .error which will resolve or reject the promise
-					 * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					 */
-					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).                          // notice the dot to start the chain to success()
+					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).
 						then(function successCallback(response) {
 							defer.resolve({
-								data: response,         // create data property with value from response
+								data: response,
 							});
 
 						}, function errorCallback(err) {
@@ -207,8 +212,30 @@ assignmentApp.
 							defer.reject(err);
 						});
 
-					// the call to getCourses returns this promise which is fulfilled 
-					// by the .get method .success or .failure
+					return defer.promise;
+
+				};
+
+				this.editBlackListVehicle = function (blackListVehicle) {
+
+					console.log(blackListVehicle)
+
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist',
+						};
+
+					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
 					return defer.promise;
 
 				};
@@ -218,35 +245,176 @@ assignmentApp.
 					console.log(blackListVehicle)
 					// let blackListVehicleJSON = { "username": user.username, "password": user.password };
 
+					var defer = $q.defer(),
+						data = {
+							action: '/blacklist?numberPlate=' + blackListVehicle,
+						};
 
-					// var defer = $q.defer(),             // The promise
-					// 	data = {                        // the data to be passed to the url
-					// 		action: '/blacklist',
-					// 	};
+					$http.delete(urlBase + data.action, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
 
-					// /**
-					//  * make an ajax get call 
-					//  * chain calls to .success and .error which will resolve or reject the promise
-					//  * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					//  * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					//  * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					//  */
-					// $http.delete(urlBase + data.action, userJSON, { cache: true }).                          // notice the dot to start the chain to success()
-					// 	success(function (response) {
-					// 		defer.resolve({
-					// 			data: response,         // create data property with value from response
-					// 		});
-					// 	}).                                                 // another dot to chain to error()
-					// 	error(function (err) {
-					// 		defer.reject(err);
-					// 	});
+						}, function errorCallback(err) {
 
-					// // the call to getCourses returns this promise which is fulfilled 
-					// // by the .get method .success or .failure
-					// return defer.promise;
+							defer.reject(err);
+						});
+
+					return defer.promise;
 
 				};
 
+
+				////////////////////////////////	Guest List	 ////////////////////////////////
+
+				this.getGuestList = function () {
+					var defer = $q.defer(),
+						data = {
+							action: 'user/guests'
+						};
+
+					$http.get(urlBase + data.action, { cache: false }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response.data,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+					return defer.promise;
+				}
+
+				this.addGuestUser = function (guestUser) {
+
+					console.log(guestUser)
+
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
+
+					$http.put(urlBase + data.action, guestUser, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.editGuestUser = function (guestUser) {
+
+					console.log(guestUser)
+
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
+
+					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.deleteGuestUser = function (guestUser) {
+
+					console.log(guestUser)
+
+					var defer = $q.defer(),
+						data = {
+							action: '/user?userId=' + guestUser,
+						};
+
+					$http.delete(urlBase + data.action, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.checkSuspiciousVehicle = function (numberPlate) {
+					var defer = $q.defer(),
+						data = {
+							action: 'checkSuspiciousVehicle?numberPlate=' + numberPlate
+						};
+
+					$http.get(urlBase + data.action, { cache: false }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response.data,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+					return defer.promise;
+				}
+
 			}
 		]
-	);
+	).
+	factory('authFact', function () {
+		var authFact = {};
+		authFact.setAccessToken = function(token){
+			authFact.token = token;
+		}
+
+		authFact.getAccessToken = function(){
+		   return authFact.token;
+		}
+
+		authFact.setUserGroup = function(userGroup){
+			authFact.userGroup = userGroup;
+		}
+
+		authFact.getUserGroup = function(){
+		   return authFact.userGroup;
+		}
+
+		return authFact;
+
+	})
+	
+	
+	
+	// .
+	// factory('Auth', function () {
+	// 	var user;
+
+	// 	return {
+	// 		setUser: function (aUser) {
+	// 			user = aUser;
+	// 		},
+	// 		isLoggedIn: function () {
+	// 			return (user) ? user : false;
+	// 		}
+	// 	}
+	// })
