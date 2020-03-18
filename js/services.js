@@ -98,9 +98,6 @@ assignmentApp.
 				}
 
 				this.addWhiteListVehicle = function (whiteListVehicle) {
-
-					console.log(whiteListVehicle)
-
 					var defer = $q.defer(),
 						data = {
 							action: 'initialiseUser',
@@ -123,8 +120,6 @@ assignmentApp.
 
 				this.editWhiteListVehicle = function (whiteListVehicle) {
 
-					console.log(whiteListVehicle)
-
 					var defer = $q.defer(),
 						data = {
 							action: 'user',
@@ -146,10 +141,6 @@ assignmentApp.
 				};
 
 				this.deleteWhiteListVehicle = function (whiteListVehicle) {
-
-					console.log(whiteListVehicle)
-					// let whiteListVehicleJSON = { "username": user.username, "password": user.password };
-
 
 					var defer = $q.defer(),
 						data = {
@@ -193,9 +184,6 @@ assignmentApp.
 				}
 
 				this.addBlackListVehicle = function (blackListVehicle) {
-
-					console.log(blackListVehicle)
-
 					var defer = $q.defer(),
 						data = {
 							action: 'blacklist',
@@ -218,8 +206,6 @@ assignmentApp.
 
 				this.editBlackListVehicle = function (blackListVehicle) {
 
-					console.log(blackListVehicle)
-
 					var defer = $q.defer(),
 						data = {
 							action: 'blacklist',
@@ -241,9 +227,6 @@ assignmentApp.
 				};
 
 				this.deleteBlackListVehicle = function (blackListVehicle) {
-
-					console.log(blackListVehicle)
-					// let blackListVehicleJSON = { "username": user.username, "password": user.password };
 
 					var defer = $q.defer(),
 						data = {
@@ -289,8 +272,6 @@ assignmentApp.
 
 				this.addGuestUser = function (guestUser) {
 
-					console.log(guestUser)
-
 					var defer = $q.defer(),
 						data = {
 							action: 'user',
@@ -313,8 +294,6 @@ assignmentApp.
 
 				this.editGuestUser = function (guestUser) {
 
-					console.log(guestUser)
-
 					var defer = $q.defer(),
 						data = {
 							action: 'user',
@@ -336,8 +315,6 @@ assignmentApp.
 				};
 
 				this.deleteGuestUser = function (guestUser) {
-
-					console.log(guestUser)
 
 					var defer = $q.defer(),
 						data = {

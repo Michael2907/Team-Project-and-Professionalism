@@ -22,11 +22,9 @@ assignmentApp.
 
 							if(response.status != 401){
 								$scope.message = "";
-								console.log(response);
 								authFact.setAccessToken(response.data.token)
-								// authFact.setUserGroup(1)
 
-								// change to -  response.data.userGroup
+								// TO DO: change to -  response.data.userGroup
 								applicationData.publishInfo('userGroup', 1);
 								$scope.login = {};
 								$location.path("/");
@@ -75,10 +73,8 @@ assignmentApp.
 
 				$scope.resetPasswordClose = function(response){
 					if (response) {
-						console.log("do something")
 						dataService.deleteWhiteListVehicle($scope.login.loginId).then(
 						  function (response) {
-							console.log(response)
 							getWhiteList();
 							
 						  },
