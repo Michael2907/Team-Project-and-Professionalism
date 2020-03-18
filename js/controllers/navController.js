@@ -12,9 +12,11 @@ assignmentApp.
 
 				$scope.$on('systemInfo_userGroup', function (event, response) {
 					$scope.userGroup = response;
-                    console.log(response)
                 })
-                
+				
+				$scope.$on('$routeChangeStart', function (event, next, current) {
+					$scope.displayNav = next.$$route.controller
+				})
 
                 $scope.logout = function(){
                     applicationData.publishInfo('userGroup', null);

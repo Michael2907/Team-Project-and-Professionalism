@@ -62,15 +62,10 @@ assignmentApp.
         function onSelectionChangedG() {
           var selectedRows = gridOptionsG.api.getSelectedRows();
           $scope.guest = selectedRows[0];
-          console.log($scope.guest)
 
           // TO DO - depending on how backend gives the dates
-          console.log($scope.guest.toDate)
-          console.log($scope.guest.fromDate)        
           var toDate = $scope.guest.toDate.split("-");
           var fromDate = $scope.guest.fromDate.split("-");
-          console.log(toDate)
-          console.log(fromDate)
           $scope.guest.toDate = new Date(toDate[2], toDate[1], toDate[0])
           $scope.guest.fromDate = new Date(fromDate[2], fromDate[1], fromDate[0])
 
@@ -89,7 +84,6 @@ assignmentApp.
         $scope.addGClose = function (response) {
           if (response) {
             $scope.newGuest.userGroup = 3;
-            console.log($scope.newGuest)
 
             dataService.addGuestUser($scope.newGuest).then(
               function (response) {
@@ -112,7 +106,6 @@ assignmentApp.
 
         $scope.editGClose = function (response) {
           if (response) {
-            console.log($scope.guest)
             $scope.guest.userGroup = 3;
             dataService.editGuestUser($scope.guest).then(
               function (response) {
@@ -155,7 +148,6 @@ assignmentApp.
         var getGuestList = function () {
           dataService.getGuestList().then(
             function (response) {
-              console.log(response)
               gridOptionsG.api.setRowData(response.data)
             },
             function (err) {

@@ -73,12 +73,10 @@ assignmentApp.
         };
         $scope.addWClose = function (response) {
           if (response) {
-            console.log($scope.newUser)
             $scope.newUser.password = null;
             $scope.newUser.userGroup= parseInt($scope.newUser.userGroup);
             dataService.addWhiteListVehicle($scope.newUser).then(
               function (response) {
-                console.log(response)
                 getWhiteList();
                 
               },
@@ -102,11 +100,9 @@ assignmentApp.
         };
         $scope.editWClose = function (response) {
           if (response) {
-            console.log($scope.user)
             $scope.user.userGroup= parseInt($scope.user.userGroup);
             dataService.editWhiteListVehicle($scope.user).then(
               function (response) {
-                console.log(response)
                 getWhiteList();
                 
               },
@@ -127,10 +123,8 @@ assignmentApp.
         };
         $scope.deleteWClose = function (response) {
           if (response) {
-            console.log("do something")
             dataService.deleteWhiteListVehicle($scope.user.userId).then(
               function (response) {
-                console.log(response)
                 getWhiteList();
                 
               },
@@ -148,7 +142,6 @@ assignmentApp.
         var getWhiteList = function () {
           dataService.getWhiteList().then(
             function (response) {
-              console.log(response.data)
               gridOptionsW.api.setRowData(response.data)
             },
             function (err) {
@@ -170,7 +163,6 @@ assignmentApp.
           if (response) {
             dataService.checkSuspiciousVehicle($scope.user.numberPlate).then(
               function (response) {
-                console.log(response)
                
               },
               function (err) {
@@ -241,11 +233,8 @@ assignmentApp.
         };
         $scope.addBClose = function (response) {
           if (response) {
-            console.log($scope.newBannedVehicle)
-
             dataService.addBlackListVehicle($scope.newBannedVehicle).then(
               function (response) {
-                console.log(response)
                 getBlackList();
                 
               },
@@ -268,7 +257,6 @@ assignmentApp.
         };
         $scope.editBClose = function (response) {
           if (response) {
-            console.log($scope.bannedVehicle)
             dataService.editBlackListVehicle($scope.bannedVehicle).then(
               function (response) {
                 getBlackList();
@@ -308,7 +296,6 @@ assignmentApp.
         var getBlackList = function () {
           dataService.getBlackList().then(
             function (response) {
-              console.log(response)
               gridOptionsB.api.setRowData(response.data)
             },
             function (err) {
