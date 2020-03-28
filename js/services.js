@@ -1,6 +1,6 @@
-
 "use strict";
 // Service to return the data
+
 
 assignmentApp.
 	service('applicationData', function ($rootScope) {
@@ -336,6 +336,23 @@ assignmentApp.
 
 				};
 
+        this.getActivities = (startDate, endDate) => {
+          var defer = $q.defer(), // The promise
+            data = {
+              // the data to be passed to the url
+              action: "activity"
+            };
+
+          $http
+            .get(urlBase + data.action, { startDate, endDate })
+            .then(response => defer.resolve({ data: response }))
+            .catch(err => {
+              defer.reject(err);
+            });
+
+          return defer.promise;
+        };
+        
 				this.checkSuspiciousVehicle = function (numberPlate) {
 					var defer = $q.defer(),
 						data = {
@@ -395,3 +412,4 @@ assignmentApp.
 	// 		}
 	// 	}
 	// })
+
