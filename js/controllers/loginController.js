@@ -13,23 +13,29 @@ assignmentApp.
 
 				$scope.login = {};
 				$scope.reset = {};
+				$scope.errorMessage = "";
 				$scope.message = "";
 
 				$scope.login = function () {
 					// Show
 					dataService.login($scope.login).then(
 						function (response) {
-
+							// success
 							if(response.status != 401){
-								$scope.message = "";
-								authFact.setAccessToken(response.data.token)
-
-								// TO DO: change to -  response.data.userGroup
-								applicationData.publishInfo('userGroup', 1);
-								$scope.login = {};
-								$location.path("/");
+								if(response.data.user.initialised == false){ // first time user has logged on
+									resetPasswordModal.style.display = "block";
+									$scope.message = "This is the first time you are logging in. Please reset your password."
+								} else { // user already initialised
+									$scope.errorMessage = "";
+									$scope.message = "";
+									authFact.setAccessToken(response.data.jwtToken)
+									// TO DO: change to -  response.data.userGroup
+									applicationData.publishInfo('userGroup', 1);
+									$scope.login = {};
+									$location.path("/");
+								}
 							} else {
-								$scope.message = response.message
+								$scope.errorMessage = response.message
 							}
 
 
@@ -73,10 +79,11 @@ assignmentApp.
 
 				$scope.resetPasswordClose = function(response){
 					if (response) {
-						dataService.deleteWhiteListVehicle($scope.login.loginId).then(
+						dataService.changePassword($scope.reset).then(
 						  function (response) {
-							getWhiteList();
-							
+							if(response.data.status == 200){
+								$scope.errorMessage = "Please login with your updated password"
+							}							
 						  },
 						  function (err) {
 							$scope.status = 'Unable to load data ' + err;
@@ -86,6 +93,8 @@ assignmentApp.
 						  }
 						);
 					  }
+					  $scope.login.password = ""
+					  $scope.reset = {};
 					  resetPasswordModal.style.display = "none";
 				}
 

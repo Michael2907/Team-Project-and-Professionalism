@@ -17,14 +17,14 @@
     <span ng-show="editGuestBooking.numberPlate.$error.required">Number Plate is required.</span>
 
     <br>
-    <input class="form-control" type="date" name="fromDate" ng-model="guest.fromDate" placeholder="From Date" required>
-    <span ng-show="editGuestBooking.fromDate.$error.required">From Date is required.</span>
-    <span ng-show="editGuestBooking.fromDate.$error.date">Invalid date.</span>
+    <input class="form-control" type="date" name="startDateTime" ng-model="guest.startDateTime" placeholder="From Date" required>
+    <span ng-show="editGuestBooking.startDateTime.$error.required">From Date is required.</span>
+    <span ng-show="editGuestBooking.startDateTime.$error.date">Invalid date.</span>
 
     <br>
-    <input class="form-control" type="date" name="toDate" ng-model="guest.toDate" placeholder="To Date" required>
-    <span ng-show="editGuestBooking.toDate.$error.required">To Date is required.</span>
-    <span ng-show="editGuestBooking.toDate.$error.date">Invalid date.</span>
+    <input class="form-control" type="date" name="endDateTime" ng-model="guest.endDateTime" placeholder="To Date" required>
+    <span ng-show="editGuestBooking.endDateTime.$error.required">To Date is required.</span>
+    <span ng-show="editGuestBooking.endDateTime.$error.date">Invalid date.</span>
 
     <br>
 

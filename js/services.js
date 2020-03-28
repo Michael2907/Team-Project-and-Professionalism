@@ -25,8 +25,8 @@ assignmentApp.
 
 				////////////////////////////////	Login	 ////////////////////////////////
 
-				this.login = function (admin) {
-					let adminJSON = { "username": admin.username, "password": admin.password };
+				this.login = function (user) {
+					let userJSON = { "username": user.username, "password": user.password };
 
 
 					var defer = $q.defer(),
@@ -34,7 +34,7 @@ assignmentApp.
 							action: 'authenticate',
 						};
 
-					$http.post(urlBase + data.action, adminJSON, { cache: true }).
+					$http.post(urlBase + data.action, userJSON, { cache: true }).
 
 						then(function successCallback(response) {
 							defer.resolve({
@@ -51,6 +51,32 @@ assignmentApp.
 
 				};
 
+				
+				this.changePassword = function (user) {
+					let userJSON = { "username": user.username, "password": user.oldPassword };
+
+
+					var defer = $q.defer(),
+						data = {
+							action: 'user/changePassword?newPassword=' + user.newPassword,
+						};
+
+					$http.put(urlBase + data.action, userJSON, { cache: true }).
+
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.resolve(err.data);
+
+
+						});
+					return defer.promise;
+
+				};
 				// this.createUser = function (user) {
 				// 	let userJSON = { "username": user.username, "password": user.password };
 
@@ -118,7 +144,7 @@ assignmentApp.
 
 				};
 
-				this.editWhiteListVehicle = function (whiteListVehicle) {
+				this.updateWhiteListVehicle = function (whiteListVehicle) {
 
 					var defer = $q.defer(),
 						data = {
@@ -140,27 +166,27 @@ assignmentApp.
 
 				};
 
-				this.deleteWhiteListVehicle = function (whiteListVehicle) {
+				// this.deleteWhiteListVehicle = function (whiteListVehicle) {
 
-					var defer = $q.defer(),
-						data = {
-							action: '/user?userId=' + whiteListVehicle,
-						};
+				// 	var defer = $q.defer(),
+				// 		data = {
+				// 			action: 'user',
+				// 		};
 
-						$http.delete(urlBase + data.action, { cache: true }).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
+				// 		$http.put(urlBase + data.action, whiteListVehicle, { cache: true }).
+				// 		then(function successCallback(response) {
+				// 			defer.resolve({
+				// 				data: response,
+				// 			});
 
-						}, function errorCallback(err) {
+				// 		}, function errorCallback(err) {
 
-							defer.reject(err);
-						});
+				// 			defer.reject(err);
+				// 		});
 
-					return defer.promise;
+				// 	return defer.promise;
 
-				};
+				// };
 
 				////////////////////////////////	Black List	 ////////////////////////////////
 
@@ -230,7 +256,7 @@ assignmentApp.
 
 					var defer = $q.defer(),
 						data = {
-							action: '/blacklist?numberPlate=' + blackListVehicle,
+							action: 'blacklist?numberPlate=' + blackListVehicle,
 						};
 
 					$http.delete(urlBase + data.action, { cache: true }).
@@ -254,7 +280,7 @@ assignmentApp.
 				this.getGuestList = function () {
 					var defer = $q.defer(),
 						data = {
-							action: 'user/guests'
+							action: 'user'
 						};
 
 					$http.get(urlBase + data.action, { cache: false }).
@@ -274,10 +300,10 @@ assignmentApp.
 
 					var defer = $q.defer(),
 						data = {
-							action: 'user',
+							action: 'initialiseUser',
 						};
 
-					$http.put(urlBase + data.action, guestUser, { cache: true }).
+					$http.post(urlBase + data.action, guestUser, { cache: false }).
 						then(function successCallback(response) {
 							defer.resolve({
 								data: response,
@@ -292,14 +318,14 @@ assignmentApp.
 
 				};
 
-				this.editGuestUser = function (guestUser) {
+				this.updateGuestUser = function (guestUser) {
 
 					var defer = $q.defer(),
 						data = {
 							action: 'user',
 						};
 
-					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).
+					$http.put(urlBase + data.action, guestUser, { cache: false }).
 						then(function successCallback(response) {
 							defer.resolve({
 								data: response,
@@ -314,35 +340,40 @@ assignmentApp.
 
 				};
 
-				this.deleteGuestUser = function (guestUser) {
+				// this.deleteGuestUser = function (guestUser) {
 
-					var defer = $q.defer(),
-						data = {
-							action: '/user?userId=' + guestUser,
-						};
+				// 	var defer = $q.defer(),
+				// 		data = {
+				// 			action: 'user?userId=' + guestUser,
+				// 		};
 
-					$http.delete(urlBase + data.action, { cache: true }).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
+				// 	$http.delete(urlBase + data.action, { cache: true }).
+				// 		then(function successCallback(response) {
+				// 			defer.resolve({
+				// 				data: response,
+				// 			});
 
-						}, function errorCallback(err) {
+				// 		}, function errorCallback(err) {
 
-							defer.reject(err);
-						});
+				// 			defer.reject(err);
+				// 		});
 
-					return defer.promise;
+				// 	return defer.promise;
 
-				};
+				// };
 
+				// https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html#register-for-ves-api
 				this.checkSuspiciousVehicle = function (numberPlate) {
-					var defer = $q.defer(),
-						data = {
-							action: 'checkSuspiciousVehicle?numberPlate=' + numberPlate
-						};
+					let body = { "registrationNumber": numberPlate }
 
-					$http.get(urlBase + data.action, { cache: false }).
+					// name: x-api-key
+					// value: {supplied API key}
+					// body: {"registrationNumber": "ABC1234"}		
+
+					var defer = $q.defer(),
+						data = {};
+
+					$http.post("https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles", body, { cache: false }).
 						then(function successCallback(response) {
 							defer.resolve({
 								data: response.data,
@@ -379,19 +410,3 @@ assignmentApp.
 		return authFact;
 
 	})
-	
-	
-	
-	// .
-	// factory('Auth', function () {
-	// 	var user;
-
-	// 	return {
-	// 		setUser: function (aUser) {
-	// 			user = aUser;
-	// 		},
-	// 		isLoggedIn: function () {
-	// 			return (user) ? user : false;
-	// 		}
-	// 	}
-	// })
