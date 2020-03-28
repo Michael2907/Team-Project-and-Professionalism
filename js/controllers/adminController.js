@@ -146,7 +146,7 @@ assignmentApp.
         var getWhiteList = function () {
           dataService.getWhiteList().then(
             function (response) {
-             let filteredResponse = response.data.filter(user => user.deleted == false)
+             let filteredResponse = response.data.filter(user => user.deleted == false && user.userGroup != 3)
               gridOptionsW.api.setRowData(filteredResponse)
             },
             function (err) {

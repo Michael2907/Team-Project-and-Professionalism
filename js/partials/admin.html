@@ -5,20 +5,18 @@
 
         <section>
             <div class="whiteTable">
-                <label><span class="glyphicon">&#xe008;</span><b>Car Park Users</b></label>
+                <label><i style='font-size:16px' class='fas'>&#xf1b9;</i><b>Car Park Users</b></label>
 
-                <p> <span class="glyphicon">&#xe086;</span>
+                <p> <i style="font-size:16px" class="fa">&#xf05a;</i>
                     To Edit/Delete, select a row and press the corresponding button</p>
 
                 <div id="whiteListGrid" class="ag-theme-balham table"></div>
-                <button id="addBtnW" class="btn btn-success" ng-click="addW()"> <span
-                        class="glyphicon icon">&#x2b;</span></button>
-                <button id="editBtnW" class="btn btn-secondary" ng-click="editW()" disabled> <span
-                        class="glyphicon icon">&#x270f;</span></button>
-                <button id="deleteBtnW" class="btn btn-danger" ng-click="deleteW()" disabled><span
-                        class="glyphicon icon">&#xe020;</span></button>
-                <button id="suspiciousBtn" style="float: right" class="btn btn-warning" ng-click="suspicious()" disabled><span
-                    class="glyphicon icon">&#xe107;</span></button>
+                <button id="addBtnW" class="btn btn-success" ng-click="addW()"> <i style='font-size:16px' class='fas'>&#xf067;</i></button>
+                <button id="editBtnW" class="btn btn-secondary" ng-click="editW()" disabled> <i style='font-size:16px' class='fas'>&#xf303;</i></button>
+                <button id="deleteBtnW" class="btn btn-danger" ng-click="deleteW()" disabled><i style='font-size:16px' class='fas'>&#xf2ed;</i></button>
+                <button id="suspiciousBtn" style="float: right" class="btn btn-warning" ng-click="suspicious()"
+                    disabled> <i style='font-size:16px' class='fas'>&#xf21b;</i>
+                </button>
 
                 <div id="addModalW" class="modal">
                     <div class="modal-content">
@@ -40,7 +38,8 @@
 
                 <div id="suspiciousModal" class="modal">
                     <div class="modal-content">
-                        <article data-ng-include="'js/partials/admin/modal/carPark/whiteList/suspicious.html'"></article>
+                        <article data-ng-include="'js/partials/admin/modal/carPark/whiteList/suspicious.html'">
+                        </article>
                     </div>
                 </div>
 
@@ -49,18 +48,15 @@
             <hr>
 
             <div class="blackTable">
-                <label><span class="glyphicon">&#xe090;</span><b>Car Park Black List</b></label>
+                <label><i style='font-size:16px' class='fas'>&#xf5e1;</i><b>Car Park Black List</b></label>
 
-                <p> <span class="glyphicon">&#xe086;</span>
+                <p> <i style="font-size:16px" class="fa">&#xf05a;</i>
                     To Edit/Delete, select a row and press the corresponding button</p>
 
                 <div id="blackListGrid" class="ag-theme-balham table"></div>
-                <button id="addBtnB" class="btn btn-success" ng-click="addB()"><span
-                        class="glyphicon icon">&#x2b;</span></button>
-                <button id="editBtnB" class="btn btn-secondary" ng-click="editB()" disabled><span
-                        class="glyphicon icon">&#x270f;</span></button>
-                <button id="deleteBtnB" class="btn btn-danger" ng-click="deleteB()" disabled><span
-                        class="glyphicon icon">&#xe020;</span></button>
+                <button id="addBtnB" class="btn btn-success" ng-click="addB()"><i style='font-size:16px' class='fas'>&#xf067;</i></button>
+                <button id="editBtnB" class="btn btn-secondary" ng-click="editB()" disabled><i style='font-size:16px' class='fas'>&#xf303;</i></button>
+                <button id="deleteBtnB" class="btn btn-danger" ng-click="deleteB()" disabled><i style='font-size:16px' class='fas'>&#xf2ed;</i></button>
 
                 <div id="addModalB" class="modal">
                     <div class="modal-content">
