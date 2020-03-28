@@ -8,6 +8,8 @@
  */
 var assignmentApp = angular.module('AssignmentApp', [
   'ngRoute',   // the only dependency at this stage, for routing
+  'ui.bootstrap',
+  'tc-chartjs'
 ]);
 // note this fullstop where we chain the call to config
 assignmentApp.
@@ -32,6 +34,10 @@ assignmentApp.
           when('/', {
             templateUrl: 'js/partials/landing.html',
             controller: 'IndexController'
+          }).
+          when('/modalTest', {
+            templateUrl: 'js/partials/testModal.html',
+            controller: 'ModalDemoCtrl'
           }).
           otherwise({
             redirectTo: '/',
