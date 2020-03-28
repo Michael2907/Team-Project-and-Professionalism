@@ -6,39 +6,70 @@
  *                 and, in fact, an object to which we add all other components
  * @param {array} dependencies An array of dependencies, the names are passed as strings
  */
+
 var assignmentApp = angular.module("AssignmentApp", [
   "ngRoute", // the only dependency at this stage, for routing
   "ui.bootstrap",
   "chart.js"
 ]);
+
 // note this fullstop where we chain the call to config
-assignmentApp.config([
-  "$routeProvider", // built in variable which injects functionality, passed as a string
-  function($routeProvider) {
-    $routeProvider
-      // not working :(
-      .when("/admin", {
-        templateUrl: "js/partials/admin.html",
-        controller: "AdminController"
-      })
-      .when("/login", {
-        templateUrl: "js/partials/login.html",
-        controller: "LoginController"
-      })
-      .when("/reports", {
-        templateUrl: "js/partials/reporting.html",
-        controller: "ReportingController"
-      })
-      .when("/", {
-        templateUrl: "js/partials/landing.html",
-        controller: "IndexController"
-      })
-      .when("/modalTest", {
-        templateUrl: "js/partials/testModal.html",
-        controller: "ModalDemoCtrl"
-      })
-      .otherwise({
-        redirectTo: "/"
-      });
-  }
-]); // end of config method
+
+assignmentApp.
+  config(
+    [
+      '$routeProvider',     // built in variable which injects functionality, passed as a string
+      function ($routeProvider) {
+        $routeProvider.
+          when('/admin', {
+            templateUrl: 'js/partials/admin.html',
+            controller: 'AdminController',
+            authenticated: true,
+            adminOnly: true
+          }).
+          when('/login', {
+            templateUrl: 'js/partials/login.html',
+            controller: 'LoginController'
+          }).
+          when('/reports', {
+            templateUrl: 'js/partials/reporting.html',
+            controller: 'ReportingController',
+            authenticated: true,
+            adminOnly: true
+          }).
+          when('/guest-booking', {
+            templateUrl: 'js/partials/guestBooking.html',
+            controller: 'guestBookingController',
+            authenticated: true,
+            adminOnly: false
+          }).
+          when('/', {
+            templateUrl: 'js/partials/landing.html',
+            controller: 'IndexController',
+            authenticated: true,
+            adminOnly: false
+          }).
+          when('/modalTest', {
+            templateUrl: 'js/partials/testModal.html',
+            controller: 'ModalDemoCtrl'
+          }).
+          otherwise({
+            redirectTo: '/login',
+          });
+      }
+    ]
+  );
+
+// ref : https://www.youtube.com/watch?v=Q5iQk0OuDus
+
+assignmentApp.run(['$rootScope', '$location', 'authFact', function ($rootScope, $location, authFact) {
+  $rootScope.$on('$routeChangeStart', function (event, next, current) {
+
+    if (next.$$route.authenticated) {
+      var userAuth = authFact.getAccessToken();
+      if (!userAuth) {
+        $location.path('/login');
+      }
+    }
+  });
+}]);

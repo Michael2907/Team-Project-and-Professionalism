@@ -28,17 +28,11 @@
   </head>
 
   <body>
-    <div id="page">
-      <nav class="nav">
-        <a class="nav-link active" href="#!/">Home</a>
-        <a class="nav-link" href="#!/login">Login</a>
-        <a class="nav-link" href="#!/admin">Admin</a>
-        <a class="nav-link" href="#!/reports">Reports</a>
-      </nav>
+    
+    <article data-ng-controller="NavController" data-ng-include="'js/partials/nav.html'"></article>
 
-      <article data-ng-view></article>
-    </div>
-
+    <article data-ng-view></article>
+   
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-resource.js"></script>
@@ -51,6 +45,8 @@
     <script src="js/controllers/indexController.js"></script>
     <script src="js/controllers/loginController.js"></script>
     <script src="js/controllers/reportingController.js"></script>
+    <script src="js/controllers/navController.js"></script>
+    <script src="js/controllers/guestBookingController.js"></script>
     <!-- <script src="js/controllers/modalTestController.js"></script> -->
     <script src="js/controllers/busiestDayModalController.js"></script>
     <!-- <script src="js/controllers/currentlyParkedModalController.js"></script> -->
@@ -58,3 +54,4 @@
     <script src="js/services.js"></script>
   </body>
 </html>
+

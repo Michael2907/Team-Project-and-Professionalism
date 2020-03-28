@@ -1,0 +1,37 @@
+<form name="addGuestBooking">
+
+    <h2>Book Guest</h2>
+
+    <input class="form-control" type="text" name="username" ng-model="newGuest.username" placeholder="Name" required>
+    <span ng-show="addGuestBooking.username.$dirty && addGuestBooking.username.$error.required">Username is required.</span>
+
+    <br>
+    <input class="form-control" type="email" name="email" ng-model="newGuest.email" placeholder="Email Address"
+        required>
+    <span ng-show="addGuestBooking.email.$dirty && addGuestBooking.email.$error.required">Email is required.</span>
+    <span ng-show="addGuestBooking.email.$error.email">Invalid email address.</span>
+
+    <br>
+
+    <input class="form-control" type="text" name="numberPlate" ng-model="newGuest.numberPlate"
+        placeholder="Number Plate" minlength="7" maxlength="7" required>
+    <span ng-show="addGuestBooking.numberPlate.$dirty && addGuestBooking.numberPlate.$error.required">Number Plate is required.</span>
+
+    <br>
+    <input class="form-control" type="date" name="fromDate" ng-model="newGuest.fromDate" placeholder="From Date"
+        required>
+    <span ng-show="addGuestBooking.fromDate.$dirty && addGuestBooking.fromDate.$error.required">From Date is required.</span>
+    <span ng-show="addGuestBooking.fromDate.$error.date">Invalid date.</span>
+
+    <br>
+    <input class="form-control" type="date" name="toDate" ng-model="newGuest.toDate" placeholder="To Date" required>
+    <span ng-show="addGuestBooking.toDate.$dirty && addGuestBooking.toDate.$error.required">To Date is required.</span>
+    <span ng-show="addGuestBooking.toDate.$error.date">Invalid date.</span>
+
+    <br>
+
+    <button type="button" class="btn btn-primary" ng-click="addGClose(true)"
+        ng-disabled="addGuestBooking.$invalid">Submit</button>
+    <button type="button" class="btn btn-secondary" ng-click="addGClose(false)">Cancel</button>
+
+</form>
