@@ -1,0 +1,28 @@
+<form name="addWForm">
+    <input class="form-control" type="text" name="username" ng-model="newUser.username" placeholder="Name" required>
+    <span ng-show="addWForm.username.$dirty && addWForm.username.$error.required">Username is required.</span>
+
+    <br>
+    <input class="form-control" type="text" name="numberPlate" ng-model="newUser.numberPlate" placeholder="Number Plate" minlength="7" maxlength="7"
+        required>
+    <span ng-show="addWForm.numberPlate.$dirty && addWForm.numberPlate.$error.required">Number Plate is required.</span>
+
+    <br>
+    <input class="form-control" type="email" name="email" ng-model="newUser.email" placeholder="Email" required>
+    <span ng-show="addWForm.email.$dirty && addWForm.email.$error.required">Email is required.</span>
+    <span ng-show="addWForm.email.$error.email">Invalid email address.</span>
+
+    <br>
+    <label>
+        <input type="radio" ng-model="newUser.userGroup" value="2">
+        Standard
+    </label>
+    <label>
+        <input type="radio" ng-model="newUser.userGroup" value="1">
+        Admin
+    </label>
+    <br>
+    <button type="button" class="btn btn-primary" ng-click="addWClose(true)"
+        ng-disabled="addWForm.$invalid">Submit</button>
+    <button type="button" class="btn btn-secondary" ng-click="addWClose(false)">Cancel</button>
+</form>

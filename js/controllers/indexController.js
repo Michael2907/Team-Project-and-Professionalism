@@ -7,7 +7,8 @@ assignmentApp.
 			'dataService',
 			'applicationData',
 			'$location',
-			function ($scope, dataService, applicationData, $location) {
+			'authFact',
+			function ($scope, dataService, applicationData, $location, authFact) {
 
 
 			}

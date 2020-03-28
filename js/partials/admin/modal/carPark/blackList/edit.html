@@ -1,0 +1,22 @@
+<form name="editBForm">
+    <h3>Edit Blacklisted Vehicle</h3>
+    <input class="form-control" type="text" name="numberPlate" ng-model="bannedVehicle.numberPlate"
+        placeholder="Number Plate" minlength="7" maxlength="7" readonly>
+    <span ng-show="editBForm.numberPlate.$dirty && editBForm.numberPlate.$error.required">Number Plate is
+        required.</span>
+
+    <br>
+
+    <input class="form-control" type="text" name="description" ng-model="bannedVehicle.description"
+        placeholder="Description" required>
+    <span ng-show="editBForm.description.$dirty && editBForm.description.$error.required">Description is
+        required.</span>
+
+    <br>
+
+    <button type="button" class="btn btn-primary" ng-click="editBClose(true)"
+        ng-disabled="editBForm.$invalid">Submit</button>
+    <button type="button" class="btn btn-secondary" ng-click="editBClose(false)">Cancel</button>
+    <p class="editErrorMessage">{{message}}</p>
+
+</form>

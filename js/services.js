@@ -1,6 +1,6 @@
 
 "use strict";
-/** Service to return the data */
+// Service to return the data
 
 assignmentApp.
 	service('applicationData', function ($rootScope) {
@@ -21,75 +21,377 @@ assignmentApp.
 			function ($q, $http) {     // the parameters must be in the same order as the dependencies
 
 
-				var urlBase = '/eam-Project-and-Professionalism/Team-Project-and-Professionalism-Front-end/api/';
+				var urlBase = 'http://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api/';
 
-				this.adminLogin = function (admin) {
+				////////////////////////////////	Login	 ////////////////////////////////
+
+				this.login = function (admin) {
 					let adminJSON = { "username": admin.username, "password": admin.password };
 
 
-					var defer = $q.defer(),             // The promise
-						data = {                        // the data to be passed to the url
-							action: 'adminLogin',
+					var defer = $q.defer(),
+						data = {
+							action: 'authenticate',
 						};
 
-					/**
-					 * make an ajax get call 
-					 * chain calls to .success and .error which will resolve or reject the promise
-					 * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					 */
-					$http.post(urlBase + data.action, adminJSON, { cache: true }).                          // notice the dot to start the chain to success()
-						success(function (response) {
+					$http.post(urlBase + data.action, adminJSON, { cache: true }).
+
+						then(function successCallback(response) {
 							defer.resolve({
-								data: response,         // create data property with value from response
+								data: response.data,
 							});
-						}).                                                 // another dot to chain to error()
-						error(function (err) {
+
+						}, function errorCallback(err) {
+
+							defer.resolve(err.data);
+
+
+						});
+					return defer.promise;
+
+				};
+
+				// this.createUser = function (user) {
+				// 	let userJSON = { "username": user.username, "password": user.password };
+
+
+				// 	var defer = $q.defer(),             
+				// 		data = {                        
+				// 			action: 'initialiseUser',
+				// 		};
+
+				// 	$http.post(urlBase + data.action, userJSON, { cache: true }).                          
+
+				// 		then(function successCallback(response) {
+				// 			defer.resolve({
+				// 				data: response,         
+				// 			});
+
+				// 		}, function errorCallback(err) {
+
+				// 			defer.reject(err);
+				// 		});
+				// 	return defer.promise;
+
+				// };
+
+				////////////////////////////////	White List	 ////////////////////////////////
+
+
+				this.getWhiteList = function () {
+					var defer = $q.defer(),
+						data = {
+							action: 'user'
+						};
+
+						$http.get(urlBase + data.action, { cache: false }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response.data,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+					return defer.promise;
+				}
+
+				this.addWhiteListVehicle = function (whiteListVehicle) {
+					var defer = $q.defer(),
+						data = {
+							action: 'initialiseUser',
+						};
+
+					$http.post(urlBase + data.action, whiteListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
 							defer.reject(err);
 						});
 
-					// the call to getCourses returns this promise which is fulfilled 
-					// by the .get method .success or .failure
+					return defer.promise;
+
+				};
+
+				this.editWhiteListVehicle = function (whiteListVehicle) {
+
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
+
+						$http.put(urlBase + data.action, whiteListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.deleteWhiteListVehicle = function (whiteListVehicle) {
+
+					var defer = $q.defer(),
+						data = {
+							action: '/user?userId=' + whiteListVehicle,
+						};
+
+						$http.delete(urlBase + data.action, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				////////////////////////////////	Black List	 ////////////////////////////////
+
+				this.getBlackList = function () {
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist'
+						};
+
+					$http.get(urlBase + data.action, { cache: false }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response.data,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+					return defer.promise;
+				}
+
+				this.addBlackListVehicle = function (blackListVehicle) {
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist',
+						};
+
+					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.editBlackListVehicle = function (blackListVehicle) {
+
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist',
+						};
+
+					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.deleteBlackListVehicle = function (blackListVehicle) {
+
+					var defer = $q.defer(),
+						data = {
+							action: '/blacklist?numberPlate=' + blackListVehicle,
+						};
+
+					$http.delete(urlBase + data.action, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
 					return defer.promise;
 
 				};
 
 
-				this.guestLogin = function (guest) {
-					let guestJSON = { "fullName": guest.fullName, "numberPlate": guest.numberPlate, "email": guest.email };
+				////////////////////////////////	Guest List	 ////////////////////////////////
 
-
-					var defer = $q.defer(),             // The promise
-						data = {                        // the data to be passed to the url
-							action: 'guestLogin',
+				this.getGuestList = function () {
+					var defer = $q.defer(),
+						data = {
+							action: 'user/guests'
 						};
 
-					/**
-					 * make an ajax get call 
-					 * chain calls to .success and .error which will resolve or reject the promise
-					 * @param {string} urlBase The url to call, later we'll to this to pass parameters
-					 * @param {object} config a configuration object, can contain parameters to pass, in this case we set cache to true
-					 * @return {object} promise The call returns, not data, but a promise which only if the call is successful is 'honoured'
-					 */
-					$http.post(urlBase + data.action, guestJSON, { cache: true }).                          // notice the dot to start the chain to success()
-						success(function (response) {
+					$http.get(urlBase + data.action, { cache: false }).
+						then(function successCallback(response) {
 							defer.resolve({
-								data: response,         // create data property with value from response
+								data: response.data,
 							});
-						}).                                                 // another dot to chain to error()
-						error(function (err) {
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+					return defer.promise;
+				}
+
+				this.addGuestUser = function (guestUser) {
+
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
+
+					$http.put(urlBase + data.action, guestUser, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
 							defer.reject(err);
 						});
 
-					// the call to getCourses returns this promise which is fulfilled 
-					// by the .get method .success or .failure
 					return defer.promise;
 
 				};
 
+				this.editGuestUser = function (guestUser) {
 
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
+
+					$http.put(urlBase + data.action, blackListVehicle, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.deleteGuestUser = function (guestUser) {
+
+					var defer = $q.defer(),
+						data = {
+							action: '/user?userId=' + guestUser,
+						};
+
+					$http.delete(urlBase + data.action, { cache: true }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+
+					return defer.promise;
+
+				};
+
+				this.checkSuspiciousVehicle = function (numberPlate) {
+					var defer = $q.defer(),
+						data = {
+							action: 'checkSuspiciousVehicle?numberPlate=' + numberPlate
+						};
+
+					$http.get(urlBase + data.action, { cache: false }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response.data,
+							});
+
+						}, function errorCallback(err) {
+
+							defer.reject(err);
+						});
+					return defer.promise;
+				}
 
 			}
 		]
-	);
+	).
+	factory('authFact', function () {
+		var authFact = {};
+		authFact.setAccessToken = function(token){
+			authFact.token = token;
+		}
+
+		authFact.getAccessToken = function(){
+		   return authFact.token;
+		}
+
+		authFact.setUserGroup = function(userGroup){
+			authFact.userGroup = userGroup;
+		}
+
+		authFact.getUserGroup = function(){
+		   return authFact.userGroup;
+		}
+
+		return authFact;
+
+	})
+	
+	
+	
+	// .
+	// factory('Auth', function () {
+	// 	var user;
+
+	// 	return {
+	// 		setUser: function (aUser) {
+	// 			user = aUser;
+	// 		},
+	// 		isLoggedIn: function () {
+	// 			return (user) ? user : false;
+	// 		}
+	// 	}
+	// })

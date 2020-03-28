@@ -1,0 +1,35 @@
+<form name="editGuestBooking">
+
+    <h2>Book Guest</h2>
+
+    <input class="form-control" type="text" name="username" ng-model="guest.username" placeholder="Name" required>
+    <span ng-show="editGuestBooking.username.$dirty && editGuestBooking.username.$error.required">Username is required.</span>
+
+    <br>
+    <input class="form-control" type="email" name="email" ng-model="guest.email" placeholder="Email Address" required>
+    <span ng-show="editGuestBooking.email.$error.required">Email is required.</span>
+    <span ng-show="editGuestBooking.email.$error.email">Invalid email address.</span>
+
+    <br>
+    <!-- min="7" max="7" -->
+    <input class="form-control" type="text" name="numberPlate" ng-model="guest.numberPlate" placeholder="Number Plate" minlength="7" maxlength="7"
+        required>
+    <span ng-show="editGuestBooking.numberPlate.$error.required">Number Plate is required.</span>
+
+    <br>
+    <input class="form-control" type="date" name="fromDate" ng-model="guest.fromDate" placeholder="From Date" required>
+    <span ng-show="editGuestBooking.fromDate.$error.required">From Date is required.</span>
+    <span ng-show="editGuestBooking.fromDate.$error.date">Invalid date.</span>
+
+    <br>
+    <input class="form-control" type="date" name="toDate" ng-model="guest.toDate" placeholder="To Date" required>
+    <span ng-show="editGuestBooking.toDate.$error.required">To Date is required.</span>
+    <span ng-show="editGuestBooking.toDate.$error.date">Invalid date.</span>
+
+    <br>
+
+    <button type="button" class="btn btn-primary" ng-click="editGClose(true)"
+        ng-disabled="editGuestBooking.$invalid">Submit</button>
+    <button type="button" class="btn btn-secondary" ng-click="editGClose(false)">Cancel</button>
+
+</form>
