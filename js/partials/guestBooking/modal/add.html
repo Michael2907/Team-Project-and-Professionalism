@@ -18,15 +18,17 @@
     <span ng-show="addGuestBooking.numberPlate.$dirty && addGuestBooking.numberPlate.$error.required">Number Plate is required.</span>
 
     <br>
-    <input class="form-control" type="date" name="fromDate" ng-model="newGuest.fromDate" placeholder="From Date"
+    <!-- TO DO : ADD VALIDATION TO DATES -->
+
+    <input class="form-control" type="date" name="startDateTime" ng-model="newGuest.startDateTime" placeholder="From Date"
         required>
-    <span ng-show="addGuestBooking.fromDate.$dirty && addGuestBooking.fromDate.$error.required">From Date is required.</span>
-    <span ng-show="addGuestBooking.fromDate.$error.date">Invalid date.</span>
+    <span ng-show="addGuestBooking.startDateTime.$dirty && addGuestBooking.startDateTime.$error.required">From Date is required.</span>
+    <span ng-show="addGuestBooking.startDateTime.$error.date">Invalid date.</span>
 
     <br>
-    <input class="form-control" type="date" name="toDate" ng-model="newGuest.toDate" placeholder="To Date" required>
-    <span ng-show="addGuestBooking.toDate.$dirty && addGuestBooking.toDate.$error.required">To Date is required.</span>
-    <span ng-show="addGuestBooking.toDate.$error.date">Invalid date.</span>
+    <input class="form-control" type="date" name="endDateTime" ng-model="newGuest.endDateTime" placeholder="To Date" required>
+    <span ng-show="addGuestBooking.endDateTime.$dirty && addGuestBooking.endDateTime.$error.required">To Date is required.</span>
+    <span ng-show="addGuestBooking.endDateTime.$error.date">Invalid date.</span>
 
     <br>
 

@@ -95,18 +95,21 @@ assignmentApp.
         }
 
         $scope.editW = function () {
+          $scope.user.userGroup = $scope.user.userGroup.toString();
           editModalW.style.display = "block";
 
         };
         $scope.editWClose = function (response) {
           if (response) {
             $scope.user.userGroup= parseInt($scope.user.userGroup);
-            dataService.editWhiteListVehicle($scope.user).then(
+            dataService.updateWhiteListVehicle($scope.user).then(
               function (response) {
                 getWhiteList();
                 
               },
               function (err) {
+                getWhiteList();
+
                 $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
@@ -123,12 +126,13 @@ assignmentApp.
         };
         $scope.deleteWClose = function (response) {
           if (response) {
-            dataService.deleteWhiteListVehicle($scope.user.userId).then(
+            $scope.user.deleted = true;
+            dataService.updateWhiteListVehicle($scope.user).then(
               function (response) {
                 getWhiteList();
-                
               },
               function (err) {
+                getWhiteList();
                 $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
@@ -142,7 +146,8 @@ assignmentApp.
         var getWhiteList = function () {
           dataService.getWhiteList().then(
             function (response) {
-              gridOptionsW.api.setRowData(response.data)
+             let filteredResponse = response.data.filter(user => user.deleted == false)
+              gridOptionsW.api.setRowData(filteredResponse)
             },
             function (err) {
               $scope.status = 'Unable to load data ' + err;
@@ -262,6 +267,8 @@ assignmentApp.
                 getBlackList();
               },
               function (err) {
+                getBlackList();
+
                 $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
@@ -283,6 +290,7 @@ assignmentApp.
                 getBlackList();
               },
               function (err) {
+                getBlackList();
                 $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
