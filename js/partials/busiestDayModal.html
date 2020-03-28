@@ -1,0 +1,43 @@
+<div ng-controller="BusiestDayModalController as $ctrl" class="modal-demo">
+  <script type="text/ng-template" id="busiestDayContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title" id="busiestDayTitle">Busiest Day</h3>
+    </div>
+    <div class="modal-body" id="busiestDayBody">
+      <p class="input-group">
+        <div>Start Date:</div>
+        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="$ctrl.startDt" is-open="$ctrl.popup1.opened" datepicker-options="$ctrl.dateOptions" ng-required="true" close-text="Close"  />
+        <span>
+          <button type="button" class="btn btn-primary" ng-click="$ctrl.open1()"><i class="fas fa-calendar-week"></i></button>
+        </span>
+      </p>
+      <p class="input-group">
+        <div>End Date:</div>
+        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="$ctrl.endDt" is-open="$ctrl.popup2.opened" datepicker-options="$ctrl.dateOptions" ng-required="true" close-text="Close"  />
+        <span>
+          <button type="button" class="btn btn-primary" ng-click="$ctrl.open2()"><i class="fas fa-calendar-week"></i></button>
+        </span>
+      </p>
+        <canvas
+        id="bar"
+        class="chart chart-bar"
+        chart-data="$ctrl.data"
+        chart-labels="$ctrl.labels"
+        chart-series="$ctrl.series"
+      >
+      </canvas>
+
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+    </div>
+  </script>
+
+  <button type="button" class="btn btn-secondary" ng-click="$ctrl.open('lg')">
+    Busiest Day
+  </button>
+
+  <div class="modal-parent"></div>
+</div>
