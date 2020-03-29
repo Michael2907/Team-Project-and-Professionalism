@@ -21,7 +21,7 @@ assignmentApp.
 			function ($q, $http) {     // the parameters must be in the same order as the dependencies
 
 
-				var urlBase = 'http://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api/';
+				var urlBase = 'https://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api/';
 
 				////////////////////////////////	Login	 ////////////////////////////////
 
