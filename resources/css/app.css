@@ -41,6 +41,41 @@
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+   width: fit-content !important;
 }
 
+.otherOptionBtn{
+  float: right;
+}
+
+
+/* Admin */
+
+#movingCarGreen{
+  position: relative;
+  animation-name: moveGreenCar;
+  animation-duration: 14s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes moveGreenCar {
+  0%   { left:0px; top:0px; transform: scaleX(1) }
+  25%  { left:125px; top:0px; transform: scaleX(1); color: green;}
+  50%  { left:250px; top:0px; transform: scaleX(1) }
+  51%  { transform: scaleX(-1); }
+  100% { left:0px; top:0px; transform: scaleX(-1)  }
+}
+
+#movingCarRed{
+  position: relative;
+  animation-name: moveRedCar;
+  animation-duration: 7s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes moveRedCar {
+  0%   { left:0px; top:0px; transform: scaleX(1) }
+  50%  { left:125px; top:0px; transform: scaleX(1); color: red;}
+  51%  { transform: scaleX(-1); }
+  100% { left:0px; top:0px; transform: scaleX(-1)  }
+}

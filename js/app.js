@@ -40,8 +40,8 @@ assignmentApp.
           when('/guest-booking', {
             templateUrl: 'js/partials/guestBooking.html',
             controller: 'guestBookingController',
-            // authenticated: true,
-            // adminOnly: false
+            authenticated: true,
+            adminOnly: false
           }).
           when('/', {
             templateUrl: 'js/partials/landing.html',
