@@ -83,6 +83,7 @@ assignmentApp.
 
 
 				this.getWhiteList = function (jwtToken) {
+					// console.log(jwtToken)
 					var defer = $q.defer(),
 						data = {
 							action: 'user'
@@ -90,11 +91,11 @@ assignmentApp.
 
 					$http.get(urlBase + data.action, {
 						cache: false,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						 headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 
 					}).
 						then(function successCallback(response) {
@@ -109,7 +110,7 @@ assignmentApp.
 					return defer.promise;
 				}
 
-				this.addWhiteListVehicle = function (whiteListVehicle) {
+				this.addWhiteListVehicle = function (whiteListVehicle, jwtToken) {
 					var defer = $q.defer(),
 						data = {
 							action: 'initialiseUser',
@@ -117,11 +118,11 @@ assignmentApp.
 
 					$http.post(urlBase + data.action, whiteListVehicle, {
 						cache: true,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -137,7 +138,7 @@ assignmentApp.
 
 				};
 
-				this.updateWhiteListVehicle = function (whiteListVehicle) {
+				this.updateWhiteListVehicle = function (whiteListVehicle, jwtToken) {
 
 					var defer = $q.defer(),
 						data = {
@@ -146,11 +147,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, whiteListVehicle, {
 						cache: true,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -169,19 +170,24 @@ assignmentApp.
 
 				////////////////////////////////	Black List	 ////////////////////////////////
 
-				this.getBlackList = function () {
+				this.getBlackList = function (jwtToken) {
+					console.log(jwtToken)
 					var defer = $q.defer(),
 						data = {
 							action: 'blacklist'
 						};
 
 					$http.get(urlBase + data.action, {
+
+						// cache: false,
+						// headers:{'Authorization':jwtToken}
+
 						cache: false,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						 headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -195,7 +201,7 @@ assignmentApp.
 					return defer.promise;
 				}
 
-				this.addBlackListVehicle = function (blackListVehicle) {
+				this.addBlackListVehicle = function (blackListVehicle, jwtToken) {
 					var defer = $q.defer(),
 						data = {
 							action: 'blacklist',
@@ -203,11 +209,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -223,7 +229,7 @@ assignmentApp.
 
 				};
 
-				this.editBlackListVehicle = function (blackListVehicle) {
+				this.editBlackListVehicle = function (blackListVehicle, jwtToken) {
 
 					var defer = $q.defer(),
 						data = {
@@ -232,11 +238,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -252,7 +258,7 @@ assignmentApp.
 
 				};
 
-				this.deleteBlackListVehicle = function (blackListVehicle) {
+				this.deleteBlackListVehicle = function (blackListVehicle, jwtToken) {
 
 					var defer = $q.defer(),
 						data = {
@@ -261,11 +267,11 @@ assignmentApp.
 
 					$http.delete(urlBase + data.action, {
 						cache: true,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -284,7 +290,7 @@ assignmentApp.
 
 				////////////////////////////////	Guest List	 ////////////////////////////////
 
-				this.getGuestList = function () {
+				this.getGuestList = function (jwtToken) {
 					var defer = $q.defer(),
 						data = {
 							action: 'user'
@@ -292,11 +298,11 @@ assignmentApp.
 
 					$http.get(urlBase + data.action, {
 						cache: false,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -310,7 +316,7 @@ assignmentApp.
 					return defer.promise;
 				}
 
-				this.addGuestUser = function (guestUser) {
+				this.addGuestUser = function (guestUser, jwtToken) {
 
 					var defer = $q.defer(),
 						data = {
@@ -319,11 +325,11 @@ assignmentApp.
 
 					$http.post(urlBase + data.action, guestUser, {
 						cache: false,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -339,7 +345,7 @@ assignmentApp.
 
 				};
 
-				this.updateGuestUser = function (guestUser) {
+				this.updateGuestUser = function (guestUser, jwtToken) {
 
 					var defer = $q.defer(),
 						data = {
@@ -348,11 +354,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, guestUser, {
 						cache: false,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						  headers: {
+							"Content-Type": "application/json",
+						 	"Accept": "application/json",
+						 	"Authorization": jwtToken
+						 }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({
@@ -400,11 +406,6 @@ assignmentApp.
 
 					$http.post("https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles", body, {
 						cache: false,
-						//  headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
 					}).
 						then(function successCallback(response) {
 							defer.resolve({

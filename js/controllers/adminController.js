@@ -54,7 +54,6 @@ assignmentApp.
         
         $scope.jwtToken = ""
         $scope.jwtToken = authFact.getAccessToken();
-        // console.log($scope.jwtToken);
 
         function onSelectionChangedW() {
           var selectedRows = gridOptionsW.api.getSelectedRows();
@@ -81,7 +80,7 @@ assignmentApp.
           if (response) {
             $scope.newUser.password = null;
             $scope.newUser.userGroup= parseInt($scope.newUser.userGroup);
-            dataService.addWhiteListVehicle($scope.newUser).then(
+            dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken).then(
               function (response) {
                 getWhiteList($scope.jwtToken);
                 
@@ -108,7 +107,7 @@ assignmentApp.
         $scope.editWClose = function (response) {
           if (response) {
             $scope.user.userGroup= parseInt($scope.user.userGroup);
-            dataService.updateWhiteListVehicle($scope.user).then(
+            dataService.updateWhiteListVehicle($scope.user, $scope.jwtToken).then(
               function (response) {
                 getWhiteList($scope.jwtToken);
                 
@@ -133,7 +132,7 @@ assignmentApp.
         $scope.deleteWClose = function (response) {
           if (response) {
             $scope.user.deleted = true;
-            dataService.updateWhiteListVehicle($scope.user).then(
+            dataService.updateWhiteListVehicle($scope.user, $scope.jwtToken).then(
               function (response) {
                 getWhiteList($scope.jwtToken);
               },
@@ -149,8 +148,8 @@ assignmentApp.
           deleteModalW.style.display = "none";
         }
 
-        var getWhiteList = function () {
-          dataService.getWhiteList($scope.jwtToken).then(
+        var getWhiteList = function (jwtToken) {
+          dataService.getWhiteList(jwtToken, $scope.jwtToken).then(
             function (response) {
              let filteredResponse = response.data.filter(user => user.deleted == false && user.userGroup != 3)
               gridOptionsW.api.setRowData(filteredResponse)
@@ -172,7 +171,7 @@ assignmentApp.
         };
         $scope.suspiciousClose = function (response) {
           if (response) {
-            dataService.checkSuspiciousVehicle($scope.user.numberPlate).then(
+            dataService.checkSuspiciousVehicle($scope.user.numberPlate, $scope.jwtToken).then(
               function (response) {
                
               },
@@ -244,9 +243,9 @@ assignmentApp.
         };
         $scope.addBClose = function (response) {
           if (response) {
-            dataService.addBlackListVehicle($scope.newBannedVehicle).then(
+            dataService.addBlackListVehicle($scope.newBannedVehicle, $scope.jwtToken).then(
               function (response) {
-                getBlackList();
+                getBlackList($scope.jwtToken);
                 
               },
               function (err) {
@@ -268,12 +267,12 @@ assignmentApp.
         };
         $scope.editBClose = function (response) {
           if (response) {
-            dataService.editBlackListVehicle($scope.bannedVehicle).then(
+            dataService.editBlackListVehicle($scope.bannedVehicle, $scope.jwtToken).then(
               function (response) {
-                getBlackList();
+               getBlackList($scope.jwtToken);
               },
               function (err) {
-                getBlackList();
+               getBlackList($scope.jwtToken);
 
                 $scope.status = 'Unable to load data ' + err;
               },
@@ -291,12 +290,12 @@ assignmentApp.
         };
         $scope.deleteBClose = function (response) {
           if (response) {
-            dataService.deleteBlackListVehicle($scope.bannedVehicle.numberPlate).then(
+            dataService.deleteBlackListVehicle($scope.bannedVehicle.numberPlate, $scope.jwtToken).then(
               function (response) {
-                getBlackList();
+               getBlackList($scope.jwtToken);
               },
               function (err) {
-                getBlackList();
+               getBlackList($scope.jwtToken);
                 $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
@@ -307,8 +306,8 @@ assignmentApp.
           deleteModalB.style.display = "none";
         }
 
-        var getBlackList = function () {
-          dataService.getBlackList().then(
+        var getBlackList = function (jwtToken) {
+          dataService.getBlackList(jwtToken).then(
             function (response) {
               gridOptionsB.api.setRowData(response.data)
             },
@@ -320,8 +319,7 @@ assignmentApp.
             }
           );
         };
-
-        getBlackList();
+       getBlackList($scope.jwtToken);
 
       }
     ]
