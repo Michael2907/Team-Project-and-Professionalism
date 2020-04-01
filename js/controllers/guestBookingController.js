@@ -84,12 +84,13 @@ assignmentApp.
 
         $scope.addGClose = function (response) {
           if (response) {
+            $scope.newGuest.startDateTime.setTime( $scope.newGuest.startDateTime.getTime() + 60*60*1000 );
+            $scope.newGuest.endDateTime.setTime( $scope.newGuest.endDateTime.getTime() + 60*60*1000 );
             $scope.newGuest.userGroup = 3;
             $scope.newGuest.password = "";
 
             dataService.addGuestUser($scope.newGuest).then(
               function (response) {
-                console.log(response)
                 getGuestList();
               },
               function (err) {

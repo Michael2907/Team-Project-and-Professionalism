@@ -6,9 +6,11 @@ assignmentApp.
     [
       '$scope',
       'dataService',
+      'authFact',
       'applicationData',
       '$location',
-      function ($scope, dataService) {
+      
+      function ($scope, dataService, authFact) {
         // White List
 
         var columnDefsW = [
@@ -49,6 +51,10 @@ assignmentApp.
         $scope.user = {
           userGroup: "1"
         }
+        
+        $scope.jwtToken = ""
+        $scope.jwtToken = authFact.getAccessToken();
+        // console.log($scope.jwtToken);
 
         function onSelectionChangedW() {
           var selectedRows = gridOptionsW.api.getSelectedRows();
@@ -77,7 +83,7 @@ assignmentApp.
             $scope.newUser.userGroup= parseInt($scope.newUser.userGroup);
             dataService.addWhiteListVehicle($scope.newUser).then(
               function (response) {
-                getWhiteList();
+                getWhiteList($scope.jwtToken);
                 
               },
               function (err) {
@@ -104,11 +110,11 @@ assignmentApp.
             $scope.user.userGroup= parseInt($scope.user.userGroup);
             dataService.updateWhiteListVehicle($scope.user).then(
               function (response) {
-                getWhiteList();
+                getWhiteList($scope.jwtToken);
                 
               },
               function (err) {
-                getWhiteList();
+                getWhiteList($scope.jwtToken);
 
                 $scope.status = 'Unable to load data ' + err;
               },
@@ -129,10 +135,10 @@ assignmentApp.
             $scope.user.deleted = true;
             dataService.updateWhiteListVehicle($scope.user).then(
               function (response) {
-                getWhiteList();
+                getWhiteList($scope.jwtToken);
               },
               function (err) {
-                getWhiteList();
+                getWhiteList($scope.jwtToken);
                 $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
@@ -144,7 +150,7 @@ assignmentApp.
         }
 
         var getWhiteList = function () {
-          dataService.getWhiteList().then(
+          dataService.getWhiteList($scope.jwtToken).then(
             function (response) {
              let filteredResponse = response.data.filter(user => user.deleted == false && user.userGroup != 3)
               gridOptionsW.api.setRowData(filteredResponse)
@@ -157,7 +163,7 @@ assignmentApp.
             }
           );
         };
-        getWhiteList();
+        getWhiteList($scope.jwtToken);
 
 
 
