@@ -6,12 +6,16 @@ assignmentApp.
     [
       '$scope',
       'dataService',
+      'authFact',
       'applicationData',
       '$location',
-      function ($scope, dataService, applicationData, $location) {
+      function ($scope, dataService, authFact, applicationData, $location) {
 
         $scope.newGuest = {};
         $scope.guest = {};
+
+        $scope.jwtToken = ""
+        $scope.jwtToken = authFact.getAccessToken();
 
         var date = new Date();
         let day = date.getDate();
@@ -89,7 +93,7 @@ assignmentApp.
             $scope.newGuest.userGroup = 3;
             $scope.newGuest.password = "";
 
-            dataService.addGuestUser($scope.newGuest).then(
+            dataService.addGuestUser($scope.newGuest, $scope.jwtToken).then(
               function (response) {
                 getGuestList();
               },
@@ -115,7 +119,7 @@ assignmentApp.
             // Adds 1 hours to time
             $scope.guest.startDateTime.setTime( $scope.guest.startDateTime.getTime() + 60*60*1000 );
             $scope.guest.endDateTime.setTime( $scope.guest.endDateTime.getTime() + 60*60*1000 );
-            dataService.updateGuestUser($scope.guest).then(
+            dataService.updateGuestUser($scope.guest, $scope.jwtToken).then(
               function (response) {
                 getGuestList();
               },
@@ -141,7 +145,7 @@ assignmentApp.
             // Adds 1 hours to time
             $scope.guest.startDateTime.setTime( $scope.guest.startDateTime.getTime() + 60*60*1000 );
             $scope.guest.endDateTime.setTime( $scope.guest.endDateTime.getTime() + 60*60*1000 );
-            dataService.updateGuestUser($scope.guest).then(
+            dataService.updateGuestUser($scope.guest, $scope.jwtToken).then(
               function (response) {
                 getGuestList();
               },
@@ -157,7 +161,7 @@ assignmentApp.
         }
 
         var getGuestList = function () {
-          dataService.getGuestList().then(
+          dataService.getGuestList($scope.jwtToken).then(
             function (response) {
               // removes deleted and non guest users from list
               let filteredResponse = response.data.filter(user => user.deleted == false && user.userGroup == 3)
