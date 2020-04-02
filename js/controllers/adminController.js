@@ -171,7 +171,7 @@ assignmentApp.
         };
         $scope.suspiciousClose = function (response) {
           if (response) {
-            dataService.checkSuspiciousVehicle($scope.user.numberPlate, $scope.jwtToken).then(
+            dataService.checkSuspiciousVehicle($scope.user.numberPlate).then(
               function (response) {
                
               },
