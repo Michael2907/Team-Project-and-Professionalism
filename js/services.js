@@ -34,8 +34,7 @@ assignmentApp.
 							action: 'authenticate',
 						};
 
-					$http.post(urlBase + data.action, userJSON, { cache: true }).
-
+					$http.post(urlBase + data.action, userJSON, { cache: false }).
 						then(function successCallback(response) {
 							defer.resolve({
 								data: response.data,
@@ -62,7 +61,6 @@ assignmentApp.
 						};
 
 					$http.put(urlBase + data.action, userJSON, { cache: true }).
-
 						then(function successCallback(response) {
 							defer.resolve({
 								data: response,
@@ -91,22 +89,21 @@ assignmentApp.
 
 					$http.get(urlBase + data.action, {
 						cache: false,
-						 headers: {
-							"Content-Type": "application/json",
-							"Accept": "application/json",
-							"Authorization": jwtToken
-						}
+						// headers: {
+						// 	"Content-Type": "application/json",
+						// 	"Accept": "application/json",
+						// 	"Authorization": jwtToken
+						// }
 
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response.data,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 					return defer.promise;
 				}
 
@@ -118,21 +115,20 @@ assignmentApp.
 
 					$http.post(urlBase + data.action, whiteListVehicle, {
 						cache: true,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 
 					return defer.promise;
 
@@ -147,21 +143,20 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, whiteListVehicle, {
 						cache: true,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 
 					return defer.promise;
 
@@ -178,26 +173,21 @@ assignmentApp.
 						};
 
 					$http.get(urlBase + data.action, {
-
-						// cache: false,
-						// headers:{'Authorization':jwtToken}
-
 						cache: false,
-						 headers: {
-							"Content-Type": "application/json",
-							"Accept": "application/json",
-							"Authorization": jwtToken
-						}
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response.data,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+						// headers: {
+							// "Content-Type": "application/json",
+							// "Accept": "application/json",
+							// "Authorization": jwtToken
+						// }
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 					return defer.promise;
 				}
 
@@ -209,21 +199,20 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 
 					return defer.promise;
 
@@ -238,21 +227,20 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 
 					return defer.promise;
 
@@ -267,21 +255,20 @@ assignmentApp.
 
 					$http.delete(urlBase + data.action, {
 						cache: true,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 
 					return defer.promise;
 
@@ -298,21 +285,20 @@ assignmentApp.
 
 					$http.get(urlBase + data.action, {
 						cache: false,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response.data,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 					return defer.promise;
 				}
 
@@ -325,21 +311,20 @@ assignmentApp.
 
 					$http.post(urlBase + data.action, guestUser, {
 						cache: false,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 
 					return defer.promise;
 
@@ -354,21 +339,20 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, guestUser, {
 						cache: false,
-						  headers: {
-						//	"Content-Type": "application/json",
-						 //	"Accept": "application/json",
-						 	"Authorization": jwtToken
-						 }
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					//	headers: {
+							//	"Content-Type": "application/json",
+							//	"Accept": "application/json",
+					//		"Authorization": jwtToken
+					//	}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 
 					return defer.promise;
 
@@ -395,30 +379,25 @@ assignmentApp.
 
 				// https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html#register-for-ves-api
 				this.checkSuspiciousVehicle = function (numberPlate) {
-					let body = {"registrationNumber": "EJ12CWN"}
+					let body = { registrationNumber: numberPlate }
 
-					// name: x-api-key
-					// value: {supplied API key}
-					// body: {"registrationNumber": "ABC1234"}		
+					var defer = $q.defer()
 
-					var defer = $q.defer(),
-						data = {};
-
-					$http.post("https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles", body, {
-						cache: false,
+					$http.post("https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles", JSON.stringify(body), {
 						headers: {
+							"Content-Type": "application/json",
+							// "Accept": "application/json",
 							"x-api-key": "HdSftuDOYT1M5lp6BAnqw428qZWLP6HG7jDN1owN"
 						}
-					}).
-						then(function successCallback(response) {
-							defer.resolve({
-								data: response.data,
-							});
-
-						}, function errorCallback(err) {
-
-							defer.reject(err);
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
 						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
 					return defer.promise;
 				}
 
