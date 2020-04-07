@@ -20,6 +20,9 @@ assignmentApp.
 					// Show
 					dataService.login($scope.login).then(
 						function (response) {
+							if(response){
+
+							
 							// success
 							if(response.status != 401){
 								if(response.data.user.initialised == false){ // first time user has logged on
@@ -37,7 +40,7 @@ assignmentApp.
 							} else {
 								$scope.errorMessage = response.message
 							}
-
+}
 
 						},
 						function (err) {
