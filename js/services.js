@@ -116,8 +116,8 @@ assignmentApp.
 					$http.post(urlBase + data.action, whiteListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
@@ -144,8 +144,8 @@ assignmentApp.
 					$http.put(urlBase + data.action, whiteListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
@@ -200,8 +200,8 @@ assignmentApp.
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
@@ -228,8 +228,8 @@ assignmentApp.
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
@@ -256,8 +256,8 @@ assignmentApp.
 					$http.delete(urlBase + data.action, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
