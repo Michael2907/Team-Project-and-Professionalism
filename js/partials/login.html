@@ -4,27 +4,41 @@
 		<div class="col ">
 			<div class="row d-flex justify-content-center">
 				<form name="loginForm">
-					<input class="form-control" name="username" type="text" ng-model="login.username"
-						placeholder="Enter Username" required>
+
+					<div class="input-group mb-3">
+						<input type="text" name="username" class="form-control" ng-model="login.username"
+							placeholder="Enter Username" required />
+						<div class="input-group-append" ng-click="showOldPassword()">
+							<span class="input-group-text"><i style='font-size:16px' class='fas'>&#xf007;</i></span>
+						</div>
+					</div>
+
 					<span ng-show="loginForm.username.$dirty && loginForm.username.$error.required">Username is
 						required.</span>
 
 					<br>
 
-					<div class="input-group">
+					<div class="input-group mb-3">
 						<input type="{{inputType}}" name="password" class="form-control" ng-model="login.password"
 							placeholder="Enter Password" required />
-						<span class="input-group-addon" ng-click="showPassword()" style="cursor:pointer">
-							<span class="{{showHideClass}}"></span>
-						</span>
+						<div class="input-group-append" ng-click="showPassword()" style="cursor:pointer">
+							<span ng-if="inputType == 'text'" class="input-group-text"><i style='font-size:16px'
+									class='fas'>&#xf070;</i></span>
+							<span ng-if="inputType == 'password'" class="input-group-text"><i style='font-size:16px'
+									class='fas'>&#xf06e;</i></span>
+						</div>
 					</div>
 					<span ng-show="loginForm.password.$dirty && loginForm.password.$error.required">Password is
 						required.</span>
+
 					<br>
-					<button style="float: right" type="button" class="btn btn-secondary" ng-click="resetPassword()">Reset
+
+					<button style="float: right" type="button" class="btn btn-secondary"
+						ng-click="resetPassword()">Reset
 						Password <i style='font-size:16px' class='fas'>&#xf0e2;</i></button>
 					<button type="button" class="btn btn-primary" ng-click="login()"
-						ng-disabled="loginForm.$invalid">Login <i style='font-size:16px' class='fas'>&#xf2f6;</i></button>
+						ng-disabled="loginForm.$invalid">Login <i style='font-size:16px'
+							class='fas'>&#xf2f6;</i></button>
 					<p class="loginErrorMessage">{{errorMessage}}</p>
 				</form>
 
@@ -35,6 +49,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </section>

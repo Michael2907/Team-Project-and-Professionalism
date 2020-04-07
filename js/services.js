@@ -81,7 +81,6 @@ assignmentApp.
 
 
 				this.getWhiteList = function (jwtToken) {
-					// console.log(jwtToken)
 					var defer = $q.defer(),
 						data = {
 							action: 'user'
@@ -166,7 +165,6 @@ assignmentApp.
 				////////////////////////////////	Black List	 ////////////////////////////////
 
 				this.getBlackList = function (jwtToken) {
-					console.log(jwtToken)
 					var defer = $q.defer(),
 						data = {
 							action: 'blacklist'
@@ -386,7 +384,6 @@ assignmentApp.
 					$http.post("https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles", JSON.stringify(body), {
 						headers: {
 							"Content-Type": "application/json",
-							// "Accept": "application/json",
 							"x-api-key": "HdSftuDOYT1M5lp6BAnqw428qZWLP6HG7jDN1owN"
 						}
 					}).then(function successCallback(response) {

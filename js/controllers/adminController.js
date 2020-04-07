@@ -18,7 +18,14 @@ assignmentApp.
           { headerName: "Name", field: "username", sortable: true, filter: true, resizable: true },
           { headerName: "Number Plate", field: "numberPlate", sortable: true, filter: true, resizable: true },
           { headerName: "Email", field: "email", sortable: true, filter: true, resizable: true },
-          { headerName: "User Group", field: "userGroup", sortable: true, filter: true, resizable: true },
+          { headerName: "User Group", field: "userGroup", sortable: true, filter: true, resizable: true, valueGetter: function(params) {
+            if(params.data.userGroup == 1){
+              return "Admin";
+            } 
+            else {
+              return "Standard";
+            }
+          }, },
         ];
 
         var rowDataW = [];
@@ -71,7 +78,7 @@ assignmentApp.
         var editModalW = document.getElementById("editModalW");
         var deleteModalW = document.getElementById("deleteModalW");
         var suspiciousModal = document.getElementById("suspiciousModal");
-
+        var suspiciousResultsModal = document.getElementById("suspiciousResultsModal");
 
         $scope.addW = function () {
           addModalW.style.display = "block";
@@ -82,11 +89,10 @@ assignmentApp.
             $scope.newUser.userGroup= parseInt($scope.newUser.userGroup);
             dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken).then(
               function (response) {
-                getWhiteList($scope.jwtToken);
-                
+                getWhiteList($scope.jwtToken);                
               },
               function (err) {
-                $scope.status = 'Unable to load data ' + err;
+                getWhiteList($scope.jwtToken);
               },
               function (notify) {
                 console.log(notify);
@@ -114,8 +120,6 @@ assignmentApp.
               },
               function (err) {
                 getWhiteList($scope.jwtToken);
-
-                $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
                 console.log(notify);
@@ -138,7 +142,6 @@ assignmentApp.
               },
               function (err) {
                 getWhiteList($scope.jwtToken);
-                $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
                 console.log(notify);
@@ -155,7 +158,6 @@ assignmentApp.
               gridOptionsW.api.setRowData(filteredResponse)
             },
             function (err) {
-              $scope.status = 'Unable to load data ' + err;
             },
             function (notify) {
               console.log(notify);
@@ -164,8 +166,6 @@ assignmentApp.
         };
         getWhiteList($scope.jwtToken);
 
-
-
         $scope.suspicious = function () {
           suspiciousModal.style.display = "block";
         };
@@ -173,10 +173,14 @@ assignmentApp.
           if (response) {
             dataService.checkSuspiciousVehicle($scope.user.numberPlate).then(
               function (response) {
-               
+                if(response.data){
+                  $scope.suspiciousResponse = response.data;
+                  suspiciousResultsModal.style.display = "block";
+                }
               },
               function (err) {
-                $scope.status = 'Unable to load data ' + err;
+                $scope.suspiciousResponseError = err.data.errors[0].detail;
+                suspiciousResultsModal.style.display = "block";
               },
               function (notify) {
                 console.log(notify);
@@ -185,6 +189,13 @@ assignmentApp.
           }
           suspiciousModal.style.display = "none";
         }
+
+        $scope.suspiciousReultsClose = function () {
+          $scope.suspiciousResponse = undefined;
+          $scope.suspiciousResponseError = undefined;
+
+          suspiciousResultsModal.style.display = "none";
+        };
 
         /////////////////////////    Black List     ///////////////////////////////
 
@@ -245,11 +256,10 @@ assignmentApp.
           if (response) {
             dataService.addBlackListVehicle($scope.newBannedVehicle, $scope.jwtToken).then(
               function (response) {
-                getBlackList($scope.jwtToken);
-                
+                getBlackList($scope.jwtToken);                
               },
               function (err) {
-                $scope.status = 'Unable to load data ' + err;
+                getBlackList($scope.jwtToken);                
               },
               function (notify) {
                 console.log(notify);
@@ -273,8 +283,6 @@ assignmentApp.
               },
               function (err) {
                getBlackList($scope.jwtToken);
-
-                $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
                 console.log(notify);
@@ -296,7 +304,6 @@ assignmentApp.
               },
               function (err) {
                getBlackList($scope.jwtToken);
-                $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
                 console.log(notify);
@@ -312,7 +319,6 @@ assignmentApp.
               gridOptionsB.api.setRowData(response.data)
             },
             function (err) {
-              $scope.status = 'Unable to load data ' + err;
             },
             function (notify) {
               console.log(notify);

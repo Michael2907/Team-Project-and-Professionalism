@@ -24,8 +24,8 @@ assignmentApp.
           when('/admin', {
             templateUrl: 'js/partials/admin.html',
             controller: 'AdminController',
-            // authenticated: true,
-            // adminOnly: true
+            authenticated: true,
+            adminOnly: true
           }).
           when('/login', {
             templateUrl: 'js/partials/login.html',
