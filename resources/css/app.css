@@ -41,7 +41,10 @@
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-   width: fit-content !important;
+  width: fit-content !important;
+  height: fit-content;
+  max-height: 80vh;
+  overflow: auto;
 }
 
 .otherOptionBtn{

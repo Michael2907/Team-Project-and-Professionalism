@@ -99,7 +99,6 @@ assignmentApp.
               },
               function (err) {
                 getGuestList();
-                $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
                 console.log(notify);
@@ -125,7 +124,6 @@ assignmentApp.
               },
               function (err) {
                 getGuestList();
-                $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
                 console.log(notify);
@@ -151,7 +149,6 @@ assignmentApp.
               },
               function (err) {
                 getGuestList();
-                $scope.status = 'Unable to load data ' + err;
               },
               function (notify) {
                 console.log(notify);
@@ -178,7 +175,7 @@ assignmentApp.
               gridOptionsG.api.setRowData(filteredResponse)
             },
             function (err) {
-              $scope.status = 'Unable to load data ' + err;
+
             },
             function (notify) {
               console.log(notify);

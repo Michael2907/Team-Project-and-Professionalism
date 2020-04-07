@@ -1,0 +1,35 @@
+<div ng-if="suspiciousResponse">
+    <h4>Results</h4>
+
+    <h6>Important</h6>
+    <p>MOT Status : {{suspiciousResponse.motStatus}}</p>
+    <p>Tax Status : {{suspiciousResponse.taxStatus}}</p>
+    <p>C02 Emissions : {{suspiciousResponse.co2Emissions}}</p>
+
+    <hr>
+
+    <h6>Other</h6>
+    <p>Registration Number : {{suspiciousResponse.registrationNumber}}</p>
+    <p>Engine Capacity : {{suspiciousResponse.engineCapacity}}</p>
+    <p>Marked for Export : {{suspiciousResponse.markedForExport}}</p>
+    <p>Fuel Type : {{suspiciousResponse.fuelType}}</p>
+    <p>Colour : {{suspiciousResponse.colour}}</p>
+    <p>Make : {{suspiciousResponse.make}}</p>
+    <p>Type Approval : {{suspiciousResponse.typeApproval}}</p>
+    <p>Year of Manufacture : {{suspiciousResponse.yearOfManufacture}}</p>
+    <p>Tax Due Date : {{suspiciousResponse.taxDueDate}}</p>
+    <p>Date of last V5C issued : {{suspiciousResponse.dateOfLastV5CIssued}}</p>
+    <p>MOT Expiry Date : {{suspiciousResponse.motExpiryDate}}</p>
+    <p>Wheel plan : {{suspiciousResponse.wheelplan}}</p>
+    <p>Month of first registration : {{suspiciousResponse.monthOfFirstRegistration}}</p>
+
+    <button type="button" class="btn btn-primary" ng-click="suspiciousReultsClose(true)">Okay</button>
+</div>
+
+<div ng-if="suspiciousResponseError">
+    <h4>Something went wrong</h4>
+
+    <p>{{suspiciousResponseError}}</p>
+
+    <button type="button" class="btn btn-primary" ng-click="suspiciousReultsClose(true)">Okay</button>
+</div>
