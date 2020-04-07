@@ -89,11 +89,11 @@ assignmentApp.
 
 					$http.get(urlBase + data.action, {
 						cache: false,
-						// headers: {
-						// 	"Content-Type": "application/json",
-						// 	"Accept": "application/json",
-						// 	"Authorization": jwtToken
-						// }
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -115,11 +115,11 @@ assignmentApp.
 
 					$http.post(urlBase + data.action, whiteListVehicle, {
 						cache: true,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
@@ -143,11 +143,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, whiteListVehicle, {
 						cache: true,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
@@ -174,11 +174,11 @@ assignmentApp.
 
 					$http.get(urlBase + data.action, {
 						cache: false,
-						// headers: {
-							// "Content-Type": "application/json",
-							// "Accept": "application/json",
-							// "Authorization": jwtToken
-						// }
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response.data,
@@ -199,11 +199,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
@@ -227,11 +227,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
@@ -255,11 +255,11 @@ assignmentApp.
 
 					$http.delete(urlBase + data.action, {
 						cache: true,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
@@ -285,11 +285,11 @@ assignmentApp.
 
 					$http.get(urlBase + data.action, {
 						cache: false,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+								"Content-Type": "application/json",
+								"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response.data,
@@ -311,11 +311,11 @@ assignmentApp.
 
 					$http.post(urlBase + data.action, guestUser, {
 						cache: false,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+								"Content-Type": "application/json",
+								"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
@@ -339,11 +339,11 @@ assignmentApp.
 
 					$http.put(urlBase + data.action, guestUser, {
 						cache: false,
-					//	headers: {
-							//	"Content-Type": "application/json",
-							//	"Accept": "application/json",
-					//		"Authorization": jwtToken
-					//	}
+						headers: {
+								"Content-Type": "application/json",
+								"Accept": "application/json",
+							"Authorization": jwtToken
+						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
