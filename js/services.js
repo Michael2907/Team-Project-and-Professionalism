@@ -4,6 +4,7 @@
 
 assignmentApp.
 	service('applicationData', function ($rootScope) {
+		// used to share data bewteen controllers
 		var sharedService = {};
 		sharedService.info = {};
 
@@ -20,14 +21,13 @@ assignmentApp.
 			'$http',                  // dependency, $http handles the ajax request
 			function ($q, $http) {     // the parameters must be in the same order as the dependencies
 
-
 				var urlBase = 'https://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api/';
 
 				////////////////////////////////	Login	 ////////////////////////////////
 
+				// authenciates users by returning a jwt token 
 				this.login = function (user) {
 					let userJSON = { "username": user.username, "password": user.password };
-
 
 					var defer = $q.defer(),
 						data = {
@@ -41,19 +41,15 @@ assignmentApp.
 							});
 
 						}, function errorCallback(err) {
-
 							defer.resolve(err.data);
-
-
 						});
 					return defer.promise;
 
 				};
 
-
+				// changes users password, mianly called when new user 
 				this.changePassword = function (user) {
 					let userJSON = { "username": user.username, "password": user.oldPassword };
-
 
 					var defer = $q.defer(),
 						data = {
@@ -67,13 +63,9 @@ assignmentApp.
 							});
 
 						}, function errorCallback(err) {
-
 							defer.resolve(err.data);
-
-
 						});
 					return defer.promise;
-
 				};
 
 
@@ -93,14 +85,11 @@ assignmentApp.
 							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
-
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response.data,
 						});
-
 					}, function errorCallback(err) {
-
 						defer.reject(err);
 					});
 					return defer.promise;
@@ -123,14 +112,11 @@ assignmentApp.
 						defer.resolve({
 							data: response,
 						});
-
 					}, function errorCallback(err) {
-
 						defer.reject(err);
 					});
 
 					return defer.promise;
-
 				};
 
 				this.updateWhiteListVehicle = function (whiteListVehicle, jwtToken) {
@@ -151,14 +137,10 @@ assignmentApp.
 						defer.resolve({
 							data: response,
 						});
-
 					}, function errorCallback(err) {
-
 						defer.reject(err);
 					});
-
 					return defer.promise;
-
 				};
 
 
@@ -284,8 +266,8 @@ assignmentApp.
 					$http.get(urlBase + data.action, {
 						cache: false,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
@@ -310,8 +292,8 @@ assignmentApp.
 					$http.post(urlBase + data.action, guestUser, {
 						cache: false,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
@@ -338,8 +320,8 @@ assignmentApp.
 					$http.put(urlBase + data.action, guestUser, {
 						cache: false,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
+							"Content-Type": "application/json",
+							"Accept": "application/json",
 							"Authorization": jwtToken
 						}
 					}).then(function successCallback(response) {
@@ -375,7 +357,6 @@ assignmentApp.
 					return defer.promise;
 				};
 
-				// https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html#register-for-ves-api
 				this.checkSuspiciousVehicle = function (numberPlate) {
 					let body = { registrationNumber: numberPlate }
 
@@ -400,8 +381,8 @@ assignmentApp.
 
 			}
 		]
-	).
-	factory('authFact', function () {
+).
+	factory('authFact', function () { // used to store the JWT Token
 		var authFact = {};
 		authFact.setAccessToken = function (token) {
 			authFact.token = token;
@@ -409,14 +390,6 @@ assignmentApp.
 
 		authFact.getAccessToken = function () {
 			return authFact.token;
-		}
-
-		authFact.setUserGroup = function (userGroup) {
-			authFact.userGroup = userGroup;
-		}
-
-		authFact.getUserGroup = function () {
-			return authFact.userGroup;
 		}
 
 		return authFact;

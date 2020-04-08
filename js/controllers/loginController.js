@@ -30,8 +30,7 @@ assignmentApp.
 										$scope.errorMessage = "";
 										$scope.message = "";
 										authFact.setAccessToken(response.data.jwtToken)
-										// TO DO: change to -  response.data.userGroup
-										applicationData.publishInfo('userGroup', 1);
+										applicationData.publishInfo('userGroup', response.data.user.userGroup);
 										$scope.login = {};
 										$location.path("/");
 									}

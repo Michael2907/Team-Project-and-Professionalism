@@ -2,8 +2,7 @@
 
     <h2>Book Guest</h2>
 
-    <input class="form-control" type="text" name="username" ng-model="guest.username" placeholder="Name" required>
-    <span ng-show="editGuestBooking.username.$dirty && editGuestBooking.username.$error.required">Username is required.</span>
+    <input class="form-control" type="text" name="username" ng-model="guest.username" placeholder="Name" readonly>
 
     <br>
     <input class="form-control" type="email" name="email" ng-model="guest.email" placeholder="Email Address" required>
@@ -11,7 +10,7 @@
     <span ng-show="editGuestBooking.email.$error.email">Invalid email address.</span>
 
     <br>
-    <!-- min="7" max="7" -->
+    
     <input class="form-control" type="text" name="numberPlate" ng-model="guest.numberPlate" placeholder="Number Plate" minlength="7" maxlength="7"
         required>
     <span ng-show="editGuestBooking.numberPlate.$error.required">Number Plate is required.</span>
@@ -27,6 +26,19 @@
     <span ng-show="editGuestBooking.endDateTime.$error.date">Invalid date.</span>
 
     <br>
+
+    <div ng-if="userGroup == 1">
+        <label>
+            <input type="radio" ng-model="guest.userGroup" value="2">
+            Standard
+        </label>
+        <label>
+            <input type="radio" ng-model="guest.userGroup" value="3">
+            Guest
+        </label>
+
+        <p class="warningMessage" ng-if="guest.userGroup == 2">Warning you are about to <br> make a guest user a standrard <br> user, meaning they will <br>have access to the system.</p>
+    </div>
 
     <button type="button" class="btn btn-primary" ng-click="editGClose(true)"
         ng-disabled="editGuestBooking.$invalid">Submit</button>
