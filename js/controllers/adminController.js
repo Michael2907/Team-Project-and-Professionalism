@@ -11,14 +11,15 @@ assignmentApp.
       '$location',
       
       function ($scope, dataService, authFact) {
+        
         // White List
-
         var columnDefsW = [
           { headerName: "ID", field: "userId", sortable: true, filter: true, resizable: true },
           { headerName: "Name", field: "username", sortable: true, filter: true, resizable: true },
           { headerName: "Number Plate", field: "numberPlate", sortable: true, filter: true, resizable: true },
           { headerName: "Email", field: "email", sortable: true, filter: true, resizable: true },
           { headerName: "User Group", field: "userGroup", sortable: true, filter: true, resizable: true, valueGetter: function(params) {
+            // displays Admin or Standard rather than 1 or 2
             if(params.data.userGroup == 1){
               return "Admin";
             } 
@@ -29,10 +30,7 @@ assignmentApp.
         ];
 
         var rowDataW = [];
-        // var rowDataW = [
-        //   { userId: 1, username: "Michael Clayton", numberPlate: "QQ11 WER", email:"asdadas@Asdasdsa" , userGroup: "admin" },
-        //   { userId: 2, username: "Jordan Marshall", numberPlate: "WW22 ASD", email:"asdadas@Asdasdsa", userGroup: "standard" },
-        // ];
+
         var gridOptionsW = {
           columnDefs: columnDefsW,
           rowData: rowDataW,
@@ -59,7 +57,7 @@ assignmentApp.
           userGroup: "1"
         }
         
-        $scope.jwtToken = ""
+        $scope.jwtToken = "";
         $scope.jwtToken = authFact.getAccessToken();
 
         function onSelectionChangedW() {
@@ -68,8 +66,6 @@ assignmentApp.
           document.getElementById("editBtnW").disabled = false;
           document.getElementById("deleteBtnW").disabled = false;
           document.getElementById("suspiciousBtn").disabled = false;
-
-
           document.getElementById("editBtnB").disabled = true;
           document.getElementById("deleteBtnB").disabled = true;
         }
@@ -89,6 +85,7 @@ assignmentApp.
             $scope.newUser.userGroup= parseInt($scope.newUser.userGroup);
             dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken).then(
               function (response) {
+                // updates the table
                 getWhiteList($scope.jwtToken);                
               },
               function (err) {
@@ -99,6 +96,7 @@ assignmentApp.
               }
             );
           }
+          // resets the varaible 
           $scope.newUser = {
             userGroup: "1"
           }
@@ -116,7 +114,6 @@ assignmentApp.
             dataService.updateWhiteListVehicle($scope.user, $scope.jwtToken).then(
               function (response) {
                 getWhiteList($scope.jwtToken);
-                
               },
               function (err) {
                 getWhiteList($scope.jwtToken);
@@ -152,7 +149,7 @@ assignmentApp.
         }
 
         var getWhiteList = function (jwtToken) {
-          dataService.getWhiteList(jwtToken, $scope.jwtToken).then(
+          dataService.getWhiteList(jwtToken).then(
             function (response) {
              let filteredResponse = response.data.filter(user => user.deleted == false && user.userGroup != 3)
               gridOptionsW.api.setRowData(filteredResponse)
@@ -164,6 +161,7 @@ assignmentApp.
             }
           );
         };
+        // calls on initialise
         getWhiteList($scope.jwtToken);
 
         $scope.suspicious = function () {
@@ -191,26 +189,20 @@ assignmentApp.
         }
 
         $scope.suspiciousReultsClose = function () {
+          // resets varibales 
           $scope.suspiciousResponse = undefined;
           $scope.suspiciousResponseError = undefined;
-
           suspiciousResultsModal.style.display = "none";
         };
 
         /////////////////////////    Black List     ///////////////////////////////
 
         var columnDefsB = [
-          // { headerName: "ID", field: "id", sortable: true, filter: true },
           { headerName: "Number Plate", field: "numberPlate", sortable: true, filter: true, resizable: true },
           { headerName: "Description", field: "description", sortable: true, filter: true, resizable: true },
         ];
 
         var rowDataB = []
-        // var rowDataBold = [
-        //   { id: 1, numberPlate: "QQ11 WER", description : "qwet rtrw etw retrwt wr" },
-        //   { id: 2, numberPlate: "WW22 ASD", description : "fd ghshs dfhshf sfdsh" },
-        //   { id: 3, numberPlate: "EE33 ZXC", description : "dfn gdsdbsbr seb" },
-        // ];
 
         var gridOptionsB = {
           columnDefs: columnDefsB,
@@ -238,7 +230,6 @@ assignmentApp.
           $scope.bannedVehicle = selectedRows[0];
           document.getElementById("editBtnB").disabled = false;
           document.getElementById("deleteBtnB").disabled = false;
-
           document.getElementById("editBtnW").disabled = true;
           document.getElementById("deleteBtnW").disabled = true;
           document.getElementById("suspiciousBtn").disabled = true;
@@ -247,7 +238,6 @@ assignmentApp.
         var addModalB = document.getElementById("addModalB");
         var editModalB = document.getElementById("editModalB");
         var deleteModalB = document.getElementById("deleteModalB");
-
 
         $scope.addB = function () {
           addModalB.style.display = "block";
@@ -294,12 +284,12 @@ assignmentApp.
 
         $scope.deleteB = function () {
           deleteModalB.style.display = "block";
-
         };
         $scope.deleteBClose = function (response) {
           if (response) {
             dataService.deleteBlackListVehicle($scope.bannedVehicle.numberPlate, $scope.jwtToken).then(
               function (response) {
+                // updates black list table
                getBlackList($scope.jwtToken);
               },
               function (err) {

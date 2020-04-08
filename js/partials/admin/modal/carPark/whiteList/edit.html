@@ -1,6 +1,5 @@
 <form name="editWForm">
     <input class="form-control" type="text" name="username" ng-model="user.username" placeholder="Name" readonly>
-    <span ng-show="editWForm.username.$dirty && editWForm.username.$error.required">Username is required.</span>
 
     <br>
     <input class="form-control" type="text" name="numberPlate" ng-model="user.numberPlate" placeholder="Number Plate" minlength="7" maxlength="7"

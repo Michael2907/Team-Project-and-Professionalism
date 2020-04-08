@@ -62,14 +62,20 @@ assignmentApp.
 
 // ref : https://www.youtube.com/watch?v=Q5iQk0OuDus
 
-assignmentApp.run(['$rootScope', '$location', 'authFact', function ($rootScope, $location, authFact) {
+assignmentApp.run(['$rootScope', '$location', 'authFact', 'applicationData', function ($rootScope, $location, authFact, applicationData) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
-
     if (next.$$route.authenticated) {
+      // checks there is a JWT Token
       var userAuth = authFact.getAccessToken();
       if (!userAuth) {
         $location.path('/login');
       }
+      // checks if route is admin only, user has access or not
+      if(next.$$route.adminOnly == true && applicationData.info.userGroup != 1){
+        if(current){
+          $location.path(current.$$route.originalPath);
+        }
+      } 
     }
   });
 }]);
