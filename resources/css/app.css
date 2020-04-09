@@ -1,3 +1,7 @@
+* {
+	font-family: arial, helvetica, sans-serif;
+}
+
 /* Login */
 
 #loginForm{
@@ -96,4 +100,32 @@
   50%  { left:110px; top:0px; transform: scaleX(1); color: red;}
   51%  { transform: scaleX(-1); }
   100% { left:0px; top:0px; transform: scaleX(-1)  }
+}
+
+.nav {
+  padding: 5px;
+  border-bottom: #007bff 2px solid;
+  margin: 0px 50px;
+}
+
+.nav-link:first-child{
+  margin-left: auto;
+}
+
+.nav-link:last-child{
+  margin-right: auto;
+}
+
+@media screen and (max-width: 655px) {
+  .nav {
+    display: grid !important;
+  }
+
+  .nav-link{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px !important;
+  }
+
+
 }
