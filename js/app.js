@@ -60,8 +60,6 @@ assignmentApp.
     ]
   );
 
-// ref : https://www.youtube.com/watch?v=Q5iQk0OuDus
-
 assignmentApp.run(['$rootScope', '$location', 'authFact', 'applicationData', function ($rootScope, $location, authFact, applicationData) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     if (next.$$route.authenticated) {
