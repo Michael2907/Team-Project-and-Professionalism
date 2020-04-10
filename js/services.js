@@ -83,7 +83,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -106,7 +106,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -131,7 +131,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -157,7 +157,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -182,7 +182,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -210,7 +210,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -238,7 +238,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -268,7 +268,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -294,7 +294,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -322,7 +322,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
