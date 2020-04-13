@@ -48,7 +48,7 @@ assignmentApp.
 				};
 
 				// changes users password, mianly called when new user 
-				this.changePassword = function (user) {
+				this.changePassword = function (user, jwtToken) {
 					let userJSON = { "username": user.username, "password": user.oldPassword };
 
 					var defer = $q.defer(),
@@ -56,7 +56,14 @@ assignmentApp.
 							action: 'user/changePassword?newPassword=' + user.newPassword,
 						};
 
-					$http.put(urlBase + data.action, userJSON, { cache: true }).
+					$http.put(urlBase + data.action, userJSON, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).
 						then(function successCallback(response) {
 							defer.resolve({
 								data: response,

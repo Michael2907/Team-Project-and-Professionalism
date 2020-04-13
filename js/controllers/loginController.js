@@ -15,6 +15,7 @@ assignmentApp.
 				$scope.reset = {};
 				$scope.errorMessage = "";
 				$scope.message = "";
+				$scope.jwtToken = "";
 
 				$scope.login = function () {
 					// Show
@@ -25,12 +26,16 @@ assignmentApp.
 								if (response.status != 401) {
 									if (response.data.user.initialised == false) { // first time user has logged on
 										resetPasswordModal.style.display = "block";
-										$scope.message = "This is the first time you are logging in. Please reset your password."
+										$scope.message = "This is the first time you are logging in. Please reset your password.";
+										$scope.jwtToken = response.data.jwtToken;
+
 									} else { // user already initialised
 										$scope.errorMessage = "";
 										$scope.message = "";
 										authFact.setAccessToken(response.data.jwtToken)
 										applicationData.publishInfo('userGroup', response.data.user.userGroup);
+										applicationData.publishInfo('username', response.data.user.username);
+
 										$scope.login = {};
 										$location.path("/");
 									}
@@ -50,13 +55,16 @@ assignmentApp.
 
 				var resetPasswordModal = document.getElementById("resetPasswordModal");
 
+
 				$scope.resetPassword = function () {
 					resetPasswordModal.style.display = "block";
+					$scope.jwtToken = authFact.getAccessToken();
+
 				};
 
 				$scope.resetPasswordClose = function (response) {
 					if (response) {
-						dataService.changePassword($scope.reset).then(
+						dataService.changePassword($scope.reset, $scope.jwtToken).then(
 							function (response) {
 								if (response.data.status == 200) {
 									$scope.errorMessage = "Please login with your updated password"
