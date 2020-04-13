@@ -6,11 +6,9 @@ assignmentApp.
     [
       '$scope',
       'dataService',
-      'authFact',
       'applicationData',
-      '$location',
-      
-      function ($scope, dataService, authFact) {
+      'authFact',
+      function ($scope, dataService, applicationData, authFact) {
         
         // White List
         var columnDefsW = [
@@ -63,11 +61,21 @@ assignmentApp.
         function onSelectionChangedW() {
           var selectedRows = gridOptionsW.api.getSelectedRows();
           $scope.user = selectedRows[0];
-          document.getElementById("editBtnW").disabled = false;
-          document.getElementById("deleteBtnW").disabled = false;
-          document.getElementById("suspiciousBtn").disabled = false;
-          document.getElementById("editBtnB").disabled = true;
-          document.getElementById("deleteBtnB").disabled = true;
+
+          if($scope.user.username == applicationData.info.username){ // dont allow user to edit themselves
+            document.getElementById("editBtnW").disabled = true;
+            document.getElementById("deleteBtnW").disabled = true;
+            document.getElementById("suspiciousBtn").disabled = true;
+            document.getElementById("editBtnB").disabled = true;
+            document.getElementById("deleteBtnB").disabled = true;
+          } else {
+            document.getElementById("editBtnW").disabled = false;
+            document.getElementById("deleteBtnW").disabled = false;
+            document.getElementById("suspiciousBtn").disabled = false;
+            document.getElementById("editBtnB").disabled = true;
+            document.getElementById("deleteBtnB").disabled = true;
+          }
+
         }
 
         var addModalW = document.getElementById("addModalW");
