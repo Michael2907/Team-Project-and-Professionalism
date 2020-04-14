@@ -15,61 +15,64 @@ var assignmentApp = angular.module("AssignmentApp", [
 
 // note this fullstop where we chain the call to config
 
-assignmentApp.
-  config(
-    [
-      '$routeProvider',     // built in variable which injects functionality, passed as a string
-      function ($routeProvider) {
-        $routeProvider.
-          when('/admin', {
-            templateUrl: 'js/partials/admin.html',
-            controller: 'AdminController',
-            // authenticated: true,
-            // adminOnly: true
-          }).
-          when('/login', {
-            templateUrl: 'js/partials/login.html',
-            controller: 'LoginController'
-          }).
-          when('/reports', {
-            templateUrl: 'js/partials/reporting.html',
-            controller: 'ReportingController',
-            authenticated: true,
-            adminOnly: true
-          }).
-          when('/guest-booking', {
-            templateUrl: 'js/partials/guestBooking.html',
-            controller: 'guestBookingController',
-            authenticated: true,
-            adminOnly: false
-          }).
-          when('/', {
-            templateUrl: 'js/partials/landing.html',
-            controller: 'IndexController',
-            authenticated: true,
-            adminOnly: false
-          }).
-          when('/modalTest', {
-            templateUrl: 'js/partials/testModal.html',
-            controller: 'ModalDemoCtrl'
-          }).
-          otherwise({
-            redirectTo: '/login',
-          });
-      }
-    ]
-  );
+assignmentApp.config([
+  "$routeProvider", // built in variable which injects functionality, passed as a string
+  function($routeProvider) {
+    $routeProvider
+      .when("/admin", {
+        templateUrl: "js/partials/admin.html",
+        controller: "AdminController",
+        authenticated: true,
+        adminOnly: true
+      })
+      .when("/login", {
+        templateUrl: "js/partials/login.html",
+        controller: "LoginController"
+      })
+      .when("/reports", {
+        templateUrl: "js/partials/reporting.html",
+        controller: "ReportingController",
+        authenticated: false,
+        adminOnly: false
+      })
+      .when("/guest-booking", {
+        templateUrl: "js/partials/guestBooking.html",
+        controller: "guestBookingController",
+        authenticated: true,
+        adminOnly: false
+      })
+      .when("/", {
+        templateUrl: "js/partials/landing.html",
+        controller: "IndexController",
+        authenticated: true,
+        adminOnly: false
+      })
+      .when("/modalTest", {
+        templateUrl: "js/partials/testModal.html",
+        controller: "ModalDemoCtrl"
+      })
+      .otherwise({
+        redirectTo: "/login"
+      });
+  }
+]);
 
-// ref : https://www.youtube.com/watch?v=Q5iQk0OuDus
 
-assignmentApp.run(['$rootScope', '$location', 'authFact', function ($rootScope, $location, authFact) {
+assignmentApp.run(['$rootScope', '$location', 'authFact', 'applicationData', function ($rootScope, $location, authFact, applicationData) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
-
     if (next.$$route.authenticated) {
+      // checks there is a JWT Token
       var userAuth = authFact.getAccessToken();
       if (!userAuth) {
         $location.path('/login');
       }
+      // checks if route is admin only, user has access or not
+      if(next.$$route.adminOnly == true && applicationData.info.userGroup != 1){
+        if(current){
+          $location.path(current.$$route.originalPath);
+        }
+      } 
     }
   });
 }]);
+

@@ -1,86 +1,79 @@
-assignmentApp.controller("CurrentlyParkedModalController", function(
+assignmentApp.controller("CurrentlyParkedModalController", function (
   dataService,
   $uibModal,
-  $document
+  $document,
+  authFact
 ) {
   var $cp = this;
-  // dataService
-  //   .getActivities("2020-03-16T15:03:44.343Z", "2020-03-20T15:03:44.343Z")
-  //   .then(res => {
-  //     const {
-  //       data: { data: activies }
-  //     } = res;
-  //     console.log(res);
 
-  //   });
-  var activies = [
+  $cp.getActivities = function () {
+    return dataService
+      .getCurrentlyParked(authFact.getAccessToken())
+      .then((res) => {
+        const {
+          data: { data: activities },
+        } = res;
+        console.log(res);
+
+        console.log("activities", activities);
+
+        return activities.map((activity) => {
+          return {
+            activityID: activity.activity.activityID,
+            username: activity.user.username,
+            numberPlate: activity.user.numberplate,
+            dateTimeEntered: activity.activity.dateTimeEntered,
+            dateTimeExited: activity.activity.dateTimeExited,
+          };
+        });
+      });
+  };
+
+  var cpColumnDefs = [
     {
-      activityID: 0,
-      dateTimeEntered: "2020-03-16T15:03:44.343Z",
-      dateTimeExited: "2020-03-16T15:03:44.343Z",
-      userID: 0
+      headerName: "ID",
+      field: "activityID",
+      sortable: true,
+      filter: true,
+      resizable: true,
     },
     {
-      activityID: 1,
-      dateTimeEntered: "2020-03-16T15:03:44.343Z",
-      dateTimeExited: "2020-03-16T15:03:44.343Z",
-      userID: 0
+      headerName: "Name",
+      field: "username",
+      sortable: true,
+      filter: true,
+      resizable: true,
     },
     {
-      activityID: 2,
-      dateTimeEntered: "2020-03-17T15:03:44.343Z",
-      dateTimeExited: "2020-03-17T15:03:44.343Z",
-      userID: 0
+      headerName: "Number Plate",
+      field: "numberplate",
+      sortable: true,
+      filter: true,
+      resizable: true,
     },
     {
-      activityID: 3,
-      dateTimeEntered: "2020-03-17T15:03:44.343Z",
-      dateTimeExited: "2020-03-17T15:03:44.343Z",
-      userID: 0
+      headerName: "Time Entered",
+      field: "dateTimeEntered",
+      sortable: true,
+      filter: true,
+      resizable: true,
     },
-    {
-      activityID: 4,
-      dateTimeEntered: "2020-03-18T15:03:44.343Z",
-      dateTimeExited: "2020-03-18T15:03:44.343Z",
-      userID: 0
-    },
-    {
-      activityID: 5,
-      dateTimeEntered: "2020-03-18T15:03:44.343Z",
-      dateTimeExited: "2020-03-18T15:03:44.343Z",
-      userID: 0
-    },
-    {
-      activityID: 6,
-      dateTimeEntered: "2020-03-19T15:03:44.343Z",
-      dateTimeExited: "2020-03-19T15:03:44.343Z",
-      userID: 0
-    },
-    {
-      activityID: 7,
-      dateTimeEntered: "2020-03-19T15:03:44.343Z",
-      dateTimeExited: "2020-03-19T15:03:44.343Z",
-      userID: 0
-    },
-    {
-      activityID: 8,
-      dateTimeEntered: "2020-03-19T15:03:44.343Z",
-      dateTimeExited: "2020-03-19T15:03:44.343Z",
-      userID: 0
-    },
-    {
-      activityID: 9,
-      dateTimeEntered: "2020-03-20T15:03:44.343Z",
-      dateTimeExited: "2020-03-20T15:03:44.343Z",
-      userID: 0
-    }
   ];
 
-  $cp.data = activies.length;
+  $cp.rowData = [];
 
   $cp.animationsEnabled = true;
 
-  $cp.open = function(size, parentSelector) {
+  $cp.cpGridOptions = (rowData) => {
+    return {
+      columnDefs: cpColumnDefs,
+      rowData: rowData,
+      pagination: true,
+      paginationPageSize: 10,
+    };
+  };
+
+  $cp.open = function (size, parentSelector) {
     var parentElem = parentSelector
       ? angular.element(
           $document[0].querySelector(".modal-demo " + parentSelector)
@@ -91,40 +84,39 @@ assignmentApp.controller("CurrentlyParkedModalController", function(
       ariaLabelledBy: "currentlyParkedTitle",
       ariaDescribedBy: "currentlyParkedBody",
       templateUrl: "currentlyParkedContent.html",
-      controller: "ModalInstanceCtrl",
+      controller: "cpModalInstanceCtrl",
       controllerAs: "$cp",
       size: size,
       appendTo: parentElem,
       resolve: {
-        data: function() {
+        data: function () {
           return $cp.data;
-        }
-      }
-    });
-
-    modalInstance.result.then(
-      function(selectedItem) {
-        $cp.selected = selectedItem;
+        },
       },
-      function() {
-        $log.info("Modal dismissed at: " + new Date());
-      }
-    );
+    });
+    modalInstance.rendered.then(() => {
+      $cp.getActivities().then((rowData) => {
+        var cpGridDivB = document.querySelector("#cpGrid");
+        var options = $cp.cpGridOptions(rowData);
+
+        new agGrid.Grid(cpGridDivB, options);
+      });
+    });
   };
 
-  $cp.openComponentModal = function() {
+  $cp.openComponentModal = function () {
     $uibModal.open({
       animation: $cp.animationsEnabled,
       component: "currentlyParkedComponent",
       resolve: {
-        data: function() {
+        data: function () {
           return $cp.data;
-        }
-      }
+        },
+      },
     });
   };
 
-  $cp.toggleAnimation = function() {
+  $cp.toggleAnimation = function () {
     $cp.animationsEnabled = !$cp.animationsEnabled;
   };
 });
@@ -132,21 +124,16 @@ assignmentApp.controller("CurrentlyParkedModalController", function(
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-assignmentApp.controller("ModalInstanceCtrl", function(
+assignmentApp.controller("cpModalInstanceCtrl", function (
   $uibModalInstance,
-
   data
 ) {
   var $cp = this;
 
   $cp.data = data;
 
-  $cp.ok = function() {
-    $uibModalInstance.close($cp.selected.item);
-  };
-
-  $cp.cancel = function() {
-    $uibModalInstance.dismiss("cancel");
+  $cp.ok = function () {
+    $uibModalInstance.close();
   };
 });
 
@@ -157,24 +144,13 @@ assignmentApp.component("currentlyParkedComponent", {
   bindings: {
     resolve: "<",
     close: "&",
-    dismiss: "&"
+    dismiss: "&",
   },
-  controller: function() {
+  controller: function () {
     var $cp = this;
 
-    $cp.$onInit = function() {
-      $cp.items = $cp.resolve.items;
-      $cp.selected = {
-        item: $cp.items[0]
-      };
+    $cp.ok = function () {
+      $cp.close();
     };
-
-    $cp.ok = function() {
-      $cp.close({ $value: $cp.selected.item });
-    };
-
-    $cp.cancel = function() {
-      $cp.dismiss({ $value: "cancel" });
-    };
-  }
+  },
 });

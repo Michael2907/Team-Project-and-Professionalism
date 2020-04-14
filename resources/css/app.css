@@ -1,3 +1,7 @@
+* {
+	font-family: arial, helvetica, sans-serif;
+}
+
 /* Login */
 
 #loginForm{
@@ -41,7 +45,10 @@
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-   width: fit-content !important;
+  width: fit-content !important;
+  height: fit-content;
+  max-height: 80vh;
+  overflow: auto;
 }
 
 .otherOptionBtn{
@@ -51,6 +58,16 @@
 
 /* Admin */
 
+.dvlaBtn{
+  float: right;
+}
+
+.dvlaLbl{
+  float: right;
+  margin-top: 6px;
+  margin-right: 6px;
+}
+
 #movingCarGreen{
   position: relative;
   animation-name: moveGreenCar;
@@ -58,10 +75,15 @@
   animation-iteration-count: infinite;
 }
 
+.warningMessage{
+  color: red;
+  padding-top: 15px;
+}
+
 @keyframes moveGreenCar {
   0%   { left:0px; top:0px; transform: scaleX(1) }
-  25%  { left:125px; top:0px; transform: scaleX(1); color: green;}
-  50%  { left:250px; top:0px; transform: scaleX(1) }
+  25%  { left:110px; top:0px; transform: scaleX(1); color: green;}
+  50%  { left:220px; top:0px; transform: scaleX(1) }
   51%  { transform: scaleX(-1); }
   100% { left:0px; top:0px; transform: scaleX(-1)  }
 }
@@ -75,7 +97,35 @@
 
 @keyframes moveRedCar {
   0%   { left:0px; top:0px; transform: scaleX(1) }
-  50%  { left:125px; top:0px; transform: scaleX(1); color: red;}
+  50%  { left:110px; top:0px; transform: scaleX(1); color: red;}
   51%  { transform: scaleX(-1); }
   100% { left:0px; top:0px; transform: scaleX(-1)  }
+}
+
+.nav {
+  padding: 5px;
+  border-bottom: #007bff 2px solid;
+  margin: 0px 50px;
+}
+
+.nav-link:first-child{
+  margin-left: auto;
+}
+
+.nav-link:last-child{
+  margin-right: auto;
+}
+
+@media screen and (max-width: 655px) {
+  .nav {
+    display: grid !important;
+  }
+
+  .nav-link{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px !important;
+  }
+
+
 }

@@ -1,9 +1,10 @@
-"use strict";
+use strict";
 // Service to return the data
 
 
 assignmentApp.
 	service('applicationData', function ($rootScope) {
+		// used to share data bewteen controllers
 		var sharedService = {};
 		sharedService.info = {};
 
@@ -20,14 +21,13 @@ assignmentApp.
 			'$http',                  // dependency, $http handles the ajax request
 			function ($q, $http) {     // the parameters must be in the same order as the dependencies
 
-
 				var urlBase = 'https://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api/';
 
 				////////////////////////////////	Login	 ////////////////////////////////
 
+				// authenciates users by returning a jwt token 
 				this.login = function (user) {
 					let userJSON = { "username": user.username, "password": user.password };
-
 
 					var defer = $q.defer(),
 						data = {
@@ -41,39 +41,38 @@ assignmentApp.
 							});
 
 						}, function errorCallback(err) {
-
 							defer.resolve(err.data);
-
-
 						});
 					return defer.promise;
 
 				};
 
-
-				this.changePassword = function (user) {
+				// changes users password, mianly called when new user 
+				this.changePassword = function (user, jwtToken) {
 					let userJSON = { "username": user.username, "password": user.oldPassword };
-
 
 					var defer = $q.defer(),
 						data = {
 							action: 'user/changePassword?newPassword=' + user.newPassword,
 						};
 
-					$http.put(urlBase + data.action, userJSON, { cache: true }).
+					$http.put(urlBase + data.action, userJSON, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).
 						then(function successCallback(response) {
 							defer.resolve({
 								data: response,
 							});
 
 						}, function errorCallback(err) {
-
 							defer.resolve(err.data);
-
-
 						});
 					return defer.promise;
-
 				};
 
 
@@ -81,7 +80,6 @@ assignmentApp.
 
 
 				this.getWhiteList = function (jwtToken) {
-					// console.log(jwtToken)
 					var defer = $q.defer(),
 						data = {
 							action: 'user'
@@ -92,16 +90,13 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
-
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response.data,
 						});
-
 					}, function errorCallback(err) {
-
 						defer.reject(err);
 					});
 					return defer.promise;
@@ -116,22 +111,19 @@ assignmentApp.
 					$http.post(urlBase + data.action, whiteListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
 						});
-
 					}, function errorCallback(err) {
-
 						defer.reject(err);
 					});
 
 					return defer.promise;
-
 				};
 
 				this.updateWhiteListVehicle = function (whiteListVehicle, jwtToken) {
@@ -144,29 +136,24 @@ assignmentApp.
 					$http.put(urlBase + data.action, whiteListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
 							data: response,
 						});
-
 					}, function errorCallback(err) {
-
 						defer.reject(err);
 					});
-
 					return defer.promise;
-
 				};
 
 
 				////////////////////////////////	Black List	 ////////////////////////////////
 
 				this.getBlackList = function (jwtToken) {
-					console.log(jwtToken)
 					var defer = $q.defer(),
 						data = {
 							action: 'blacklist'
@@ -177,7 +164,7 @@ assignmentApp.
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json",
-							"Authorization": jwtToken
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -200,9 +187,9 @@ assignmentApp.
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -228,9 +215,9 @@ assignmentApp.
 					$http.put(urlBase + data.action, blackListVehicle, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -256,9 +243,9 @@ assignmentApp.
 					$http.delete(urlBase + data.action, {
 						cache: true,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -286,9 +273,9 @@ assignmentApp.
 					$http.get(urlBase + data.action, {
 						cache: false,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -312,9 +299,9 @@ assignmentApp.
 					$http.post(urlBase + data.action, guestUser, {
 						cache: false,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -340,9 +327,9 @@ assignmentApp.
 					$http.put(urlBase + data.action, guestUser, {
 						cache: false,
 						headers: {
-								"Content-Type": "application/json",
-								"Accept": "application/json",
-							"Authorization": jwtToken
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
 						}
 					}).then(function successCallback(response) {
 						defer.resolve({
@@ -377,7 +364,60 @@ assignmentApp.
 					return defer.promise;
 				};
 
-				// https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html#register-for-ves-api
+        this.getActivities = (startDate, endDate, jwtToken) => {
+          var defer = $q.defer(), // The promise
+            data = {
+              // the data to be passed to the url
+              action: "activity/date",
+            };
+          var config = {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + jwtToken,
+            },
+          };
+          var parameters = `?startDate=${new Date(
+            startDate
+          ).toLocaleDateString()}&endDate=${new Date(
+            endDate
+          ).toLocaleDateString()}`;
+
+          $http
+            .get(urlBase + data.action + parameters, config)
+            .then((response) => defer.resolve({ data: response }))
+            .catch((err) => {
+              defer.reject(err);
+            });
+
+          return defer.promise;
+        };
+
+        this.getCurrentlyParked = (jwtToken) => {
+          var defer = $q.defer(), // The promise
+            data = {
+              // the data to be passed to the url
+              action: "activity/currentlyParked",
+            };
+          var config = {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + jwtToken,
+            },
+          };
+
+
+          $http
+            .get(urlBase + data.action, config)
+            .then((response) => defer.resolve({ data: response }))
+            .catch((err) => {
+              defer.reject(err);
+            });
+
+          return defer.promise;
+        };
+        
 				this.checkSuspiciousVehicle = function (numberPlate) {
 					let body = { registrationNumber: numberPlate }
 
@@ -386,7 +426,6 @@ assignmentApp.
 					$http.post("https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles", JSON.stringify(body), {
 						headers: {
 							"Content-Type": "application/json",
-							// "Accept": "application/json",
 							"x-api-key": "HdSftuDOYT1M5lp6BAnqw428qZWLP6HG7jDN1owN"
 						}
 					}).then(function successCallback(response) {
@@ -403,8 +442,8 @@ assignmentApp.
 
 			}
 		]
-	).
-	factory('authFact', function () {
+).
+	factory('authFact', function () { // used to store the JWT Token
 		var authFact = {};
 		authFact.setAccessToken = function (token) {
 			authFact.token = token;
@@ -412,14 +451,6 @@ assignmentApp.
 
 		authFact.getAccessToken = function () {
 			return authFact.token;
-		}
-
-		authFact.setUserGroup = function (userGroup) {
-			authFact.userGroup = userGroup;
-		}
-
-		authFact.getUserGroup = function () {
-			return authFact.userGroup;
 		}
 
 		return authFact;
