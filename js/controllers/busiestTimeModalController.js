@@ -1,4 +1,4 @@
-assignmentApp.controller("BusiestDayModalController", function (
+assignmentApp.controller("BusiestTimeModalController", function (
   dataService,
   $uibModal,
   $document,
@@ -14,17 +14,23 @@ assignmentApp.controller("BusiestDayModalController", function (
           data: { data: activities },
         } = res;
         console.log(res);
-        var activityDays = activities.map((a) =>
-          new Date(a.activity.dateTimeEntered).getDay()
+
+        console.log("activities", activities);
+        var activityHours = activities.map((a) =>
+          new Date(a.activity.dateTimeEntered).getHours()
         );
 
         return [
           [
-            activityDays.filter((day) => day === 1).length,
-            activityDays.filter((day) => day === 2).length,
-            activityDays.filter((day) => day === 3).length,
-            activityDays.filter((day) => day === 4).length,
-            activityDays.filter((day) => day === 5).length,
+            activityHours.filter((hour) => hour === 9).length,
+            activityHours.filter((hour) => hour === 10).length,
+            activityHours.filter((hour) => hour === 11).length,
+            activityHours.filter((hour) => hour === 12).length,
+            activityHours.filter((hour) => hour === 13).length,
+            activityHours.filter((hour) => hour === 14).length,
+            activityHours.filter((hour) => hour === 15).length,
+            activityHours.filter((hour) => hour === 16).length,
+            activityHours.filter((hour) => hour === 17).length,
           ],
         ];
       });
@@ -32,8 +38,18 @@ assignmentApp.controller("BusiestDayModalController", function (
 
   $ctrl.animationsEnabled = true;
 
-  $ctrl.labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  $ctrl.series = ["Days Of the Week"];
+  $ctrl.labels = [
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+  ];
+  $ctrl.series = ["Hours of the day"];
 
   $ctrl.format = "dd-MMMM-yyyy";
 
@@ -105,10 +121,10 @@ assignmentApp.controller("BusiestDayModalController", function (
       : undefined;
     var modalInstance = $uibModal.open({
       animation: $ctrl.animationsEnabled,
-      ariaLabelledBy: "busiestDayTitle",
-      ariaDescribedBy: "busiestDayBody",
-      templateUrl: "busiestDayContent.html",
-      controller: "BDModalInstanceCtrl",
+      ariaLabelledBy: "busiestTimeTitle",
+      ariaDescribedBy: "busiestTimeBody",
+      templateUrl: "busiestTimeContent.html",
+      controller: "BTModalInstanceCtrl",
       controllerAs: "$ctrl",
       size: size,
       appendTo: parentElem,
@@ -147,7 +163,7 @@ assignmentApp.controller("BusiestDayModalController", function (
   $ctrl.openComponentModal = function () {
     $uibModal.open({
       animation: $ctrl.animationsEnabled,
-      component: "busiestDayComponent",
+      component: "busiestTimeComponent",
       resolve: {
         series: function () {
           return $ctrl.series;
@@ -185,7 +201,7 @@ assignmentApp.controller("BusiestDayModalController", function (
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-assignmentApp.controller("BDModalInstanceCtrl", function (
+assignmentApp.controller("BTModalInstanceCtrl", function (
   $uibModalInstance,
   series,
   labels,
@@ -216,24 +232,28 @@ assignmentApp.controller("BDModalInstanceCtrl", function (
     console.log("is it here");
     $ctrl.popup1.opened = true;
   };
+
   $ctrl.open2 = function () {
     console.log("is it here");
     $ctrl.popup2.opened = true;
   };
 
   $ctrl.getActivities = function () {
-    getActivities($ctrl.startDt, $ctrl.endDt).then((activities) => {
+    var endDt = new Date($ctrl.startDt);
+    endDt.setDate(endDt.getDate() + 1);
+    getActivities($ctrl.startDt, endDt).then((activities) => {
       console.log("get activites", activities);
       $ctrl.data = activities;
     });
   };
+
   $ctrl.getActivities();
 });
 
 // Please note that the close and dismiss bindings are from $uibModalInstance.
 
-assignmentApp.component("busiestDayComponent", {
-  templateUrl: "busiestDayContent.html",
+assignmentApp.component("busiestTimeComponent", {
+  templateUrl: "busiestTimeContent.html",
   bindings: {
     resolve: "<",
     close: "&",
