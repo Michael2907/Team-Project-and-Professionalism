@@ -1,4 +1,4 @@
-"use strict";
+use strict";
 // Service to return the data
 
 
@@ -364,6 +364,60 @@ assignmentApp.
 					return defer.promise;
 				};
 
+        this.getActivities = (startDate, endDate, jwtToken) => {
+          var defer = $q.defer(), // The promise
+            data = {
+              // the data to be passed to the url
+              action: "activity/date",
+            };
+          var config = {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + jwtToken,
+            },
+          };
+          var parameters = `?startDate=${new Date(
+            startDate
+          ).toLocaleDateString()}&endDate=${new Date(
+            endDate
+          ).toLocaleDateString()}`;
+
+          $http
+            .get(urlBase + data.action + parameters, config)
+            .then((response) => defer.resolve({ data: response }))
+            .catch((err) => {
+              defer.reject(err);
+            });
+
+          return defer.promise;
+        };
+
+        this.getCurrentlyParked = (jwtToken) => {
+          var defer = $q.defer(), // The promise
+            data = {
+              // the data to be passed to the url
+              action: "activity/currentlyParked",
+            };
+          var config = {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + jwtToken,
+            },
+          };
+
+
+          $http
+            .get(urlBase + data.action, config)
+            .then((response) => defer.resolve({ data: response }))
+            .catch((err) => {
+              defer.reject(err);
+            });
+
+          return defer.promise;
+        };
+        
 				this.checkSuspiciousVehicle = function (numberPlate) {
 					let body = { registrationNumber: numberPlate }
 

@@ -4,11 +4,12 @@
         <h3 class="modal-title" id="currentlyParkedTitle">Currently Parked</h3>
     </div>
     <div class="modal-body" id="currentlyParkedBody">
-      There are currently {{$cp.data}} users that are parked in the car park
+      Here are the users that are currently parked in the car park
+      <div id="cpGrid" class="ag-theme-balham table" ></div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="$cp.ok()">OK</button>
-        <button class="btn btn-warning" type="button" ng-click="$cp.cancel()">Cancel</button>
+
     </div>
   </script>
 

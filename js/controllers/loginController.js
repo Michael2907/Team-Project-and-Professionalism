@@ -1,5 +1,5 @@
-
 "use strict";
+
 
 assignmentApp.
 	controller('LoginController',
@@ -124,3 +124,4 @@ assignmentApp.
 			}
 		]
 	)
+

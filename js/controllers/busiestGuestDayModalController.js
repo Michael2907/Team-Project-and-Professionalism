@@ -1,4 +1,4 @@
-assignmentApp.controller("BusiestDayModalController", function (
+assignmentApp.controller("BusiestGuestDayModalController", function (
   dataService,
   $uibModal,
   $document,
@@ -14,10 +14,16 @@ assignmentApp.controller("BusiestDayModalController", function (
           data: { data: activities },
         } = res;
         console.log(res);
-        var activityDays = activities.map((a) =>
+
+        console.log("activities", activities);
+        var guestActivities = activities.filter(
+          (activity) => activity.user.userGroup === 3
+        );
+        console.log("guestactivities", guestActivities);
+        var activityDays = guestActivities.map((a) =>
           new Date(a.activity.dateTimeEntered).getDay()
         );
-
+        console.log("here", activityDays);
         return [
           [
             activityDays.filter((day) => day === 1).length,
@@ -105,10 +111,10 @@ assignmentApp.controller("BusiestDayModalController", function (
       : undefined;
     var modalInstance = $uibModal.open({
       animation: $ctrl.animationsEnabled,
-      ariaLabelledBy: "busiestDayTitle",
-      ariaDescribedBy: "busiestDayBody",
-      templateUrl: "busiestDayContent.html",
-      controller: "BDModalInstanceCtrl",
+      ariaLabelledBy: "busiestGuestDayTitle",
+      ariaDescribedBy: "busiestGuestDayBody",
+      templateUrl: "busiestGuestDayContent.html",
+      controller: "BGDModalInstanceCtrl",
       controllerAs: "$ctrl",
       size: size,
       appendTo: parentElem,
@@ -147,7 +153,7 @@ assignmentApp.controller("BusiestDayModalController", function (
   $ctrl.openComponentModal = function () {
     $uibModal.open({
       animation: $ctrl.animationsEnabled,
-      component: "busiestDayComponent",
+      component: "busiestGuestDayComponent",
       resolve: {
         series: function () {
           return $ctrl.series;
@@ -185,7 +191,7 @@ assignmentApp.controller("BusiestDayModalController", function (
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-assignmentApp.controller("BDModalInstanceCtrl", function (
+assignmentApp.controller("BGDModalInstanceCtrl", function (
   $uibModalInstance,
   series,
   labels,
@@ -232,8 +238,8 @@ assignmentApp.controller("BDModalInstanceCtrl", function (
 
 // Please note that the close and dismiss bindings are from $uibModalInstance.
 
-assignmentApp.component("busiestDayComponent", {
-  templateUrl: "busiestDayContent.html",
+assignmentApp.component("busiestGuestDayComponent", {
+  templateUrl: "busiestGuestDayContent.html",
   bindings: {
     resolve: "<",
     close: "&",
