@@ -13,17 +13,15 @@ assignmentApp.controller("BusiestGuestDayModalController", function (
         const {
           data: { data: activities },
         } = res;
-        console.log(res);
 
-        console.log("activities", activities);
         var guestActivities = activities.filter(
           (activity) => activity.user.userGroup === 3
         );
-        console.log("guestactivities", guestActivities);
+
         var activityDays = guestActivities.map((a) =>
           new Date(a.activity.dateTimeEntered).getDay()
         );
-        console.log("here", activityDays);
+
         return [
           [
             activityDays.filter((day) => day === 1).length,
@@ -219,17 +217,14 @@ assignmentApp.controller("BGDModalInstanceCtrl", function (
   };
 
   $ctrl.open1 = function () {
-    console.log("is it here");
     $ctrl.popup1.opened = true;
   };
   $ctrl.open2 = function () {
-    console.log("is it here");
     $ctrl.popup2.opened = true;
   };
 
   $ctrl.getActivities = function () {
     getActivities($ctrl.startDt, $ctrl.endDt).then((activities) => {
-      console.log("get activites", activities);
       $ctrl.data = activities;
     });
   };

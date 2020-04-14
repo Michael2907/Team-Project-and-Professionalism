@@ -13,9 +13,6 @@ assignmentApp.controller("HistoryOfActivitiesModalController", function (
         const {
           data: { data: activities },
         } = res;
-        console.log(res);
-
-        console.log("activities", activities);
 
         return activities.map((activity) => {
           return {
@@ -46,7 +43,7 @@ assignmentApp.controller("HistoryOfActivitiesModalController", function (
     },
     {
       headerName: "Number Plate",
-      field: "numberplate",
+      field: "numberPlate",
       sortable: true,
       filter: true,
       resizable: true,
@@ -186,7 +183,7 @@ assignmentApp.controller("HistoryOfActivitiesModalController", function (
       $ctrl.getActivities($ctrl.startDt, $ctrl.endDt).then((rowData) => {
         var eGridDivB = document.querySelector("#hoaGrid");
         var options = $ctrl.hoaGridOptions(rowData);
-        console.log("is this here", eGridDivB);
+
         new agGrid.Grid(eGridDivB, options);
       });
     });
@@ -252,11 +249,9 @@ assignmentApp.controller("HOAModalInstanceCtrl", function (
   };
 
   $ctrl.open1 = function () {
-    console.log("is it here");
     $ctrl.popup1.opened = true;
   };
   $ctrl.open2 = function () {
-    console.log("is it here");
     $ctrl.popup2.opened = true;
   };
 

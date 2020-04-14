@@ -13,7 +13,7 @@ assignmentApp.controller("BusiestDayModalController", function (
         const {
           data: { data: activities },
         } = res;
-        console.log(res);
+
         var activityDays = activities.map((a) =>
           new Date(a.activity.dateTimeEntered).getDay()
         );
@@ -213,17 +213,14 @@ assignmentApp.controller("BDModalInstanceCtrl", function (
   };
 
   $ctrl.open1 = function () {
-    console.log("is it here");
     $ctrl.popup1.opened = true;
   };
   $ctrl.open2 = function () {
-    console.log("is it here");
     $ctrl.popup2.opened = true;
   };
 
   $ctrl.getActivities = function () {
     getActivities($ctrl.startDt, $ctrl.endDt).then((activities) => {
-      console.log("get activites", activities);
       $ctrl.data = activities;
     });
   };

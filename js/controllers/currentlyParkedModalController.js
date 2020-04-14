@@ -13,9 +13,6 @@ assignmentApp.controller("CurrentlyParkedModalController", function (
         const {
           data: { data: activities },
         } = res;
-        console.log(res);
-
-        console.log("activities", activities);
 
         return activities.map((activity) => {
           return {

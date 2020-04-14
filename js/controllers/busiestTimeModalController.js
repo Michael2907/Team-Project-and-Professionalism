@@ -13,9 +13,7 @@ assignmentApp.controller("BusiestTimeModalController", function (
         const {
           data: { data: activities },
         } = res;
-        console.log(res);
 
-        console.log("activities", activities);
         var activityHours = activities.map((a) =>
           new Date(a.activity.dateTimeEntered).getHours()
         );
@@ -229,12 +227,10 @@ assignmentApp.controller("BTModalInstanceCtrl", function (
   };
 
   $ctrl.open1 = function () {
-    console.log("is it here");
     $ctrl.popup1.opened = true;
   };
 
   $ctrl.open2 = function () {
-    console.log("is it here");
     $ctrl.popup2.opened = true;
   };
 
@@ -242,7 +238,6 @@ assignmentApp.controller("BTModalInstanceCtrl", function (
     var endDt = new Date($ctrl.startDt);
     endDt.setDate(endDt.getDate() + 1);
     getActivities($ctrl.startDt, endDt).then((activities) => {
-      console.log("get activites", activities);
       $ctrl.data = activities;
     });
   };
