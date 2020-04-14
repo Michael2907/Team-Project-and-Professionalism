@@ -1,352 +1,368 @@
-"use strict";
+use strict";
 // Service to return the data
 
-assignmentApp
-  .service("applicationData", function ($rootScope) {
-    var sharedService = {};
-    sharedService.info = {};
 
-    sharedService.publishInfo = function (key, obj) {
-      this.info[key] = obj;
-      $rootScope.$broadcast("systemInfo_" + key, obj);
-    };
+assignmentApp.
+	service('applicationData', function ($rootScope) {
+		// used to share data bewteen controllers
+		var sharedService = {};
+		sharedService.info = {};
 
-    return sharedService;
-  })
-  .service(
-    "dataService", // the data service name, can be anything we want
-    [
-      "$q", // dependency, $q handles promises, the request initially returns a promise, not the data
-      "$http", // dependency, $http handles the ajax request
-      function ($q, $http) {
-        // the parameters must be in the same order as the dependencies
+		sharedService.publishInfo = function (key, obj) {
+			this.info[key] = obj;
+			$rootScope.$broadcast('systemInfo_' + key, obj);
+		};
 
-        var urlBase =
-          "https://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api/";
+		return sharedService;
+	}
+	).
+	service('dataService',         // the data service name, can be anything we want
+		['$q',                     // dependency, $q handles promises, the request initially returns a promise, not the data
+			'$http',                  // dependency, $http handles the ajax request
+			function ($q, $http) {     // the parameters must be in the same order as the dependencies
 
-        ////////////////////////////////	Login	 ////////////////////////////////
+				var urlBase = 'https://carparkrecognitionsystemapi.azurewebsites.net/cpmAPI/api/';
 
-        this.login = function (user) {
-          let userJSON = { username: user.username, password: user.password };
+				////////////////////////////////	Login	 ////////////////////////////////
 
-          var defer = $q.defer(),
-            data = {
-              action: "authenticate",
-            };
+				// authenciates users by returning a jwt token 
+				this.login = function (user) {
+					let userJSON = { "username": user.username, "password": user.password };
 
-          $http.post(urlBase + data.action, userJSON, { cache: true }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response.data,
-              });
-            },
-            function errorCallback(err) {
-              defer.resolve(err.data);
-            }
-          );
-          return defer.promise;
-        };
+					var defer = $q.defer(),
+						data = {
+							action: 'authenticate',
+						};
 
-        this.changePassword = function (user) {
-          let userJSON = {
-            username: user.username,
-            password: user.oldPassword,
-          };
+					$http.post(urlBase + data.action, userJSON, { cache: false }).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response.data,
+							});
 
-          var defer = $q.defer(),
-            data = {
-              action: "user/changePassword?newPassword=" + user.newPassword,
-            };
+						}, function errorCallback(err) {
+							defer.resolve(err.data);
+						});
+					return defer.promise;
 
-          $http.put(urlBase + data.action, userJSON, { cache: true }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response,
-              });
-            },
-            function errorCallback(err) {
-              defer.resolve(err.data);
-            }
-          );
-          return defer.promise;
-        };
-        // this.createUser = function (user) {
-        // 	let userJSON = { "username": user.username, "password": user.password };
+				};
 
-        // 	var defer = $q.defer(),
-        // 		data = {
-        // 			action: 'initialiseUser',
-        // 		};
+				// changes users password, mianly called when new user 
+				this.changePassword = function (user, jwtToken) {
+					let userJSON = { "username": user.username, "password": user.oldPassword };
 
-        // 	$http.post(urlBase + data.action, userJSON, { cache: true }).
+					var defer = $q.defer(),
+						data = {
+							action: 'user/changePassword?newPassword=' + user.newPassword,
+						};
 
-        // 		then(function successCallback(response) {
-        // 			defer.resolve({
-        // 				data: response,
-        // 			});
+					$http.put(urlBase + data.action, userJSON, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).
+						then(function successCallback(response) {
+							defer.resolve({
+								data: response,
+							});
 
-        // 		}, function errorCallback(err) {
+						}, function errorCallback(err) {
+							defer.resolve(err.data);
+						});
+					return defer.promise;
+				};
 
-        // 			defer.reject(err);
-        // 		});
-        // 	return defer.promise;
 
-        // };
+				////////////////////////////////	White List	 ////////////////////////////////
 
-        ////////////////////////////////	White List	 ////////////////////////////////
 
-        this.getWhiteList = function () {
-          var defer = $q.defer(),
-            data = {
-              action: "user",
-            };
+				this.getWhiteList = function (jwtToken) {
+					var defer = $q.defer(),
+						data = {
+							action: 'user'
+						};
 
-          $http.get(urlBase + data.action, { cache: false }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response.data,
-              });
-            },
-            function errorCallback(err) {
-              defer.reject(err);
-            }
-          );
-          return defer.promise;
-        };
+					$http.get(urlBase + data.action, {
+						cache: false,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
+						});
+					}, function errorCallback(err) {
+						defer.reject(err);
+					});
+					return defer.promise;
+				}
 
-        this.addWhiteListVehicle = function (whiteListVehicle) {
-          var defer = $q.defer(),
-            data = {
-              action: "initialiseUser",
-            };
+				this.addWhiteListVehicle = function (whiteListVehicle, jwtToken) {
+					var defer = $q.defer(),
+						data = {
+							action: 'initialiseUser',
+						};
 
-          $http
-            .post(urlBase + data.action, whiteListVehicle, { cache: true })
-            .then(
-              function successCallback(response) {
-                defer.resolve({
-                  data: response,
-                });
-              },
-              function errorCallback(err) {
-                defer.reject(err);
-              }
-            );
+					$http.post(urlBase + data.action, whiteListVehicle, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
+						});
+					}, function errorCallback(err) {
+						defer.reject(err);
+					});
 
-          return defer.promise;
-        };
+					return defer.promise;
+				};
 
-        this.updateWhiteListVehicle = function (whiteListVehicle) {
-          var defer = $q.defer(),
-            data = {
-              action: "user",
-            };
+				this.updateWhiteListVehicle = function (whiteListVehicle, jwtToken) {
 
-          $http
-            .put(urlBase + data.action, whiteListVehicle, { cache: true })
-            .then(
-              function successCallback(response) {
-                defer.resolve({
-                  data: response,
-                });
-              },
-              function errorCallback(err) {
-                defer.reject(err);
-              }
-            );
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
 
-          return defer.promise;
-        };
+					$http.put(urlBase + data.action, whiteListVehicle, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
+						});
+					}, function errorCallback(err) {
+						defer.reject(err);
+					});
+					return defer.promise;
+				};
 
-        // this.deleteWhiteListVehicle = function (whiteListVehicle) {
 
-        // 	var defer = $q.defer(),
-        // 		data = {
-        // 			action: 'user',
-        // 		};
+				////////////////////////////////	Black List	 ////////////////////////////////
 
-        // 		$http.put(urlBase + data.action, whiteListVehicle, { cache: true }).
-        // 		then(function successCallback(response) {
-        // 			defer.resolve({
-        // 				data: response,
-        // 			});
+				this.getBlackList = function (jwtToken) {
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist'
+						};
 
-        // 		}, function errorCallback(err) {
+					$http.get(urlBase + data.action, {
+						cache: false,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
+						});
 
-        // 			defer.reject(err);
-        // 		});
+					}, function errorCallback(err) {
 
-        // 	return defer.promise;
+						defer.reject(err);
+					});
+					return defer.promise;
+				}
 
-        // };
+				this.addBlackListVehicle = function (blackListVehicle, jwtToken) {
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist',
+						};
 
-        ////////////////////////////////	Black List	 ////////////////////////////////
+					$http.put(urlBase + data.action, blackListVehicle, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
+						});
 
-        this.getBlackList = function () {
-          var defer = $q.defer(),
-            data = {
-              action: "blacklist",
-            };
+					}, function errorCallback(err) {
 
-          $http.get(urlBase + data.action, { cache: false }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response.data,
-              });
-            },
-            function errorCallback(err) {
-              defer.reject(err);
-            }
-          );
-          return defer.promise;
-        };
+						defer.reject(err);
+					});
 
-        this.addBlackListVehicle = function (blackListVehicle) {
-          var defer = $q.defer(),
-            data = {
-              action: "blacklist",
-            };
+					return defer.promise;
 
-          $http
-            .put(urlBase + data.action, blackListVehicle, { cache: true })
-            .then(
-              function successCallback(response) {
-                defer.resolve({
-                  data: response,
-                });
-              },
-              function errorCallback(err) {
-                defer.reject(err);
-              }
-            );
+				};
 
-          return defer.promise;
-        };
+				this.editBlackListVehicle = function (blackListVehicle, jwtToken) {
 
-        this.editBlackListVehicle = function (blackListVehicle) {
-          var defer = $q.defer(),
-            data = {
-              action: "blacklist",
-            };
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist',
+						};
 
-          $http
-            .put(urlBase + data.action, blackListVehicle, { cache: true })
-            .then(
-              function successCallback(response) {
-                defer.resolve({
-                  data: response,
-                });
-              },
-              function errorCallback(err) {
-                defer.reject(err);
-              }
-            );
+					$http.put(urlBase + data.action, blackListVehicle, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
+						});
 
-          return defer.promise;
-        };
+					}, function errorCallback(err) {
 
-        this.deleteBlackListVehicle = function (blackListVehicle) {
-          var defer = $q.defer(),
-            data = {
-              action: "blacklist?numberPlate=" + blackListVehicle,
-            };
+						defer.reject(err);
+					});
 
-          $http.delete(urlBase + data.action, { cache: true }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response,
-              });
-            },
-            function errorCallback(err) {
-              defer.reject(err);
-            }
-          );
+					return defer.promise;
 
-          return defer.promise;
-        };
+				};
 
-        ////////////////////////////////	Guest List	 ////////////////////////////////
+				this.deleteBlackListVehicle = function (blackListVehicle, jwtToken) {
 
-        this.getGuestList = function () {
-          var defer = $q.defer(),
-            data = {
-              action: "user",
-            };
+					var defer = $q.defer(),
+						data = {
+							action: 'blacklist?numberPlate=' + blackListVehicle,
+						};
 
-          $http.get(urlBase + data.action, { cache: false }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response.data,
-              });
-            },
-            function errorCallback(err) {
-              defer.reject(err);
-            }
-          );
-          return defer.promise;
-        };
+					$http.delete(urlBase + data.action, {
+						cache: true,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
+						});
 
-        this.addGuestUser = function (guestUser) {
-          var defer = $q.defer(),
-            data = {
-              action: "initialiseUser",
-            };
+					}, function errorCallback(err) {
 
-          $http.post(urlBase + data.action, guestUser, { cache: false }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response,
-              });
-            },
-            function errorCallback(err) {
-              defer.reject(err);
-            }
-          );
+						defer.reject(err);
+					});
 
-          return defer.promise;
-        };
+					return defer.promise;
 
-        this.updateGuestUser = function (guestUser) {
-          var defer = $q.defer(),
-            data = {
-              action: "user",
-            };
+				};
 
-          $http.put(urlBase + data.action, guestUser, { cache: false }).then(
-            function successCallback(response) {
-              defer.resolve({
-                data: response,
-              });
-            },
-            function errorCallback(err) {
-              defer.reject(err);
-            }
-          );
 
-          return defer.promise;
-        };
+				////////////////////////////////	Guest List	 ////////////////////////////////
 
-        // this.deleteGuestUser = function (guestUser) {
+				this.getGuestList = function (jwtToken) {
+					var defer = $q.defer(),
+						data = {
+							action: 'user'
+						};
 
-        // 	var defer = $q.defer(),
-        // 		data = {
-        // 			action: 'user?userId=' + guestUser,
-        // 		};
+					$http.get(urlBase + data.action, {
+						cache: false,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
+						});
 
-        // 	$http.delete(urlBase + data.action, { cache: true }).
-        // 		then(function successCallback(response) {
-        // 			defer.resolve({
-        // 				data: response,
-        // 			});
+					}, function errorCallback(err) {
 
-        // 		}, function errorCallback(err) {
+						defer.reject(err);
+					});
+					return defer.promise;
+				}
 
-        // 			defer.reject(err);
-        // 		});
+				this.addGuestUser = function (guestUser, jwtToken) {
 
-        // 	return defer.promise;
+					var defer = $q.defer(),
+						data = {
+							action: 'initialiseUser',
+						};
 
-        // };
+					$http.post(urlBase + data.action, guestUser, {
+						cache: false,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
+						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
+
+					return defer.promise;
+
+				};
+
+				this.updateGuestUser = function (guestUser, jwtToken) {
+
+					var defer = $q.defer(),
+						data = {
+							action: 'user',
+						};
+
+					$http.put(urlBase + data.action, guestUser, {
+						cache: false,
+						headers: {
+							"Content-Type": "application/json",
+							"Accept": "application/json",
+							"Authorization": "Bearer " + jwtToken
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response,
+						});
+
+					}, function errorCallback(err) {
+
+						defer.reject(err);
+					});
+
+					return defer.promise;
+
+				};
+
+
+
+				this.getActivities = (startDate, endDate) => {
+					var defer = $q.defer(), // The promise
+						data = {
+							// the data to be passed to the url
+							action: "activity"
+						};
+
+					$http
+						.get(urlBase + data.action, { startDate, endDate })
+						.then(response => defer.resolve({ data: response }))
+						.catch(err => {
+							defer.reject(err);
+						});
+
+					return defer.promise;
+				};
 
         this.getActivities = (startDate, endDate, jwtToken) => {
           var defer = $q.defer(), // The promise
@@ -366,7 +382,7 @@ assignmentApp
           ).toLocaleDateString()}&endDate=${new Date(
             endDate
           ).toLocaleDateString()}`;
-          console.log(config);
+
           $http
             .get(urlBase + data.action + parameters, config)
             .then((response) => defer.resolve({ data: response }))
@@ -391,7 +407,7 @@ assignmentApp
             },
           };
 
-          console.log(config);
+
           $http
             .get(urlBase + data.action, config)
             .then((response) => defer.resolve({ data: response }))
@@ -401,57 +417,42 @@ assignmentApp
 
           return defer.promise;
         };
+        
+				this.checkSuspiciousVehicle = function (numberPlate) {
+					let body = { registrationNumber: numberPlate }
 
-        // https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html#register-for-ves-api
-        this.checkSuspiciousVehicle = function (numberPlate) {
-          let body = { registrationNumber: numberPlate };
+					var defer = $q.defer()
 
-          // name: x-api-key
-          // value: {supplied API key}
-          // body: {"registrationNumber": "ABC1234"}
+					$http.post("https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles", JSON.stringify(body), {
+						headers: {
+							"Content-Type": "application/json",
+							"x-api-key": "HdSftuDOYT1M5lp6BAnqw428qZWLP6HG7jDN1owN"
+						}
+					}).then(function successCallback(response) {
+						defer.resolve({
+							data: response.data,
+						});
 
-          var defer = $q.defer(),
-            data = {};
+					}, function errorCallback(err) {
 
-          $http
-            .post(
-              "https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles",
-              body,
-              { cache: false }
-            )
-            .then(
-              function successCallback(response) {
-                defer.resolve({
-                  data: response.data,
-                });
-              },
-              function errorCallback(err) {
-                defer.reject(err);
-              }
-            );
-          return defer.promise;
-        };
-      },
-    ]
-  )
-  .factory("authFact", function () {
-    var authFact = {};
-    authFact.setAccessToken = function (token) {
-      console.log("tokenset", token);
-      authFact.token = token;
-    };
+						defer.reject(err);
+					});
+					return defer.promise;
+				}
 
-    authFact.getAccessToken = function () {
-      return authFact.token;
-    };
+			}
+		]
+).
+	factory('authFact', function () { // used to store the JWT Token
+		var authFact = {};
+		authFact.setAccessToken = function (token) {
+			authFact.token = token;
+		}
 
-    authFact.setUserGroup = function (userGroup) {
-      authFact.userGroup = userGroup;
-    };
+		authFact.getAccessToken = function () {
+			return authFact.token;
+		}
 
-    authFact.getUserGroup = function () {
-      return authFact.userGroup;
-    };
+		return authFact;
 
-    return authFact;
-  });
+	})
