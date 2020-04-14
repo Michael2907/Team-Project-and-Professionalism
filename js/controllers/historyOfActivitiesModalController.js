@@ -18,7 +18,7 @@ assignmentApp.controller("HistoryOfActivitiesModalController", function (
           return {
             activityID: activity.activity.activityID,
             username: activity.user.username,
-            numberPlate: activity.user.numberplate,
+            numberPlate: activity.user.numberPlate,
             dateTimeEntered: activity.activity.dateTimeEntered,
             dateTimeExited: activity.activity.dateTimeExited,
           };
