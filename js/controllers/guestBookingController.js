@@ -15,7 +15,7 @@ assignmentApp.
         $scope.guest = {};
         $scope.newUser = {};
 
-        $scope.jwtToken = ""
+        $scope.jwtToken = "";
         $scope.jwtToken = authFact.getAccessToken();
 
         var date = new Date();
@@ -101,6 +101,9 @@ assignmentApp.
               }
             );
           }
+          $scope.newGuest = {};
+          $scope.newGuest.startDateTime = new Date(year, month, day);
+          $scope.newGuest.endDateTime = new Date(year, month, day + 1);
           addModalG.style.display = "none";
         }
 
@@ -118,7 +121,7 @@ assignmentApp.
             $scope.guest.endDateTime.setTime($scope.guest.endDateTime.getTime() + 60 * 60 * 1000);
 
             if ($scope.guest.userGroup == 2) { // initialise user and remove guest
-              
+
               // iniailise standrard user
               $scope.newUser.userGroup = $scope.guest.userGroup;
               $scope.newUser.username = $scope.guest.username;
@@ -126,7 +129,7 @@ assignmentApp.
               $scope.newUser.email = $scope.guest.email;
               $scope.newUser.password = null;
               $scope.newUser.username = $scope.newUser.username + "1";
-              
+
               dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken).then(
                 function (response) {
                   // do nothing             
@@ -206,10 +209,12 @@ assignmentApp.
               for (let i = 0; i < filteredResponse.length; i++) {
                 var oldDateTime = filteredResponse[i].endDateTime.split("-");
                 oldDateTime[2] = oldDateTime[2].substring(0, oldDateTime[2].indexOf('T'));
-                var newDateTime = new Date(oldDateTime[0], oldDateTime[1] - 1, oldDateTime[2] - 1);
-                if (newDateTime < $scope.todaysDate) {
-                  filteredResponse.splice(i, 1)
-                  i--;
+                var newDateTime = new Date(oldDateTime[0], oldDateTime[1] - 1, oldDateTime[2]);
+                if (newDateTime <= $scope.todaysDate) {
+                  if (newDateTime - $scope.todaysDate != 0) {
+                    filteredResponse.splice(i, 1)
+                    i--;
+                  }
                 }
               }
               gridOptionsG.api.setRowData(filteredResponse)
