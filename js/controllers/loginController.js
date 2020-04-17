@@ -35,6 +35,7 @@ assignmentApp.
 										authFact.setAccessToken(response.data.jwtToken)
 										applicationData.publishInfo('userGroup', response.data.user.userGroup);
 										applicationData.publishInfo('username', response.data.user.username);
+										applicationData.publishInfo('userID', response.data.user.userId);
 
 										$scope.login = {};
 										$location.path("/");

@@ -78,6 +78,8 @@ assignmentApp.
         var editModalG = document.getElementById("editModalG");
         var deleteModalG = document.getElementById("deleteModalG");
 
+        $scope.userID = applicationData.info.userID
+
         $scope.addG = function () {
           addModalG.style.display = "block";
         };
@@ -89,7 +91,7 @@ assignmentApp.
             $scope.newGuest.userGroup = 3;
             $scope.newGuest.password = "";
 
-            dataService.addGuestUser($scope.newGuest, $scope.jwtToken).then(
+            dataService.addGuestUser($scope.newGuest, $scope.jwtToken, $scope.userID).then(
               function (response) {
                 getGuestList();
               },
@@ -130,7 +132,7 @@ assignmentApp.
               $scope.newUser.password = null;
               $scope.newUser.username = $scope.newUser.username + "1";
 
-              dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken).then(
+              dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken, $scope.userID).then(
                 function (response) {
                   // do nothing             
                 },
@@ -144,7 +146,7 @@ assignmentApp.
 
               // delete guest
               $scope.guest.deleted = true;
-              dataService.updateGuestUser($scope.guest, $scope.jwtToken).then(
+              dataService.updateGuestUser($scope.guest, $scope.jwtToken, $scope.userID).then(
                 function (response) {
                   getGuestList();
                 },
@@ -158,7 +160,7 @@ assignmentApp.
 
             } else { // update as normal
 
-              dataService.updateGuestUser($scope.guest, $scope.jwtToken).then(
+              dataService.updateGuestUser($scope.guest, $scope.jwtToken, $scope.userID).then(
                 function (response) {
                   getGuestList();
                 },
@@ -185,7 +187,7 @@ assignmentApp.
             // Adds 1 hours to time
             $scope.guest.startDateTime.setTime($scope.guest.startDateTime.getTime() + 60 * 60 * 1000);
             $scope.guest.endDateTime.setTime($scope.guest.endDateTime.getTime() + 60 * 60 * 1000);
-            dataService.updateGuestUser($scope.guest, $scope.jwtToken).then(
+            dataService.updateGuestUser($scope.guest, $scope.jwtToken, $scope.userID).then(
               function (response) {
                 getGuestList();
               },

@@ -84,6 +84,8 @@ assignmentApp.
         var suspiciousModal = document.getElementById("suspiciousModal");
         var suspiciousResultsModal = document.getElementById("suspiciousResultsModal");
 
+        $scope.userID = applicationData.info.userID
+
         $scope.addW = function () {
           addModalW.style.display = "block";
         };
@@ -91,7 +93,7 @@ assignmentApp.
           if (response) {
             $scope.newUser.password = null;
             $scope.newUser.userGroup= parseInt($scope.newUser.userGroup);
-            dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken).then(
+            dataService.addWhiteListVehicle($scope.newUser, $scope.jwtToken, $scope.userID).then(
               function (response) {
                 // updates the table
                 getWhiteList($scope.jwtToken);                
@@ -119,7 +121,7 @@ assignmentApp.
         $scope.editWClose = function (response) {
           if (response) {
             $scope.user.userGroup= parseInt($scope.user.userGroup);
-            dataService.updateWhiteListVehicle($scope.user, $scope.jwtToken).then(
+            dataService.updateWhiteListVehicle($scope.user, $scope.jwtToken, $scope.userID).then(
               function (response) {
                 getWhiteList($scope.jwtToken);
               },
@@ -141,7 +143,7 @@ assignmentApp.
         $scope.deleteWClose = function (response) {
           if (response) {
             $scope.user.deleted = true;
-            dataService.updateWhiteListVehicle($scope.user, $scope.jwtToken).then(
+            dataService.updateWhiteListVehicle($scope.user, $scope.jwtToken, $scope.userID).then(
               function (response) {
                 getWhiteList($scope.jwtToken);
               },
@@ -252,7 +254,7 @@ assignmentApp.
         };
         $scope.addBClose = function (response) {
           if (response) {
-            dataService.addBlackListVehicle($scope.newBannedVehicle, $scope.jwtToken).then(
+            dataService.addBlackListVehicle($scope.newBannedVehicle, $scope.jwtToken, $scope.userID).then(
               function (response) {
                 getBlackList($scope.jwtToken);                
               },
@@ -275,7 +277,7 @@ assignmentApp.
         };
         $scope.editBClose = function (response) {
           if (response) {
-            dataService.editBlackListVehicle($scope.bannedVehicle, $scope.jwtToken).then(
+            dataService.editBlackListVehicle($scope.bannedVehicle, $scope.jwtToken, $scope.userID).then(
               function (response) {
                getBlackList($scope.jwtToken);
               },
@@ -295,7 +297,7 @@ assignmentApp.
         };
         $scope.deleteBClose = function (response) {
           if (response) {
-            dataService.deleteBlackListVehicle($scope.bannedVehicle.numberPlate, $scope.jwtToken).then(
+            dataService.deleteBlackListVehicle($scope.bannedVehicle.numberPlate, $scope.jwtToken, $scope.userID).then(
               function (response) {
                 // updates black list table
                getBlackList($scope.jwtToken);
