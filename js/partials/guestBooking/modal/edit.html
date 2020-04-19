@@ -1,47 +1,109 @@
 <form name="editGuestBooking">
+  <h2>Book Guest</h2>
 
-    <h2>Book Guest</h2>
+  <input
+    class="form-control"
+    type="text"
+    name="username"
+    ng-model="guest.username"
+    placeholder="Name"
+    readonly
+  />
 
-    <input class="form-control" type="text" name="username" ng-model="guest.username" placeholder="Name" readonly>
+  <br />
+  <input
+    class="form-control"
+    type="email"
+    name="email"
+    ng-model="guest.email"
+    placeholder="Email Address"
+    required
+  />
+  <span ng-show="editGuestBooking.email.$error.required"
+    >Email is required.</span
+  >
+  <span ng-show="editGuestBooking.email.$error.email"
+    >Invalid email address.</span
+  >
 
-    <br>
-    <input class="form-control" type="email" name="email" ng-model="guest.email" placeholder="Email Address" required>
-    <span ng-show="editGuestBooking.email.$error.required">Email is required.</span>
-    <span ng-show="editGuestBooking.email.$error.email">Invalid email address.</span>
+  <br />
 
-    <br>
-    
-    <input class="form-control" type="text" name="numberPlate" ng-model="guest.numberPlate" placeholder="Number Plate" minlength="7" maxlength="7"
-        required>
-    <span ng-show="editGuestBooking.numberPlate.$error.required">Number Plate is required.</span>
+  <input
+    class="form-control"
+    type="text"
+    name="numberPlate"
+    ng-model="guest.numberPlate"
+    placeholder="Number Plate"
+    minlength="7"
+    maxlength="7"
+    required
+  />
+  <span ng-show="editGuestBooking.numberPlate.$error.required"
+    >Number Plate is required.</span
+  >
 
-    <br>
-    <input class="form-control" type="date" name="startDateTime" ng-model="guest.startDateTime" placeholder="From Date" required>
-    <span ng-show="editGuestBooking.startDateTime.$error.required">From Date is required.</span>
-    <span ng-show="editGuestBooking.startDateTime.$error.date">Invalid date.</span>
+  <br />
+  <input
+    class="form-control"
+    type="date"
+    name="startDateTime"
+    ng-model="guest.startDateTime"
+    placeholder="From Date"
+    required
+  />
+  <span ng-show="editGuestBooking.startDateTime.$error.required"
+    >From Date is required.</span
+  >
+  <span ng-show="editGuestBooking.startDateTime.$error.date"
+    >Invalid date.</span
+  >
 
-    <br>
-    <input class="form-control" type="date" name="endDateTime" ng-model="guest.endDateTime" placeholder="To Date" required>
-    <span ng-show="editGuestBooking.endDateTime.$error.required">To Date is required.</span>
-    <span ng-show="editGuestBooking.endDateTime.$error.date">Invalid date.</span>
+  <br />
+  <input
+    class="form-control"
+    type="date"
+    name="endDateTime"
+    ng-model="guest.endDateTime"
+    placeholder="To Date"
+    required
+  />
+  <span ng-show="editGuestBooking.endDateTime.$error.required"
+    >To Date is required.</span
+  >
+  <span ng-show="editGuestBooking.endDateTime.$error.date">Invalid date.</span>
 
-    <br>
+  <br />
 
-    <div ng-if="userGroup == 1">
-        <label>
-            <input type="radio" ng-model="guest.userGroup" value="2">
-            Standard
-        </label>
-        <label>
-            <input type="radio" ng-model="guest.userGroup" value="3">
-            Guest
-        </label>
+  <div ng-if="userGroup == 1">
+    <label>
+      <input type="radio" ng-model="guest.userGroup" value="2" />
+      Standard
+    </label>
+    <label>
+      <input type="radio" ng-model="guest.userGroup" value="3" />
+      Guest
+    </label>
 
-        <p class="warningMessage" ng-if="guest.userGroup == 2">Warning you are about to <br> make a guest user a standrard <br> user, meaning they will <br>have access to the system.</p>
-    </div>
+    <p class="warningMessage" ng-if="guest.userGroup == 2">
+      Warning you are about to <br />
+      make a guest user a standard <br />
+      user, meaning they will <br />have access to the system.
+    </p>
+  </div>
 
-    <button type="button" class="btn btn-primary" ng-click="editGClose(true)"
-        ng-disabled="editGuestBooking.$invalid">Submit</button>
-    <button type="button" class="btn btn-secondary otherOptionBtn" ng-click="editGClose(false)">Cancel</button>
-
+  <button
+    type="button"
+    class="btn btn-primary"
+    ng-click="editGClose(true)"
+    ng-disabled="editGuestBooking.$invalid"
+  >
+    Submit
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary otherOptionBtn"
+    ng-click="editGClose(false)"
+  >
+    Cancel
+  </button>
 </form>
