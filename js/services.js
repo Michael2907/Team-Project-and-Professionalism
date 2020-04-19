@@ -113,7 +113,11 @@ assignmentApp
           return defer.promise;
         };
 
-        this.addWhiteListVehicle = function (whiteListVehicle, jwtToken, userID) {
+        this.addWhiteListVehicle = function (
+          whiteListVehicle,
+          jwtToken,
+          userID
+        ) {
           var defer = $q.defer(),
             data = {
               action: "initialiseUser?userID=" + userID,
@@ -142,7 +146,11 @@ assignmentApp
           return defer.promise;
         };
 
-        this.updateWhiteListVehicle = function (whiteListVehicle, jwtToken, userID) {
+        this.updateWhiteListVehicle = function (
+          whiteListVehicle,
+          jwtToken,
+          userID
+        ) {
           var defer = $q.defer(),
             data = {
               action: "user?userID=" + userID,
@@ -200,7 +208,11 @@ assignmentApp
           return defer.promise;
         };
 
-        this.addBlackListVehicle = function (blackListVehicle, jwtToken, userID) {
+        this.addBlackListVehicle = function (
+          blackListVehicle,
+          jwtToken,
+          userID
+        ) {
           var defer = $q.defer(),
             data = {
               action: "blacklist?userID=" + userID,
@@ -229,7 +241,11 @@ assignmentApp
           return defer.promise;
         };
 
-        this.editBlackListVehicle = function (blackListVehicle, jwtToken, userID) {
+        this.editBlackListVehicle = function (
+          blackListVehicle,
+          jwtToken,
+          userID
+        ) {
           var defer = $q.defer(),
             data = {
               action: "blacklist?userID=" + userID,
@@ -258,10 +274,18 @@ assignmentApp
           return defer.promise;
         };
 
-        this.deleteBlackListVehicle = function (blackListVehicle, jwtToken, userID) {
+        this.deleteBlackListVehicle = function (
+          blackListVehicle,
+          jwtToken,
+          userID
+        ) {
           var defer = $q.defer(),
             data = {
-              action: "blacklist?numberPlate=" + blackListVehicle + "&userID=" + userID,
+              action:
+                "blacklist?numberPlate=" +
+                blackListVehicle +
+                "&userID=" +
+                userID,
             };
 
           $http
@@ -375,23 +399,6 @@ assignmentApp
           return defer.promise;
         };
 
-        this.getActivities = (startDate, endDate) => {
-          var defer = $q.defer(), // The promise
-            data = {
-              // the data to be passed to the url
-              action: "activity",
-            };
-
-          $http
-            .get(urlBase + data.action, { startDate, endDate })
-            .then((response) => defer.resolve({ data: response }))
-            .catch((err) => {
-              defer.reject(err);
-            });
-
-          return defer.promise;
-        };
-
         this.getActivities = (startDate, endDate, jwtToken) => {
           var defer = $q.defer(), // The promise
             data = {
@@ -405,11 +412,9 @@ assignmentApp
               Authorization: "Bearer " + jwtToken,
             },
           };
-          var parameters = `?startDate=${new Date(
-            startDate
-          ).toLocaleDateString()}&endDate=${new Date(
-            endDate
-          ).toLocaleDateString()}`;
+          var parameters = `?startDate=${new Date(startDate).toLocaleDateString(
+            "en-GB"
+          )}&endDate=${new Date(endDate).toLocaleDateString("en-GB")}`;
 
           $http
             .get(urlBase + data.action + parameters, config)
